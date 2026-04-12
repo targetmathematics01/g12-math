@@ -2,7 +2,7 @@
   "courseId": "g12_math",
   "title": "Grade 12 Mathematics",
   "version": 1,
-  "basePath": "https://your-domain.com/g12_math/",
+  "basePath": "https://raw.githubusercontent.com/targetmathematics01/g12-math/main/courses/",
   "updatedAt": "2026-04-12T10:00:00Z",
   "chapters": [
     {
