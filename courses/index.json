@@ -1,0 +1,108 @@
+{
+  "courseId": "g12_math",
+  "title": "Grade 12 Mathematics",
+  "version": 1,
+  "basePath": "https://your-domain.com/g12_math/",
+  "updatedAt": "2026-04-12T10:00:00Z",
+  "chapters": [
+    {
+      "id": "chapter1",
+      "title": "Chapter 1",
+      "order": 1,
+      "mainFile": "chapter1.html",
+      "practiceFile": "chapter1-practice.html",
+      "quizFile": "chapter1-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter2",
+      "title": "Chapter 2",
+      "order": 2,
+      "mainFile": "chapter2.html",
+      "practiceFile": "chapter2-practice.html",
+      "quizFile": "chapter2-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter3",
+      "title": "Chapter 3",
+      "order": 3,
+      "mainFile": "chapter3.html",
+      "practiceFile": "chapter3-practice.html",
+      "quizFile": "chapter3-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter4",
+      "title": "Chapter 4",
+      "order": 4,
+      "mainFile": "chapter4.html",
+      "practiceFile": "chapter4-practice.html",
+      "quizFile": "chapter4-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter5",
+      "title": "Chapter 5",
+      "order": 5,
+      "mainFile": "chapter5.html",
+      "practiceFile": "chapter5-practice.html",
+      "quizFile": "chapter5-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter6",
+      "title": "Chapter 6",
+      "order": 6,
+      "mainFile": "chapter6.html",
+      "practiceFile": "chapter6-practice.html",
+      "quizFile": "chapter6-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter7",
+      "title": "Chapter 7",
+      "order": 7,
+      "mainFile": "chapter7.html",
+      "practiceFile": "chapter7-practice.html",
+      "quizFile": "chapter7-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter8",
+      "title": "Chapter 8",
+      "order": 8,
+      "mainFile": "chapter8.html",
+      "practiceFile": "chapter8-practice.html",
+      "quizFile": "chapter8-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter9",
+      "title": "Chapter 9",
+      "order": 9,
+      "mainFile": "chapter9.html",
+      "practiceFile": "chapter9-practice.html",
+      "quizFile": "chapter9-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter10",
+      "title": "Chapter 10",
+      "order": 10,
+      "mainFile": "chapter10.html",
+      "practiceFile": "chapter10-practice.html",
+      "quizFile": "chapter10-quiz.html",
+      "published": true
+    },
+    {
+      "id": "chapter11",
+      "title": "Chapter 11",
+      "order": 11,
+      "mainFile": "chapter11.html",
+      "practiceFile": "chapter11-practice.html",
+      "quizFile": "chapter11-quiz.html",
+      "published": true
+    }
+  ]
+}

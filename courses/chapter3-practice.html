@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytical Solid Geometry: Practice Problems | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1, 
+                minScale: 0.5
+            }
+        };
+    </script>
+   <script id="MathJax-script" async src="mathjax.js"></script>
+    
+    <style>
+        /* Prevent full-page horizontal scroll */
+        body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; overflow-x: hidden; }
+        header { background: #0056b3; color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logo { font-size: 28px; font-weight: 600; letter-spacing: 2px; color: #f39c12; }
+        .logo span { color: #f4f6f1; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+        .content-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; text-align: left; }
+        .content-box h1 { color: #333; margin-bottom: 10px; text-align: center; font-family: 'Alice', serif; }
+        .content-box p.subtitle { text-align: center; color: #777; margin-bottom: 40px; font-size: 1.1em; }
+        
+        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 10px; }
+        
+        /* Problem Box Optimization */
+        .problem-box { 
+            border: 1px solid #e0e0e0; 
+            padding: 35px; 
+            border-radius: 10px; 
+            margin-bottom: 40px; 
+            background: #fafafa; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+            max-width: 100%; 
+            box-sizing: border-box; 
+            word-wrap: break-word;
+            overflow-x: auto; /* Added horizontal slider */
+            overflow-y: hidden;
+        }
+        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 22px; margin-bottom: 20px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .problem-box p { color: #333; font-size: 16px; line-height: 1.8; margin-bottom: 15px; word-wrap: break-word; }
+
+        /* Enable horizontal slider for math blocks */
+        mjx-container { 
+            box-sizing: border-box;
+        }
+        mjx-container[display="true"] {
+            display: block !important;
+            text-align: center;
+            margin: 1em 0 !important;
+        }
+        p mjx-container {
+            display: inline-block !important;
+            margin: 0 !important;
+        }
+
+        .svg-container { text-align: center; margin: 30px 0; display: flex; justify-content: center; width: 100%; overflow-x: auto;}
+        svg text { font-family: 'Open Sans', sans-serif; font-size: 14px; }
+        
+        ul, ol { margin-bottom: 20px; font-size: 1.1em; padding-left: 40px; color: #555; line-height: 1.8; }
+        li { margin-bottom: 15px; padding-left: 5px; }
+
+        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
+        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; }
+        .btn-nav:hover { background-color: #004494; }
+
+        .top-nav-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: -25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+        }
+        .nav-link {
+            padding: 12px 30px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover { color: #0056b3; background-color: #f4f7f6; }
+        .nav-link.active { color: #0056b3; background-color: #e8f4f8; }
+
+        /* Fully Responsive Media Queries */
+        @media (max-width: 768px) {
+            .content-box { padding: 25px 15px; }
+            .problem-box { padding: 20px; margin-bottom: 25px; }
+            .problem-box h4 { font-size: 18px; }
+            .problem-box p { font-size: 14px; }
+            .page-navigation { flex-direction: column; gap: 15px; }
+            .btn-nav { width: 100%; box-sizing: border-box; }
+            .top-nav-box { flex-direction: row; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
+            .nav-link { flex: 1; text-align: center; padding: 12px 10px; font-size: 14px; }
+            
+            /* Scale down Math equations on tablets */
+            mjx-container[display="true"] { font-size: 85% !important; }
+        }
+
+        @media (max-width: 480px) {
+            /* Scale down further for small mobile screens */
+            mjx-container[display="true"] { font-size: 65% !important; }
+            .problem-box { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-box">
+            <h1>Analytical Solid Geometry</h1>
+            <p class="subtitle">Practice Problems & Solutions</p>
+
+            <div class="problem-box">
+                <h4>Problem 1</h4>
+                <p>Find the parametric equations of the line passing through the points $A(2, 4, -3)$ and $B(3, -1, 1)$. At what point does this line intersect the $xy$-plane?</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & A(2, 4, -3) \, , \, B(3, -1, 1) \\
+                    \therefore\quad& \langle AB \rangle = \langle 1, -5, 4 \rangle \\
+                    & \text{The parametric equations are } x = 2 + t, \, y = 4 - 5t, \, z = -3 + 4t \\
+                    \therefore\quad& \frac{x-2}{1} = \frac{y-4}{-5} = \frac{z+3}{4} \\
+                    & \text{The line intersects the } xy\text{-plane when } z = 0. \\
+                    \therefore\quad& \frac{x-2}{1} = \frac{y-4}{-5} = \frac{3}{4} \\
+                    \therefore\quad& \frac{x-2}{1} = \frac{3}{4} \qquad \qquad \frac{y-4}{-5} = \frac{3}{4} \\
+                    \therefore\quad& 4x - 8 = 3 \qquad \quad \,\, 4y - 16 = -15 \\
+                    \therefore\quad& x = \frac{11}{4} \qquad \qquad \quad y = \frac{1}{4} \\
+                    \therefore\quad & \text{The line intersects the } xy\text{-plane at } \left( \frac{11}{4}, \frac{1}{4}, 0 \right).
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 2</h4>
+                <p>show that the lines $L_1$ and $L_2$ with parametric equations</p>
+                <p>$L_1: x = 1 + t, \quad y = -2 + 3t, \quad z = 4 - t$</p>
+                <p>$L_2: x = 2s, \quad y = 3 + s, \quad z = -3 + 4s$ are skew lines.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                & \langle L_1 \rangle = \langle 1, 3, -1 \rangle \, , \, \langle L_2 \rangle = \langle 2, 1, 4 \rangle \qquad \frac{1}{2} \neq \frac{3}{1} \neq -\frac{1}{4} \\
+                    \therefore\quad& L_1 \nparallel L_2 \text{ ($\because$ their directed values are not proportional.)} \\
+                    & \text{If } L_1 \text{ intersects} L_2 , \\
+                    & 1 + t = 2s \implies t - 2s = -1 \quad \text{--- (1)} \\
+                    & -2 + 3t = 3 + s \implies 3t - s = 5 \quad \text{--- (2)} \\
+                    \therefore\quad& 4 - t = -3 + 4s \implies -t - 4s = -7 \quad \text{--- (3)} \\
+                    & \text{Solving eq(1) and eq(2), } t = \frac{11}{5} \text{ and } s = \frac{8}{5} \\
+                    \therefore\quad& -t - 4s = -\frac{11}{5} - 4\left(\frac{8}{5}\right) = -\frac{11}{5} - \frac{32}{5} = -\frac{43}{5} \neq -7 \\
+                    & \text{These values of } s \text{ and } t \text{ do not satisfy the last equation.} \\
+                    \therefore\quad& L_1 \text{ and } L_2 \text{ do not intersect.} \\
+                    \therefore\quad& L_1 \text{ and } L_2 \text{ are skew lines.}
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 3</h4>
+                <p>Find an equation of the plane that passes through the points $P(1, 3, 2), Q(3, -1, 6)$ and $R(5, 2, 0)$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                &  P(1, 3, 2), Q(3, -1, 6), R(5, 2, 0) \\
+                    \therefore\quad&  \langle PQ \rangle = \langle 2, -4, 4 \rangle \quad , \quad \langle PR \rangle = \langle 4, -1, -2 \rangle \\
+                    & a = 8 - (-4) = 12 \\
+                    & b = 16 - (-4) = 20 \\
+                    & c = -2 - (-16) = 14 \\
+                    & d = 12x_1 + 20y_1 + 14z_1 = 12(1) + 20(3) + 14(2) = 100. \\
+                    \therefore\quad&\text{The equation of the plane is } 12x + 20y + 14z = 100 \\
+                    \therefore\quad& 6x + 10y + 7z = 50
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 4</h4>
+                <p>Find the point at which the line with parametric equation $x = 2 + 3t, y = -4t, z = 5 + t$ intersects the plane $4x + 5y - 2z = 18$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Parametric equation: } x = 2 + 3t \quad , \quad y = -4t \quad , \quad z = 5 + t \\
+                    & \text{Cartesian equation } \quad : 4x + 5y - 2z = 18 \\
+                    \therefore\quad&  4(2 + 3t) + 5(-4t) - 2(5 + t) = 18 \\
+                    \therefore\quad&  8 + 12t - 20t - 10 - 2t = 18 \\
+                    \therefore\quad&  -10t = 20 \\
+                    \therefore\quad&  t = -2 \\
+                    \therefore\quad&\text{The point of intersection is } (-4, 8, 3).
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 5</h4>
+                <p>Find the equation of the plane tangent to the sphere with center $(3, 8, 1)$ at the point $(4, 3, -1)$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Center of sphere: } C(3, 8, 1) \quad , \quad \text{Point: } P(4, 3, -1) \\
+                    \therefore\quad&  \langle CP \rangle = \langle 1, -5, -2 \rangle \\
+                    & \text{Line CP is perpendicular to the tangent plane.} \\
+                    \therefore\quad&\text{The equation of the plane is } x - 5y - 2z = d. \\
+                    & \text{Since } P(4, 3, -1) \text{ is on the plane, } 4 - 5(3) - 2(-1) = d \\
+                    \therefore\quad&  d = -9 \\
+                    \therefore\quad&\text{The equation of the plane is } x - 5y - 2z = -9.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 6</h4>
+                <p>The coordinates of the points $P$ and $Q$ are $(1, 2, 3)$ and $(k, 2k, 5)$ respectively. Given that the distance from $P$ to $Q$ is $\sqrt{24}$ units, and that $k$ is a positive integer, find the value of $k$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & P(1, 2, 3) \, , \, Q(k, 2k, 5) \\
+                    \therefore\quad& PQ^2 = (k-1)^2 + (2k-2)^2 + (5-3)^2 \\
+                    \therefore\quad& 24 = (k-1)^2 + 4(k-1)^2 + 4 \\
+                    \therefore\quad& 5(k-1)^2 = 20 \\
+                    \therefore\quad& (k-1)^2 = 4 \\
+                    \therefore\quad& k-1 = \pm 2 \\
+                    \therefore\quad& k = 3 \text{ or } k = -1 \\
+                    \therefore\quad& \text{Since } k \text{ is a positive integer, } k = 3.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 7</h4>
+                <p>Determine the following forms of the equation of the line passing through the points $A(1, 4, -2)$ and $B(3, 5, 1)$: (a) a coordinate form, (b) a Cartesian form, and (c) a vector form.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & A(1, 4, -2) \, , \, B(3, 5, 1) \\
+                    \therefore\quad& \text{The directed value of the line is } \langle AB \rangle = \langle 3-1, 5-4, 1-(-2) \rangle = \langle 2, 1, 3 \rangle. \\
+                    \therefore\quad& \text{(a) The coordinate form: } x = 1 + 2t, \, y = 4 + t, \, z = -2 + 3t \\
+                    \therefore\quad& \text{(b) The Cartesian form: } \displaystyle \frac{x-1}{2} = \frac{y-4}{1} = \frac{z+2}{3} \\
+                    \therefore\quad& \text{(c) The vector form: } \mathbf{r} = \langle 1, 4, -2 \rangle + t\langle 2, 1, 3 \rangle
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 8</h4>
+                <p>Find the coordinates of the point where the line passing through $A(3, 4, 1)$ and $B(5, 1, 6)$ crosses the $xy$-plane.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & A(3, 4, 1) \, , \, B(5, 1, 6) \\
+                    \therefore\quad& \text{The directed value is } \langle AB \rangle = \langle 5-3, 1-4, 6-1 \rangle = \langle 2, -3, 5 \rangle \\
+                    & \text{The parametric equations are } x = 3 + 2t, \, y = 4 - 3t, \, z = 1 + 5t \\
+                    & \text{The line crosses the } xy\text{-plane when } z = 0. \\
+                    \therefore\quad& 1 + 5t = 0 \implies \displaystyle t = -\frac{1}{5} \\
+                    \therefore\quad& \displaystyle x = 3 + 2\left(-\frac{1}{5}\right) = \frac{13}{5} \qquad y = 4 - 3\left(-\frac{1}{5}\right) = \frac{23}{5} \\
+                    \therefore\quad& \text{The coordinates of the point are } \displaystyle \left( \frac{13}{5}, \frac{23}{5}, 0 \right).
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 9</h4>
+                <p>Determine the Cartesian equation of the plane containing the points $A(-4, -2, -1)$, $B(-1, 3, -5)$, and $C(2, -6, 4)$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & A(-4, -2, -1) \, , \, B(-1, 3, -5) \, , \, C(2, -6, 4) \\
+                    \therefore\quad& \langle AB \rangle = \langle 3, 5, -4 \rangle \quad , \quad \langle AC \rangle = \langle 6, -4, 5 \rangle \\
+                    & a = 25 - 16 = 9 \\
+                    & b = -24 - 15 = -39 \\
+                    & c = -12 - 30 = -42 \\
+                    & \text{Dividing by } 3, \text{ the directed value of the normal is } \langle 3, -13, -14 \rangle \\
+                    & d = 3x_1 - 13y_1 - 14z_1 = 3(-4) - 13(-2) - 14(-1) = -12 + 26 + 14 = 28 \\
+                    \therefore\quad& \text{The Cartesian equation of the plane is } 3x - 13y - 14z = 28.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 10</h4>
+                <p>Find the Cartesian equation of the tangent plane to the sphere $(x-2)^2 + (y-3)^2 + (z-4)^2 = 14$ at the point $P(3, 5, 1)$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Center of sphere: } C(2, 3, 4) \quad , \quad \text{Point: } P(3, 5, 1) \\
+                    \therefore\quad& \langle CP \rangle = \langle 1, 2, -3 \rangle \\
+                    & \text{Line } CP \text{ is perpendicular to the tangent plane.} \\
+                    \therefore\quad& \text{The equation of the plane is } x + 2y - 3z = d. \\
+                    & \text{Since } P(3, 5, 1) \text{ is on the plane, } 3 + 2(5) - 3(1) = d \\
+                    \therefore\quad& d = 10 \\
+                    \therefore\quad& \text{The Cartesian equation of the tangent plane is } x + 2y - 3z = 10.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 11</h4>
+                <p>Find the equation of the sphere on the join of $(-3, 1, 4)$ and $(5, -3, 2)$ as diameter.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Let } A(-3, 1, 4) \text{ and } B(5, -3, 2) \text{ be the endpoints of the diameter.} \\
+                    \therefore\quad& \text{Center of sphere } C = \displaystyle \left( \frac{-3+5}{2}, \frac{1-3}{2}, \frac{4+2}{2} \right) = (1, -1, 3) \\
+                    & \text{Radius } r = CA = \sqrt{(-3-1)^2 + (1-(-1))^2 + (4-3)^2} = \sqrt{16 + 4 + 1} = \sqrt{21} \\
+                    \therefore\quad& \text{The equation of the sphere is } (x-1)^2 + (y+1)^2 + (z-3)^2 = 21.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 12</h4>
+                <p>Given the points $P(1, 2, 7)$, $Q(2, 6, 3)$, $R(3, 4, 4)$ and $S(4, 3, 2)$, determine whether the lines $PQ$ and $RS$ are parallel, skew or intersect.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    \therefore\quad& \langle PQ \rangle = \langle 1, 4, -4 \rangle \quad , \quad \langle RS \rangle = \langle 1, -1, -2 \rangle \qquad \displaystyle \frac{1}{1} \neq \frac{4}{-1} \neq \frac{-4}{-2} \\
+                    \therefore\quad& PQ \nparallel RS \text{ ($\because$ their directed values are not proportional.)} \\
+                    & \text{If } PQ \text{ intersects } RS, \\
+                    & \text{Line } PQ: x = 1+t, \, y = 2+4t, \, z = 7-4t \\
+                    & \text{Line } RS: x = 3+s, \, y = 4-s, \, z = 4-2s \\
+                    & 1+t = 3+s \implies t-s = 2 \quad \text{--- (1)} \\
+                    & 2+4t = 4-s \implies 4t+s = 2 \quad \text{--- (2)} \\
+                    \therefore\quad& 7-4t = 4-2s \implies 4t-2s = 3 \quad \text{--- (3)} \\
+                    & \text{Solving eq(1) and eq(2), } \displaystyle t = \frac{4}{5} \text{ and } s = -\frac{6}{5} \\
+                    \therefore\quad& \displaystyle 4t - 2s = 4\left(\frac{4}{5}\right) - 2\left(-\frac{6}{5}\right) = \frac{16}{5} + \frac{12}{5} = \frac{28}{5} \neq 3 \\
+                    & \text{These values of } s \text{ and } t \text{ do not satisfy the last equation.} \\
+                    \therefore\quad& PQ \text{ and } RS \text{ do not intersect.} \\
+                    \therefore\quad& PQ \text{ and } RS \text{ are skew lines.}
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 13</h4>
+                <p>Point $A$ has coordinates $(4, 3, 1)$ and the line $l$ passes through the points $(1, 2, 3)$ and $(2, 4, 1)$. Point $B$ lies on $l$ such that $AB \perp l$. Find the distance $AB$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Let } C(1, 2, 3) \text{ and } D(2, 4, 1) \text{ be points on } l. \\
+                    \therefore\quad& \langle l \rangle = \langle CD \rangle = \langle 1, 2, -2 \rangle \\
+                    & \text{The parametric equations of } l \text{ are } x = 1+t, \, y = 2+2t, \, z = 3-2t. \\
+                    & \text{Since } B \text{ lies on } l, \text{ let } B \text{ be } (1+t, 2+2t, 3-2t). \\
+                    \therefore\quad& \langle AB \rangle = \langle 1+t-4, 2+2t-3, 3-2t-1 \rangle = \langle t-3, 2t-1, 2-2t \rangle \\
+                    & \text{Since } AB \perp l, \text{ the sum of the products of their directed values is zero.} \\
+                    \therefore\quad& 1(t-3) + 2(2t-1) - 2(2-2t) = 0 \\
+                    \therefore\quad& t - 3 + 4t - 2 - 4 + 4t = 0 \\
+                    \therefore\quad& 9t = 9 \implies t = 1 \\
+                    & \text{Substitute } t=1 \text{ into } B: \quad B(2, 4, 1) \\
+                    \therefore\quad& AB = \sqrt{(2-4)^2 + (4-3)^2 + (1-1)^2} = \sqrt{4 + 1 + 0} = \sqrt{5}
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 14</h4>
+                <p>Find the equation of the line that passes through the point $(-1, 3, 2)$ and perpendicular to the plane $3x - 2y - z = 3$. Find the point of intersection of the line and the given plane.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{The directed value of the normal to the plane is } \langle 3, -2, -1 \rangle. \\
+                    & \text{Since the line is perpendicular to the plane, its directed value is } \langle 3, -2, -1 \rangle. \\
+                    \therefore\quad& \text{The parametric equations of the line are } x = -1 + 3t, \, y = 3 - 2t, \, z = 2 - t. \\
+                    & \text{The Cartesian equation of the line is } \displaystyle \frac{x+1}{3} = \frac{y-3}{-2} = \frac{z-2}{-1}. \\
+                    & \text{To find the intersection, substitute parametric equations into the plane equation:} \\
+                    \therefore\quad& 3(-1+3t) - 2(3-2t) - (2-t) = 3 \\
+                    \therefore\quad& -3 + 9t - 6 + 4t - 2 + t = 3 \\
+                    \therefore\quad& 14t - 11 = 3 \implies 14t = 14 \implies t = 1 \\
+                    \therefore\quad& x = -1+3(1)=2, \quad y = 3-2(1)=1, \quad z = 2-1=1 \\
+                    \therefore\quad& \text{The point of intersection is } (2, 1, 1).
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 15</h4>
+                <p>Find the equation of the sphere with center $(3, 4, -1)$ and touching the plane $2x + 6y + 3z = 6$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Center } C(3, 4, -1) \quad , \quad \text{Plane: } 2x + 6y + 3z - 6 = 0 \\
+                    & \text{Radius } r \text{ is the perpendicular distance from } C \text{ to the plane.} \\
+                    \therefore\quad& \displaystyle r = \frac{|2(3) + 6(4) + 3(-1) - 6|}{\sqrt{2^2 + 6^2 + 3^2}} \\
+                    \therefore\quad& \displaystyle r = \frac{|6 + 24 - 3 - 6|}{\sqrt{4 + 36 + 9}} \\
+                    \therefore\quad& \displaystyle r = \frac{21}{\sqrt{49}} = \frac{21}{7} = 3 \\
+                    \therefore\quad& \text{The equation of the sphere is } (x-3)^2 + (y-4)^2 + (z+1)^2 = 9.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 16</h4>
+                <p>Find the angle between the planes $x+y+z=1$ and $x-2y+3z=1$.</p>
+                <div class="solution-title">Solution</div>
+                <p>Let the angle between the two planes be $\theta$.</p>
+                $$
+                \begin{aligned}
+                    & \text{Directed values of the line perpendicular to the plane } x+y+z=1 \text{ are } \\
+                    & \langle 1, 1, 1 \rangle. \\
+                    & \text{Directed values of the line perpendicular to the plane } x-2y+3z=1 \\
+                    & \text{are } \langle 1, -2, 3 \rangle. \\
+                    & \cos \theta = \frac{1.1 + 1(-2) + 1.3}{\sqrt{1^2+1^2+1^2} \sqrt{1^2+(-2)^2+3^2}} = \frac{1-2+3}{\sqrt{3} \cdot \sqrt{14}} \\
+                    & \cos \theta = \frac{2}{\sqrt{42}} \\
+                    & \theta = \cos^{-1} \left( \frac{2}{\sqrt{42}} \right) \sim 72.025^\circ
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 17</h4>
+                <p>Find the equation of the sphere which passes through the origin $(0, 0, 0)$ and the points $(2, 4, -2)$ and $(4, -2, 2)$, and whose center lies on the plane $x + y + z = 2$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Let the equation of the sphere be } x^2 + y^2 + z^2 - 2ax - 2by - 2cz + d = 0. \\
+                    & \text{Since it passes through } (0, 0, 0), \, d = 0. \\
+                    & \text{Passes through } (2, 4, -2): \\
+                    \therefore\quad& 4 + 16 + 4 - 4a - 8b + 4c = 0 \implies a + 2b - c = 6 \quad \text{--- (1)} \\
+                    & \text{Passes through } (4, -2, 2): \\
+                    \therefore\quad& 16 + 4 + 4 - 8a + 4b - 4c = 0 \implies 2a - b + c = 6 \quad \text{--- (2)} \\
+                    & \text{Center } (a, b, c) \text{ lies on } x + y + z = 2: \\
+                    \therefore\quad& a + b + c = 2 \quad \text{--- (3)} \\
+                    & \text{Adding (1) and (2): } 3a + b = 12 \implies b = 12 - 3a \\
+                    & \text{Subtracting (3) from (1): } b - 2c = 4 \implies \displaystyle c = \frac{b-4}{2} = \frac{8-3a}{2} \\
+                    & \text{Substitute } b \text{ and } c \text{ into (3): } \displaystyle a + 12 - 3a + \frac{8-3a}{2} = 2 \\
+                    \therefore\quad& -4a + 24 + 8 - 3a = 4 \\
+                    \therefore\quad& -7a = -28 \implies a = 4 \\
+                    \therefore\quad& b = 12 - 3(4) = 0 \quad , \quad \displaystyle c = \frac{8-12}{2} = -2 \\
+                    \therefore\quad& \text{Center is } (4, 0, -2) \text{ and radius squared } r^2 = 4^2 + 0^2 + (-2)^2 = 20. \\
+                    \therefore\quad& \text{The equation of the sphere is } (x-4)^2 + y^2 + (z+2)^2 = 20.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 18</h4>
+                <p>Suppose that the line passes through the points $P(-1, 2, 3)$ and $Q(2, 0, -3)$. Find where this line meets the plane with equation $x-2y+3z=15$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & P(-1, 2, 3), \, Q(2, 0, -3) \\
+                    & \langle PQ \rangle = \langle 3, -2, -6 \rangle \\
+                    & \text{If a point } (x, y, z) \text{ is on the line } PQ, \text{ then } (x, y, z) = (-1+3t, 2-2t, 3-6t) \\
+                    & \text{for real number } t. \\
+                    & \text{The line } PQ \text{ meets the plane } x-2y+3z=15. \\
+                    \therefore\quad & (-1+3t) - 2(2-2t) + 3(3-6t) = 15 \\
+                    & -1 + 3t - 4 + 4t + 9 - 18t = 15 \\
+                    & 4 - 11t = 15 \\
+                    & t = -1 \\
+                    \therefore\quad & \text{The line } PQ \text{ meets the plane at } (-4, 4, 9).
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 19</h4>
+                <p>Show that the planes $x+2y+2z=0$ and $2x+y-2z+5=0$ are perpendicular. Find the equation of the plane through the origin which is perpendicular to each of the given planes.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{The directed values of given planes are } \langle 1, 2, 2 \rangle \text{ and } \langle 2, 1, -2 \rangle. \\
+                    & (1)(2) + 2(1) + 2(-2) = 0 \\
+                    \therefore\quad& \text{The given planes are perpendicular.} \\
+                    & \text{Let } ax+by+cz=0 \text{ be the required plane equation.} \\
+                    & a+2b+2c=0 \quad \text{--- (1)} \\
+                    & 2a+b-2c=0 \quad \text{--- (2)} \\
+                    & a = -4 - 2 = -6 \\
+                    & b = 4 - (-2) = 6 \\
+                    & c = 1 - 4 = -3 \\
+                    \therefore\quad& \text{The plane equation is } -6x+6y-3z=0. \implies  2x-2y+z=0.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 20</h4>
+                <p>Find the equation of the plane tangent to the sphere $x^2+y^2+z^2-2x-4y+8z=15$ at the point $(5, 0, 0)$.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Sphere equation: } x^2+y^2+z^2-2x-4y+8z=15 \\
+                    & x^2-2x+1^2 + y^2-4y+2^2 + z^2+8z+4^2 = 15+1^2+2^2+4^2 \\
+                    & (x-1)^2 + (y-2)^2 + (z+4)^2 = 36 \\
+                    \therefore\quad& \text{center of sphere: } C(1, 2, -4) \text{ and point } P(5, 0, 0). \\
+                    & \langle CP \rangle = \langle 4, -2, 4 \rangle \\
+                    & \text{Line } CP \text{ is perpendicular to the tangent plane.} \\
+                        \therefore\quad& \text{The equation of the plane is } 4x-2y+4z=d. \\
+                    & \text{Since } P(5, 0, 0) \text{ is on the plane, } 4(5)-2(0)+4(0)=d \\
+                    & d = 20 \\
+                        \therefore\quad& \text{The equation of the plane is } 4x-2y+4z=20. \\
+                    & 2x-y+2z=10.
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 21</h4>
+                <p>The points $A(1, 1, 1)$, $B(2, 3, -1)$ and $C(4, 2, 0)$ are vertices of a parallelogram $ABCD$. (a) Find the coordinates of $D$. (b) Calculate the area of the parallelogram.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{(a) The diagonals of a parallelogram bisect each other.} \\
+                    & \text{Midpoint of } AC = \text{Midpoint of } BD \\
+                    \therefore\quad& \displaystyle \left(\frac{1+4}{2}, \frac{1+2}{2}, \frac{1+0}{2}\right) = \left(\frac{2+x_D}{2}, \frac{3+y_D}{2}, \frac{-1+z_D}{2}\right) \\
+                    \therefore\quad& 2+x_D = 5 \implies x_D = 3 \\
+                    \therefore\quad& 3+y_D = 3 \implies y_D = 0 \\
+                    \therefore\quad& -1+z_D = 1 \implies z_D = 2 \\
+                    \therefore\quad& \text{The coordinates of } D \text{ are } (3, 0, 2). \\
+                    & \text{(b) Area } = \text{base} \times \text{height.} \\
+                    & \text{Base } AB = \sqrt{(2-1)^2 + (3-1)^2 + (-1-1)^2} = \sqrt{1 + 4 + 4} = 3 \\
+                    \therefore\quad& \langle AB \rangle = \langle 1, 2, -2 \rangle \\
+                    & \text{Line } AB \text{ is } x = 1+t, \, y = 1+2t, \, z = 1-2t. \\
+                    & \text{Let } F(1+t, 1+2t, 1-2t) \text{ be the foot of the perpendicular from } D(3, 0, 2) \text{ to } AB. \\
+                    \therefore\quad& \langle DF \rangle = \langle t-2, 2t+1, -2t-1 \rangle \\
+                    & \text{Since } DF \perp AB, \quad 1(t-2) + 2(2t+1) - 2(-2t-1) = 0 \\
+                    \therefore\quad& t - 2 + 4t + 2 + 4t + 2 = 0 \implies 9t = -2 \implies \displaystyle t = -\frac{2}{9} \\
+                    & \text{Height } h = DF = \sqrt{\left(-\frac{2}{9}-2\right)^2 + \left(-\frac{4}{9}+1\right)^2 + \left(\frac{4}{9}-1\right)^2} \\
+                    \therefore\quad& \displaystyle h = \sqrt{\left(-\frac{20}{9}\right)^2 + \left(\frac{5}{9}\right)^2 + \left(-\frac{5}{9}\right)^2} = \sqrt{\frac{400+25+25}{81}} = \frac{5\sqrt{2}}{3} \\
+                    \therefore\quad& \text{Area } = AB \times h = 3 \times \frac{5\sqrt{2}}{3} = 5\sqrt{2}
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="problem-box">
+                <h4>Problem 22</h4>
+                <p>Find the vector equation of the line passing through the point $(3, 6, 5)$ and perpendicular to the line $\frac{x-1}{2} = \frac{5-y}{3} = \frac{z+2}{4}$. Find also the distance between the given point and the point of intersection of the two lines.</p>
+                <div class="solution-title">Solution</div>
+                $$
+                \begin{aligned}
+                    & \text{Point } P(3, 6, 5) \, , \, \text{Line } l_1: \displaystyle \frac{x-1}{2} = \frac{y-5}{-3} = \frac{z+2}{4} = t \\
+                    \therefore\quad& \langle l_1 \rangle = \langle 2, -3, 4 \rangle \\
+                    & \text{Let } F(1+2t, 5-3t, -2+4t) \text{ be the point of intersection on } l_1. \\
+                    \therefore\quad& \langle PF \rangle = \langle 1+2t-3, 5-3t-6, -2+4t-5 \rangle = \langle 2t-2, -3t-1, 4t-7 \rangle \\
+                    & \text{Since } PF \perp l_1, \quad 2(2t-2) - 3(-3t-1) + 4(4t-7) = 0 \\
+                    \therefore\quad& 4t - 4 + 9t + 3 + 16t - 28 = 0 \\
+                    \therefore\quad& 29t = 29 \implies t = 1 \\
+                    \therefore\quad& F(1+2(1), 5-3(1), -2+4(1)) = F(3, 2, 2) \\
+                    \therefore\quad& \text{The directed value of the new line is } \langle PF \rangle = \langle 0, -4, -3 \rangle. \\
+                    \therefore\quad& \text{The vector equation of the line is } \mathbf{r} = \langle 3, 6, 5 \rangle + s\langle 0, -4, -3 \rangle. \\
+                    \therefore\quad& \text{Distance } PF = \sqrt{(3-3)^2 + (2-6)^2 + (2-5)^2} = \sqrt{0 + 16 + 9} = 5
+                \end{aligned}
+                $$
+            </div>
+        </div>
+    </div>
+</body>
+</html>

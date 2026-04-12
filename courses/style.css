@@ -1,0 +1,57 @@
+/* style.css - Optimized for Target Mathematics */
+:root {
+    --primary: #34495e; /* Elegant Dark Blue */
+    --accent: #e67e22;  /* Initio Orange */
+    --bg-main: #fcfcfc;
+    --card-bg: #ffffff;
+    --text: #444444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Open Sans', sans-serif; color: var(--text); background-color: var(--bg-main); line-height: 1.7; }
+h1, h2, h3 { font-family: 'Alice', serif; color: var(--primary); }
+a { text-decoration: none; color: inherit; }
+
+/* Header Elements */
+header { background: #fff; padding: 25px 20px; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 28px; font-weight: bold; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; }
+.logo span { color: var(--accent); }
+
+/* Main Container */
+.container { max-width: 1000px; margin: 0 auto; padding: 50px 20px; min-height: calc(100vh - 160px); }
+
+/* Home Page Specifics */
+.hero { text-align: center; margin-bottom: 60px; }
+.hero h1 { font-size: 38px; margin-bottom: 15px; }
+.hero p { font-size: 18px; color: #7f8c8d; max-width: 650px; margin: 0 auto; font-style: italic; }
+
+/* Clean Chapter Grid */
+.chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+
+.chapter-box {
+    background: var(--card-bg); border: 1px solid #f0f0f0; border-radius: 6px;
+    padding: 35px 25px; text-align: center; transition: all 0.3s ease;
+    border-top: 4px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+.chapter-box:hover {
+    transform: translateY(-7px); border-top-color: var(--accent);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08); cursor: pointer;
+}
+.chapter-num { font-size: 13px; font-weight: bold; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; display: block; }
+.chapter-box h2 { font-size: 24px; margin-bottom: 10px; }
+.chapter-box p { font-size: 15px; color: #777; }
+
+/* Single Chapter Page Specifics */
+.back-btn { display: inline-flex; align-items: center; margin-bottom: 30px; font-size: 15px; font-weight: 600; color: var(--primary); transition: 0.2s; }
+.back-btn:hover { color: var(--accent); transform: translateX(-5px); }
+.content-box { background: #fff; padding: 50px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); border: 1px solid #f9f9f9; }
+.content-box h1 { border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 35px; font-size: 32px; }
+.content-box h3 { margin-top: 30px; margin-bottom: 15px; font-size: 22px; }
+.content-box p { margin-bottom: 20px; font-size: 16px; }
+
+/* LaTeX Math Block Styling */
+.math-block { background: #f8f9fa; border-left: 4px solid var(--accent); padding: 20px; margin: 25px 0; overflow-x: auto; font-size: 1.1em; border-radius: 0 6px 6px 0; }
+
+/* Footer */
+footer { text-align: center; padding: 30px; background: var(--primary); color: #bdc3c7; font-size: 14px; }
+footer b { color: #fff; }

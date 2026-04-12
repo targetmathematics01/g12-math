@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Analytical Solid Geometry | Target Mathematics</title>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    ds: "\\displaystyle"
+                }
+            }
+        };
+    </script>
+   <script id="MathJax-script" async src="mathjax.js"></script>
+    
+    <style>
+        /* Base & Resets */
+        * {
+            box-sizing: border-box;
+        }
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background-color: #f4f7f6; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        /* Header & Nav */
+        header { 
+            background: #0056b3; 
+            color: white; 
+            padding: 20px 0; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        .logo { 
+            font-size: 28px; 
+            font-weight: 600; 
+            letter-spacing: 2px; 
+            color: #f39c12; 
+        }
+        .logo span { color: #f4f6f1; }
+        
+        .top-nav-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: -25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+        }
+        .nav-link {
+            padding: 12px 30px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #0056b3;
+            background-color: #f4f7f6;
+        }
+
+        /* Layout & Containers */
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+        }
+        .content-box { 
+            background: #fff; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+            margin-bottom: 40px; 
+            text-align: left; 
+        }
+        
+        /* Typography */
+        .content-box h1 { color: #333; margin-bottom: 20px; text-align: center; font-family: 'Alice', serif; }
+        .content-box h2 { color: #0056b3; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .content-box h3 { color: #444; margin-top: 25px; }
+        .content-box p { color: #555; line-height: 1.8; font-size: 16px; margin-bottom: 15px; }
+        .figure-caption { text-align: center; font-style: italic; color: #777; margin-bottom: 30px; margin-top: 10px; }
+        
+        ul, ol {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            padding-left: 40px; 
+            color: #555;
+            line-height: 1.8;
+        }
+        li { margin-bottom: 15px; padding-left: 5px; }
+
+        /* Math & Code Components */
+        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+        
+        .example-box { 
+            border: 1px solid #e0e0e0; 
+            padding: 25px; 
+            border-radius: 8px; 
+            margin: 25px 0; 
+            background: #fafafa; 
+            overflow-x: auto; 
+            width: 100%; 
+        }
+        .example-box h4 { margin-top: 0; color: #222; font-size: 18px; }
+        
+        .exercise-box { 
+            border: 2px dashed #ccc; 
+            padding: 25px; 
+            border-radius: 8px; 
+            margin: 35px 0; 
+            overflow-x: auto; 
+            width: 100%; 
+        }
+        .exercise-box h4 { color: #d9534f; margin-top: 0; font-size: 20px; }
+        
+        .concept-box { 
+            background-color: #e8f4f8; 
+            border-left: 5px solid #2980b9; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 4px; 
+            overflow-x: auto; 
+            width: 100%; 
+        }
+
+        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 10px; }
+        
+        /* Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table.math-table { 
+            width: 100%; 
+            max-width: 600px; 
+            border-collapse: collapse; 
+            margin: 0 auto; 
+            background-color: #fff; 
+        }
+        table.math-table th, table.math-table td { border: 1px solid #ccc; padding: 12px; text-align: center; }
+        table.math-table th { background-color: #f0f0f0; font-weight: 600; }
+        
+        /* SVGs & ../images */
+        .svg-container { 
+            text-align: center; 
+            margin: 30px auto; 
+            display: flex; 
+            justify-content: center; 
+            max-width: 100%; 
+            overflow-x: auto; 
+        }
+        svg text { font-family: 'Open Sans', sans-serif; font-size: 14px; }
+        
+        .float-svg-container {
+            float: right; 
+            margin: 0 0 20px 20px;
+            max-width: 100%;
+        }
+
+        /* Flex Layouts */
+        .flex-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            justify-content: space-around;
+        }
+        .flex-item { flex: 1; min-width: 200px; }
+        
+        .svg-row-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px; 
+            width: 100%;
+            margin: 30px 0;
+        }
+        .svg-row-wrapper .svg-container {
+            flex: 1 1 calc(33.333% - 20px); 
+            min-width: 250px;
+            margin: 0; /* Override auto margin for flex children */
+        }
+        .svg-row-wrapper svg {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Navigation Buttons */
+        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
+        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; }
+        .btn-nav:hover { background-color: #004494; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .content-box { padding: 25px 20px; }
+            .page-navigation { flex-direction: column; gap: 15px; }
+            .btn-nav { width: 100%; }
+            .top-nav-box { gap: 5px; flex-wrap: wrap; }
+            .nav-link { padding: 10px 15px; }
+            
+            /* Un-float SVGs on small screens */
+            .float-svg-container {
+                float: none;
+                margin: 20px auto;
+                display: flex;
+                justify-content: center;
+            }
+            
+            /* Stack flex items completely */
+            .svg-row-wrapper .svg-container {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="content-box">
+            <h1>Chapter 3: Analytical Solid Geometry</h1>
+            
+            <p>We have learned about points and lines in two-dimensional rectangular coordinate system. In this chapter, we will extend the system to three dimensions.</p>
+
+            <h2>3.1 Coordinates of a Point in Space</h2>
+            
+            <p>In the plane, each point is associated with an ordered pair of real numbers.</p>
+            
+            <p>In space, each point is associated with an ordered triple of real numbers.</p>
+            
+            <p>Through a fixed point, called the origin $O$, draw three mutually perpendicular lines: the x-axis, the y-axis and the z-axis.</p>
+            
+            <p>A point $P$ in space is determined by an ordered triple $(x,y,z)$ of real numbers as shown in the diagram.</p>
+            
+            <p>The numbers $x$, $y$, $z$ are called the coordinates of $P$.</p>
+
+            <div class="svg-container">
+                <svg width="350" height="350" viewBox="0 0 350 350" style="max-width: 100%; height: auto;">
+                    <line x1="150" y1="200" x2="150" y2="40" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="150" y1="200" x2="300" y2="200" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="150" y1="200" x2="50" y2="300" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    
+                    <text x="145" y="30">z</text>
+                    <text x="310" y="205">y</text>
+                    <text x="40" y="315">x</text>
+                    <text x="160" y="215">O</text>
+
+                    <line x1="150" y1="200" x2="250" y2="200" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="150" y1="200" x2="90" y2="260" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="150" y1="200" x2="150" y2="100" stroke="#555" stroke-dasharray="4"/>
+                    
+                    <line x1="250" y1="200" x2="190" y2="260" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="90" y1="260" x2="190" y2="260" stroke="#555" stroke-dasharray="4"/>
+                    
+                    <line x1="150" y1="100" x2="250" y2="100" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="150" y1="100" x2="90" y2="160" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="90" y1="160" x2="190" y2="160" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="250" y1="100" x2="190" y2="160" stroke="#555" stroke-dasharray="4"/>
+                    
+                    <line x1="90" y1="260" x2="90" y2="160" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="250" y1="200" x2="250" y2="100" stroke="#555" stroke-dasharray="4"/>
+                    <line x1="190" y1="260" x2="190" y2="160" stroke="#555" stroke-dasharray="4"/>
+
+                    <text x="80" y="280">$(x,0,0)$</text>
+                    <text x="260" y="220">$(0,y,0)$</text>
+                    <text x="90" y="95">$(0,0,z)$</text>
+                    <text x="200" y="155" font-weight="bold">$P(x,y,z)$</text>
+                    
+                </svg>
+            </div>
+
+            <p>The following table:</p>
+            
+            <div class="table-responsive">
+                <table class="math-table">
+                    <tr>
+                        <th>Plane</th>
+                        <th>Equation</th>
+                        <th>Coordinates</th>
+                    </tr>
+                    <tr><td>xy-plane</td><td>$\ds z=0$</td><td>$\ds (x,y,0)$</td></tr>
+                    <tr><td>yz-plane</td><td>$\ds x=0$</td><td>$\ds (0,y,z)$</td></tr>
+                    <tr><td>xz-plane</td><td>$\ds y=0$</td><td>$\ds (x,0,z)$</td></tr>
+                </table>
+            </div>
+            
+            <p class="figure-caption">Table 3.1</p>
+
+            <div class="svg-container">
+                <svg width="400" height="350" viewBox="0 0 400 350" style="max-width: 100%; height: auto;">
+                    <defs>
+                        <marker id="arrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#111" />
+                        </marker>
+                    </defs>
+
+                    <g stroke-width="1.2" stroke-linejoin="round">
+                        <polygon points="200,170 280,110 170,80 90,140" fill="#aed5d1" stroke="#3e8c85"/>
+                        <polygon points="200,170 90,140 90,250 200,280" fill="#fcbda1" stroke="#e86b35"/>
+                        <polygon points="200,170 280,110 280,220 200,280" fill="#9ea4c6" stroke="#445188"/>
+                    </g>
+
+                    <g stroke-width="1.2" stroke-linejoin="round">
+                        <polygon points="200,170 120,230 10,200 90,140" fill="#aed5d1" stroke="#3e8c85"/>
+                        <polygon points="200,170 280,110 390,140 310,200" fill="#aed5d1" stroke="#3e8c85"/>
+                        <polygon points="200,170 90,140 90,30 200,60" fill="#fcbda1" stroke="#e86b35"/>
+                        <polygon points="200,170 280,110 280,0 200,60" fill="#9ea4c6" stroke="#445188"/>
+                        <polygon points="200,170 310,200 310,310 200,280" fill="#fcbda1" stroke="#e86b35"/>
+                        <polygon points="200,170 120,230 120,340 200,280" fill="#9ea4c6" stroke="#445188"/>
+                    </g>
+
+                    <g stroke="#888" stroke-width="1.5" stroke-dasharray="5,5">
+                        <line x1="200" y1="170" x2="310" y2="87.5"/>
+                        <line x1="200" y1="170" x2="50" y2="129"/>
+                        <line x1="200" y1="170" x2="200" y2="330"/>
+                    </g>
+
+                    <g stroke-width="1.2" stroke-linejoin="round">
+                        <polygon points="200,170 120,230 230,260 310,200" fill="#aed5d1" stroke="#3e8c85"/>
+                        <polygon points="200,170 310,200 310,90 200,60" fill="#fcbda1" stroke="#e86b35"/>
+                        <polygon points="200,170 120,230 120,120 200,60" fill="#9ea4c6" stroke="#445188"/>
+                    </g>
+
+                    <g stroke="#111" stroke-width="1.5">
+                        <line x1="200" y1="170" x2="60" y2="275" marker-end="url(#arrowHead)"/>
+                        <line x1="200" y1="170" x2="370" y2="216" marker-end="url(#arrowHead)"/>
+                        <line x1="200" y1="170" x2="200" y2="10" marker-end="url(#arrowHead)"/>
+                    </g>
+
+                    <text x="215" y="235" font-family="sans-serif" font-size="16" fill="#111" text-anchor="middle">
+                        <tspan font-style="italic">xy</tspan>
+                        <tspan x="215" dy="18">plane</tspan>
+                    </text>
+                    <text x="270" y="135" font-family="sans-serif" font-size="16" fill="#111" text-anchor="middle">
+                        <tspan font-style="italic">yz</tspan>
+                        <tspan x="270" dy="18">plane</tspan>
+                    </text>
+                    <text x="140" y="145" font-family="sans-serif" font-size="16" fill="#111" text-anchor="middle">
+                        <tspan font-style="italic">xz</tspan>
+                        <tspan x="140" dy="18">plane</tspan>
+                    </text>
+
+                    <text x="50" y="295" font-family="sans-serif" font-size="18" font-weight="bold" font-style="italic" fill="#111">x</text>
+                    <text x="380" y="235" font-family="sans-serif" font-size="18" font-weight="bold" font-style="italic" fill="#111">y</text>
+                    <text x="185" y="20" font-family="sans-serif" font-size="18" font-weight="bold" font-style="italic" fill="#111">z</text>
+
+                    <g font-family="monospace" font-size="13" font-weight="bold" fill="#222" text-anchor="middle">
+                        <text x="235" y="105">I</text>
+                        <text x="235" y="120">(+, +, +)</text>
+                        <text x="345" y="90">(-, +, +)</text>
+                        <text x="55" y="90">(+, -, +)</text>
+                        <text x="200" y="25">(-, -, +)</text>
+                        <text x="235" y="285">(+, +, -)</text>
+                        <text x="345" y="240">(-, +, -)</text>
+                        <text x="55" y="265">(+, -, -)</text>
+                    </g>
+
+                   
+                </svg>
+            </div>
+
+            <p>The following table:</p>
+            
+            <div class="table-responsive">
+                <table class="math-table">
+                    <tr>
+                        <th>Plane</th>
+                        <th>Equation</th>
+                        <th>Coordinates</th>
+                        <th>Example<br>Equation</th>
+                        <th>Coordinates</th>
+                    </tr>
+                    <tr><td>Parallel to xy-plane</td><td>$\ds z=c$</td><td>$\ds (x,y,c)$</td><td>$\ds z=1$</td><td>$\ds (x,y,1)$</td></tr>
+                    <tr><td>Parallel to yz-plane</td><td>$\ds x=a$</td><td>$\ds (a,y,z)$</td><td>$\ds x=5$</td><td>$\ds (5,y,z)$</td></tr>
+                    <tr><td>Parallel to zx-plane</td><td>$\ds y=b$</td><td>$\ds (x,b,z)$</td><td>$\ds y=2$</td><td>$\ds (x,2,z)$</td></tr>
+                </table>
+            </div>
+            
+            <p class="figure-caption">Table 3.2</p>
+
+            <div class="svg-row-wrapper">
+                <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-170 -190 340 340" style="background: transparent;">
+                        <defs>
+                            <filter id="plane-shadow-1" x="-30%" y="-30%" width="160%" height="160%">
+                                <feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#000000" flood-opacity="0.25"/>
+                            </filter>
+                            <filter id="text-shadow-1" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.9"/>
+                            </filter>
+                            <linearGradient id="gradTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ffeaa7" />
+                                <stop offset="100%" stop-color="#ffb347" />
+                            </linearGradient>
+                            <linearGradient id="axisGrad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#34495e" />
+                                <stop offset="100%" stop-color="#2c3e50" />
+                            </linearGradient>
+                            <style>
+                                .axis-line-1 { stroke: url(#axisGrad-1); stroke-width: 2px; }
+                                .dash-line-1 { fill: none; stroke: #95a5a6; stroke-width: 1.5px; stroke-dasharray: 5,5; }
+                                .axis-label-1 { font-family: 'Open Sans', system-ui, sans-serif; font-size: 18px; font-weight: 700; font-style: italic; fill: #2c3e50; }
+                                .data-label-1 { font-family: 'Open Sans', system-ui, sans-serif; font-size: 14px; font-weight: 600; fill: #2c3e50; filter: url(#text-shadow-1); }
+                                .equation-label-1 { font-family: 'Open Sans', system-ui, sans-serif; font-size: 16px; font-weight: 800; fill: #d35400; }
+                                .data-point-1 { fill: #e74c3c; stroke: #fff; stroke-width: 1.5px; }
+                            </style>
+                            <g id="base-axes-1">
+                                <line x1="0" y1="0" x2="-120" y2="90" class="axis-line-1" marker-end="url(#arrow)"/>
+                                <line x1="0" y1="0" x2="140" y2="42" class="axis-line-1" marker-end="url(#arrow)"/>
+                                <line x1="0" y1="0" x2="0" y2="-150" class="axis-line-1" marker-end="url(#arrow)"/>
+                                <text x="-135" y="105" class="axis-label-1">x</text>
+                                <text x="150" y="47" class="axis-label-1">y</text>
+                                <text x="-5" y="-165" class="axis-label-1">z</text>
+                            </g>
+                            <g id="base-cuboid-1">
+                                <path d="M 0,0 L -80,60 L 20,90 L 100,30 Z" class="dash-line-1" />
+                                <path d="M 0,-110 L -80,-50 L 20,-20 L 100,-80 Z" class="dash-line-1" />
+                                <path d="M 0,0 L 0,-110 M -80,60 L -80,-50 M 100,30 L 100,-80 M 20,90 L 20,-20" class="dash-line-1" />
+                            </g>
+                            <g id="base-labels-1">
+                                <circle cx="0" cy="0" r="3.5" class="data-point-1"/>
+                                <text x="-18" y="20" class="data-label-1">O</text>
+                                <circle cx="-80" cy="60" r="3.5" class="data-point-1"/>
+                                <text x="-100" y="80" class="data-label-1">a</text>
+                                <circle cx="100" cy="30" r="3.5" class="data-point-1"/>
+                                <text x="110" y="45" class="data-label-1">b</text>
+                                <circle cx="0" cy="-110" r="3.5" class="data-point-1"/>
+                                <text x="-18" y="-115" class="data-label-1">c</text>
+                                <circle cx="-80" cy="-50" r="3.5" class="data-point-1"/>
+                                <text x="-140" y="-55" class="data-label-1">(a,0,c)</text>
+                                <circle cx="100" cy="-80" r="3.5" class="data-point-1"/>
+                                <text x="110" y="-85" class="data-label-1">(0,b,c)</text>
+                                <circle cx="20" cy="-20" r="3.5" class="data-point-1"/>
+                                <text x="35" y="-25" class="data-label-1">(a,b,c)</text>
+                                <circle cx="20" cy="90" r="3.5" class="data-point-1"/>
+                                <text x="35" y="105" class="data-label-1">(a,b,0)</text>
+                            </g>
+                        </defs>
+                        <use href="#base-axes-1" />
+                        <use href="#base-cuboid-1" />
+                        <polygon points="0,-110 -80,-50 20,-20 100,-80" fill="url(#gradTop)" opacity="0.85" filter="url(#plane-shadow-1)"/>
+                        <polygon points="0,-110 -80,-50 20,-20 100,-80" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+                        <g transform="translate(10, -65)">
+                            <rect x="-30" y="-14" width="60" height="28" rx="5" fill="rgba(255,255,255,0.9)" filter="url(#plane-shadow-1)"/>
+                            <text x="0" y="5" text-anchor="middle" class="equation-label-1">z = c</text>
+                        </g>
+                        <use href="#base-labels-1" />
+                    </svg>
+                </div>
+                
+                <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-170 -190 340 340" style="background: transparent;">
+                        <defs>
+                            <filter id="plane-shadow-2" x="-30%" y="-30%" width="160%" height="160%">
+                                <feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#000000" flood-opacity="0.25"/>
+                            </filter>
+                            <linearGradient id="gradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffb347" />
+                                <stop offset="100%" stop-color="#f39c12" />
+                            </linearGradient>
+                        </defs>
+                        <use href="#base-axes-1" />
+                        <use href="#base-cuboid-1" />
+                        <polygon points="-80,60 20,90 20,-20 -80,-50" fill="url(#gradLeft)" opacity="0.85" filter="url(#plane-shadow-2)"/>
+                        <polygon points="-80,60 20,90 20,-20 -80,-50" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+                        <g transform="translate(-30, 20)">
+                            <rect x="-30" y="-14" width="60" height="28" rx="5" fill="rgba(255,255,255,0.9)" filter="url(#plane-shadow-2)"/>
+                            <text x="0" y="5" text-anchor="middle" class="equation-label-1">x = a</text>
+                        </g>
+                        <use href="#base-labels-1" />
+                    </svg>
+                </div>
+                
+                <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-170 -190 340 340" style="background: transparent;">
+                        <defs>
+                            <filter id="plane-shadow-3" x="-30%" y="-30%" width="160%" height="160%">
+                                <feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#000000" flood-opacity="0.25"/>
+                            </filter>
+                            <linearGradient id="gradRight" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#f39c12" />
+                                <stop offset="100%" stop-color="#d35400" />
+                            </linearGradient>
+                        </defs>
+                        <use href="#base-axes-1" />
+                        <use href="#base-cuboid-1" />
+                        <polygon points="100,30 20,90 20,-20 100,-80" fill="url(#gradRight)" opacity="0.85" filter="url(#plane-shadow-3)"/>
+                        <polygon points="100,30 20,90 20,-20 100,-80" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+                        <g transform="translate(60, 5)">
+                            <rect x="-30" y="-14" width="60" height="28" rx="5" fill="rgba(255,255,255,0.9)" filter="url(#plane-shadow-3)"/>
+                            <text x="0" y="5" text-anchor="middle" class="equation-label-1">y = b</text>
+                        </g>
+                        <use href="#base-labels-1" />
+                    </svg>
+                </div>
+            </div>
+            
+            
+
+            <h3>Line perpendicular to the xy-plane</h3>
+            
+            <p>Equation of any line perpendicular to the xy-plane and passing through the point $\ds (a,b,c)$ is $\ds x=a$, $\ds y=b$ and the coordinates of the points on that line are of the form $\ds (a,b,z)$.</p>
+
+            <h3>Line perpendicular to the yz-plane</h3>
+            
+            <p>Equation of any line perpendicular to the yz-plane and passing through the point $\ds (a,b,c)$ is $\ds y=b$, $\ds z=c$ and the coordinates of the points on the line are of the form $\ds (x,b,c)$.</p>
+
+            <h3>Line perpendicular to the zx-plane</h3>
+            
+            <p>Equation of any line perpendicular to the zx-plane and passing through the point $\ds (a,b,c)$ is $\ds x=a$, $\ds z=c$ and the coordinates of the points on the line are of the form $\ds (a,y,c)$.</p>
+
+            <div class="svg-row-wrapper">
+                <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-220 -220 480 460" style="background: transparent; font-family: 'Segoe UI', system-ui, sans-serif;">
+                        <defs>
+                            <filter id="shadow4" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="2" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.15"/>
+                            </filter>
+                            <filter id="text-glow4" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="2" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                            <linearGradient id="metalGradZ" x1="62" y1="0" x2="68" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#7f8c8d" />
+                                <stop offset="50%" stop-color="#ffffff" />
+                                <stop offset="100%" stop-color="#2c3e50" />
+                            </linearGradient>
+                            <linearGradient id="planeXY" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3498db" stop-opacity="0.5" />
+                                <stop offset="100%" stop-color="#2980b9" stop-opacity="0.7" />
+                            </linearGradient>
+                            <style>
+                                .axis { stroke: #34495e; stroke-width: 1.5px; }
+                                .axis-dash { stroke: #7f8c8d; stroke-width: 1.5px; stroke-dasharray: 4,4; }
+                                .axis-label { font-size: 16px; font-weight: bold; font-style: italic; fill: #2c3e50; }
+                                .grid-line { stroke: #ffffff; stroke-width: 1px; stroke-opacity: 0.3; }
+                                .cast-shadow { stroke: #000000; stroke-width: 4px; stroke-opacity: 0.25; filter: blur(3px); stroke-linecap: round; }
+                                .point { fill: #f1c40f; stroke: #d35400; stroke-width: 2px; }
+                                .data-label { font-size: 14px; font-weight: 600; fill: #111; filter: url(#text-glow4); }
+                                .badge { fill: #ffffff; opacity: 0.85; rx: 4; }
+                            </style>
+                        </defs>
+                        <line x1="0" y1="0" x2="-140" y2="80" class="axis-dash" />
+                        <line x1="0" y1="0" x2="180" y2="60" class="axis-dash" />
+                        <line x1="0" y1="0" x2="0" y2="-180" class="axis-dash" />
+                        <line x1="0" y1="0" x2="0" y2="100" class="axis" />
+                        <rect x="62" y="85" width="6" height="100" fill="url(#metalGradZ)" rx="3" />
+                        <polygon points="0,0 -175,100 50,175 225,75" fill="url(#planeXY)" filter="url(#shadow4)" />
+                        <polygon points="0,0 -175,100 50,175 225,75" fill="none" stroke="#2980b9" stroke-width="2" opacity="0.8" />
+                        <g class="grid-line">
+                            <line x1="-35" y1="20" x2="190" y2="95"/>
+                            <line x1="-70" y1="40" x2="155" y2="115"/>
+                            <line x1="-105" y1="60" x2="120" y2="135"/>
+                            <line x1="-140" y1="80" x2="85" y2="155"/>
+                            <line x1="45" y1="15" x2="-130" y2="115"/>
+                            <line x1="90" y1="30" x2="-85" y2="130"/>
+                            <line x1="135" y1="45" x2="-40" y2="145"/>
+                            <line x1="180" y1="60" x2="5" y2="160"/>
+                        </g>
+                        <line x1="0" y1="0" x2="-160" y2="91.4" class="axis" marker-end="url(#arrow)" />
+                        <line x1="0" y1="0" x2="200" y2="66.6" class="axis" marker-end="url(#arrow)" />
+                        <line x1="0" y1="0" x2="0" y2="-190" class="axis" marker-end="url(#arrow)" />
+                        <text x="-175" y="105" class="axis-label">X</text>
+                        <text x="210" y="75" class="axis-label">Y</text>
+                        <text x="10" y="-185" class="axis-label">Z</text>
+                        <line x1="65" y1="85" x2="165" y2="65" class="cast-shadow" />
+                        <rect x="62" y="-80" width="6" height="165" fill="url(#metalGradZ)" rx="3" />
+                        <circle cx="65" cy="85" r="5" class="point" />
+                        <rect x="75" y="65" width="60" height="24" class="badge" />
+                        <text x="80" y="82" class="data-label">(2, 3, 0)</text>
+                        <rect x="-40" y="100" width="125" height="24" class="badge" />
+                        <text x="-35" y="117" class="data-label">Line ⟂ XY-plane</text>
+                    </svg>
+                </div>
+
+                <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-220 -220 480 460" style="background: transparent; font-family: 'Segoe UI', system-ui, sans-serif;">
+                        <defs>
+                            <filter id="shadow5" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="2" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.15"/>
+                            </filter>
+                            <linearGradient id="metalGradX" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#7f8c8d" />
+                                <stop offset="30%" stop-color="#ffffff" />
+                                <stop offset="100%" stop-color="#2c3e50" />
+                            </linearGradient>
+                            <linearGradient id="planeYZ" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e74c3c" stop-opacity="0.5" />
+                                <stop offset="100%" stop-color="#c0392b" stop-opacity="0.7" />
+                            </linearGradient>
+                            <style>
+                                .perp-line { stroke-width: 6px; stroke-linecap: round; }
+                            </style>
+                        </defs>
+                        <line x1="0" y1="0" x2="-140" y2="80" class="axis-dash" />
+                        <line x1="0" y1="0" x2="180" y2="60" class="axis-dash" />
+                        <line x1="0" y1="0" x2="0" y2="-180" class="axis-dash" />
+                        <line x1="55" y1="-110" x2="-15" y2="-70" class="perp-line" stroke="url(#metalGradX)" />
+                        <polygon points="-105,60 120,135 120,-65 -105,-140" fill="url(#planeYZ)" filter="url(#shadow5)" />
+                        <polygon points="-105,60 120,135 120,-65 -105,-140" fill="none" stroke="#c0392b" stroke-width="2" opacity="0.8" />
+                        <g class="grid-line">
+                            <line x1="-60" y1="75" x2="-60" y2="-125"/>
+                            <line x1="-15" y1="90" x2="-15" y2="-110"/>
+                            <line x1="30" y1="105" x2="30" y2="-95"/>
+                            <line x1="75" y1="120" x2="75" y2="-80"/>
+                            <line x1="-105" y1="20" x2="120" y2="95"/>
+                            <line x1="-105" y1="-20" x2="120" y2="55"/>
+                            <line x1="-105" y1="-60" x2="120" y2="15"/>
+                            <line x1="-105" y1="-100" x2="120" y2="-25"/>
+                        </g>
+                        <line x1="-105" y1="60" x2="-160" y2="91.4" class="axis" marker-end="url(#arrow)" />
+                        <line x1="0" y1="0" x2="200" y2="66.6" class="axis" marker-end="url(#arrow)" />
+                        <line x1="0" y1="0" x2="0" y2="-190" class="axis" marker-end="url(#arrow)" />
+                        <text x="-175" y="105" class="axis-label">X</text>
+                        <text x="210" y="75" class="axis-label">Y</text>
+                        <text x="10" y="-185" class="axis-label">Z</text>
+                        <line x1="-15" y1="-70" x2="-15" y2="20" class="cast-shadow" />
+                        <line x1="-15" y1="-70" x2="-135" y2="-1.4" class="perp-line" stroke="url(#metalGradX)" />
+                        <circle cx="-15" cy="-70" r="5" class="point" />
+                        <rect x="0" y="-95" width="60" height="24" class="badge" />
+                        <text x="5" y="-78" class="data-label">(3, 2, 4)</text>
+                        <rect x="-105" y="25" width="125" height="24" class="badge" />
+                        <text x="-100" y="42" class="data-label">Line ⟂ YZ-plane</text>
+                    </svg>
+                </div>
+
+                <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-220 -220 480 460" style="background: transparent; font-family: 'Segoe UI', system-ui, sans-serif;">
+                        <defs>
+                            <filter id="shadow6" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="2" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.15"/>
+                            </filter>
+                            <linearGradient id="metalGradY" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#7f8c8d" />
+                                <stop offset="40%" stop-color="#ffffff" />
+                                <stop offset="100%" stop-color="#2c3e50" />
+                            </linearGradient>
+                            <linearGradient id="planeZX" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.5" />
+                                <stop offset="100%" stop-color="#27ae60" stop-opacity="0.7" />
+                            </linearGradient>
+                        </defs>
+                        <line x1="0" y1="0" x2="-140" y2="80" class="axis-dash" />
+                        <line x1="0" y1="0" x2="180" y2="60" class="axis-dash" />
+                        <line x1="0" y1="0" x2="0" y2="-180" class="axis-dash" />
+                        <line x1="-140" y1="-40" x2="-50" y2="-10" class="perp-line" stroke="url(#metalGradY)" />
+                        <polygon points="90,30 -85,130 -85,-70 90,-170" fill="url(#planeZX)" filter="url(#shadow6)" />
+                        <polygon points="90,30 -85,130 -85,-70 90,-170" fill="none" stroke="#27ae60" stroke-width="2" opacity="0.8" />
+                        <g class="grid-line">
+                            <line x1="-50" y1="110" x2="-50" y2="-90"/>
+                            <line x1="-15" y1="90" x2="-15" y2="-110"/>
+                            <line x1="20" y1="70" x2="20" y2="-130"/>
+                            <line x1="55" y1="50" x2="55" y2="-150"/>
+                            <line x1="55" y1="-10" x2="-120" y2="90"/>
+                            <line x1="20" y1="-50" x2="-120" y2="50"/>
+                            <line x1="-15" y1="-90" x2="-120" y2="10"/>
+                            <line x1="-50" y1="-130" x2="-120" y2="-30"/>
+                        </g>
+                        <line x1="0" y1="0" x2="-160" y2="91.4" class="axis" marker-end="url(#arrow)" />
+                        <line x1="90" y1="30" x2="200" y2="66.6" class="axis" marker-end="url(#arrow)" />
+                        <line x1="0" y1="0" x2="0" y2="-190" class="axis" marker-end="url(#arrow)" />
+                        <text x="-175" y="105" class="axis-label">X</text>
+                        <text x="210" y="75" class="axis-label">Y</text>
+                        <text x="10" y="-185" class="axis-label">Z</text>
+                        <line x1="-50" y1="-10" x2="-50" y2="70" class="cast-shadow" />
+                        <line x1="-50" y1="-10" x2="85" y2="35" class="perp-line" stroke="url(#metalGradY)" />
+                        <circle cx="-50" cy="-10" r="5" class="point" />
+                        <rect x="-65" y="-45" width="60" height="24" class="badge" />
+                        <text x="-60" y="-28" class="data-label">(4, 2, 5)</text>
+                        <rect x="-35" y="60" width="125" height="24" class="badge" />
+                        <text x="-30" y="77" class="data-label">Line ⟂ ZX-plane</text>
+                    </svg>
+                </div>
+            </div>
+
+           
+
+            <div class="example-box">
+                <h4>Example 1.</h4>
+                
+                <p>Find the equation of the line through the point $\ds (-3,5,7)$ and perpendicular to<br>
+                (a) xy-plane<br>
+                (b) yz-plane<br>
+                (c) zx-plane.<br>
+                Find the point of intersection of the line and plane.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p><b>(a)</b> The equation of the line through the point $\ds (-3,5,7)$ and perpendicular to xy-plane is<br>
+                $\ds x=-3$, $\ds y=5$ or $\ds (-3,5,z)$<br>
+                The point of intersection of the line and xy-plane is $\ds (-3,5,0)$.</p>
+                
+                <p><b>(b)</b> The equation of the line through the point $\ds (-3,5,7)$ and perpendicular to yz-plane is<br>
+                $\ds y=5$, $\ds z=7$ or $\ds (x,5,7)$<br>
+                The point of intersection of the line and yz-plane is $\ds (0,5,7)$.</p>
+                
+                <p><b>(c)</b> The equation of the line through the point $\ds (-3,5,7)$ and perpendicular to zx-plane is<br>
+                $\ds z=7$, $\ds x=-3$ or $\ds (-3,y,7)$<br>
+                The point of intersection of the line and zx-plane is $\ds (-3,0,7)$.</p>
+            </div>
+
+            <div class="concept-box">
+                <p><strong>Note that:</strong></p>
+                <ul>
+                    <li>Equation of x-axis: $\ds y=0$, $\ds z=0$.</li>
+                    <li>Equation of y-axis: $\ds x=0$, $\ds z=0$.</li>
+                    <li>Equation of z-axis: $\ds x=0$, $\ds y=0$.</li>
+                </ul>
+            </div>
+
+            <h3>Distance between two points</h3>
+
+
+            <div style="display: flex; justify-content: center;">
+
+            <img src="../images/distance-between-points.png" alt="Distance Between Points" style="max-width: 70%; height: auto;">
+
+            </div>
+            
+            <p>The distance between points $\ds P(x_1,y_1,z_1)$ and $\ds Q(x_2,y_2,z_2)$ is</p>
+            
+            $$
+            \begin{aligned}
+            PQ &= \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
+            \end{aligned}
+            $$
+
+            <div class="exercise-box">
+                <h4>Exercise 3.1</h4>
+                <ol>
+                    <li>Find the equation of the plane containing the point $\ds (1,-2,3)$ and parallel to the
+                        <div class="flex-container">
+                            <div class="flex-item">(a) xy-plane</div>
+                            <div class="flex-item">(b) yz-plane</div>
+                            <div class="flex-item">(c) zx-plane.</div>
+                        </div>
+                    </li>
+                    <li>Find the equation of the line through the point $\ds (2,3,-4)$ and perpendicular to
+                        <div class="flex-container">
+                            <div class="flex-item">(a) xy-plane</div>
+                            <div class="flex-item">(b) yz-plane</div>
+                            <div class="flex-item">(c) zx-plane.</div>
+                        </div>
+                        <p>Find the point of intersection of the line and plane.</p>
+                    </li>
+                    <li>Find the distance between the points $\ds (2,-3, 5)$ and $\ds (7, 5,-2)$.</li>
+                    <li>Show that the points $\ds (-1, 2, 5)$, $\ds (1, 1, 6)$ and $\ds (0, 5, 6)$ form a right triangle.</li>
+                    <li>Show that the points $\ds (1,-1,2)$, $\ds (3,-2,3)$ and $\ds (5,-3,4)$ are collinear.</li>
+                </ol>
+            </div>
+
+            <h2>3.2 Lines</h2>
+            
+            <h3>Directed value of a line segment</h3>
+            
+            <p>For a line segment $\ds PQ$, directed values $\ds \langle l,m,n \rangle$ of $\ds PQ$ where $\ds P$ is $\ds (x_1,y_1,z_1)$ and $\ds Q$ is $\ds (x_2,y_2,z_2)$ is defined by</p>
+            
+            $$
+            \begin{aligned}
+            \langle PQ \rangle &= \langle l,m,n \rangle = \langle x_2-x_1, y_2-y_1, z_2-z_1 \rangle
+            \end{aligned}
+            $$
+            
+            <p>The length of the segment $\ds PQ$ is</p>
+            
+            $$
+            \begin{aligned}
+            PQ &= \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2} \\
+               &= \sqrt{l^2 + m^2 + n^2}
+            \end{aligned}
+            $$
+
+            <h3>Real numbers and points on the line</h3>
+            
+            <p>The coordinates of point $\ds R$ on the line $\ds PQ$ with respect to the point $\ds P$ and a real number $\ds k$ are $\ds (x,y,z) = (x_1+kl, y_1+km, z_1+kn)$.</p>
+            
+            <p>The equation is called coordinate form of the equation of line $\ds PQ$ and $\ds k$ is called a parameter.</p>
+            
+            <p>In general, if a segment of a line through $\ds (x_1,y_1,z_1)$ has directed values $\ds \langle l,m,n \rangle$ which are not equal to zero, then the equation of the line can be written as</p>
+            
+            $$
+            \begin{aligned}
+            \frac{x-x_1}{l} &= \frac{y-y_1}{m} = \frac{z-z_1}{n}
+            \end{aligned}
+            $$
+            
+            <p>Since $\ds \langle PR \rangle = \langle x_1+kl-x_1, y_1+km-y_1, z_1+kn-z_1 \rangle = \langle kl, km, kn \rangle$ and $\ds R$ is any point on the line $\ds PQ$ with $\ds \langle PQ \rangle = \langle l,m,n \rangle$, we will defined directed values of a line $\ds PQ$ as $\ds (kl, km, kn)$ where $\ds k$ is a real number.</p>
+
+            <div class="example-box">
+                <h4>Example 2.</h4>
+                
+                <p>Given $\ds P(1,2,3)$ and $\ds Q(3,6,5)$, find the coordinates of point $\ds R(x,y,z)$ on the line $\ds PQ$ with respect to the point $\ds P$ and the following parameters.</p>
+                
+                <p>(a) $\ds k=\frac{1}{2} \quad$ (b) $\ds k=2 \quad$ (c) $\ds k=-2$</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>By given $\ds P(1,2,3)$ and $\ds Q(3,6,5)$,</p>
+                
+                $$
+                \begin{aligned}
+                \langle PQ \rangle &= \langle l,m,n \rangle \\
+                &= \langle 3-1, 6-2, 5-3 \rangle \\
+                &= \langle 2,4,2 \rangle
+                \end{aligned}
+                $$
+                
+                <p><b>(a)</b> For $\ds k=\frac{1}{2}$, $\ds (x,y,z) = \left(1+\frac{1}{2}(2), 2+\frac{1}{2}(4), 3+\frac{1}{2}(2)\right) = (2,4,4)$.</p>
+                
+                <p><b>(b)</b> For $\ds k=2$, $\ds (x,y,z) = (1+2(2), 2+2(4), 3+2(2)) = (5,10,7)$.</p>
+                
+                <p><b>(c)</b> For $\ds k=-2$, $\ds (x,y,z) = (1+(-2)(2), 2+(-2)(4), 3+(-2)(2)) = (-3,-6,-1)$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 3.</h4>
+                
+                <p>Given $\ds P(-1,2,3)$ and $\ds Q(3,5,-2)$ determine whether or not the following points are on the line $\ds PQ$. If the point is on the line $\ds PQ$, find the corresponding parameter with respect to the point $\ds P$.</p>
+                
+                <p>(a) $\ds \left(1,\frac{7}{2},\frac{1}{2}\right) \quad$ (b) $\ds (7,8,-7) \quad$ (c) $\ds (-5,-1,8) \quad$ (d) $\ds (7,8,-2)$</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>By given $\ds P(-1,2,3)$ and $\ds Q(3,5,-2)$</p>
+                
+                $$
+                \begin{aligned}
+                \langle PQ \rangle &= \langle l,m,n \rangle \\
+                &= \langle 3+1, 5-2, -2-3 \rangle \\
+                &= \langle 4,3,-5 \rangle
+                \end{aligned}
+                $$
+                
+                <p>Thus, the equation of the line $\ds PQ$ is $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$</p>
+                
+                <p><b>(a)</b> If $\ds (x,y,z) = \left(1,\frac{7}{2},\frac{1}{2}\right)$ then</p>
+                
+                $$
+                \begin{aligned}
+                \frac{x+1}{4} &= \frac{1+1}{4} = \frac{1}{2} \\
+                \frac{y-2}{3} &= \frac{\frac{7}{2}-2}{3} = \frac{1}{2} \\
+                \frac{z-3}{-5} &= \frac{\frac{1}{2}-3}{-5} = \frac{1}{2}
+                \end{aligned}
+                $$
+                
+                <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$ for $\ds \left(1,\frac{7}{2},\frac{1}{2}\right)$.<br>
+                Hence the point $\ds \left(1,\frac{7}{2},\frac{1}{2}\right)$ is on the line $\ds PQ$ with corresponding parameter is $\ds \frac{1}{2}$.</p>
+
+                <p><b>(b)</b> If $\ds (x,y,z) = (7,8,-7)$, then</p>
+                
+                $$
+                \begin{aligned}
+                \frac{x+1}{4} &= \frac{7+1}{4} = 2 \\
+                \frac{y-2}{3} &= \frac{8-2}{3} = 2 \\
+                \frac{z-3}{-5} &= \frac{-7-3}{-5} = 2
+                \end{aligned}
+                $$
+                
+                <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$ for $\ds (7,8,-7)$.<br>
+                Hence the point $\ds (7,8,-7)$ is on the line $\ds PQ$ with corresponding parameter is $\ds 2$.</p>
+
+                <p><b>(c)</b> If $\ds (x,y,z) = (-5,-1,8)$, then</p>
+                
+                $$
+                \begin{aligned}
+                \frac{x+1}{4} &= \frac{-5+1}{4} = -1 \\
+                \frac{y-2}{3} &= \frac{-1-2}{3} = -1 \\
+                \frac{z-3}{-5} &= \frac{8-3}{-5} = -1
+                \end{aligned}
+                $$
+                
+                <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$ for $\ds (-5,-1,8)$.<br>
+                Hence the point $\ds (-5,-1,8)$ is on the line $\ds PQ$ with corresponding parameter is $\ds -1$.</p>
+
+                <p><b>(d)</b> If $\ds (x,y,z) = (7,8,-2)$, then</p>
+                
+                $$
+                \begin{aligned}
+                \frac{x+1}{4} &= \frac{7+1}{4} = 2 \\
+                \frac{y-2}{3} &= \frac{8-2}{3} = 2 \\
+                \frac{z-3}{-5} &= \frac{-2-3}{-5} = 1
+                \end{aligned}
+                $$
+                
+                <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} \ne \frac{z-3}{-5}$ for $\ds (7,8,-2)$.<br>
+                Hence the point $\ds (7,8,-2)$ is not on the line $\ds PQ$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 4.</h4>
+                
+                <p>Given $\ds P(2,1,3)$ and $\ds Q(6,-5,3)$, determine whether or not the following points are on the line $\ds PQ$, if the point is on the line $\ds PQ$, find the corresponding parameter with respect to the point $\ds P$.</p>
+                
+                <p>(a) $\ds (4,-2, 3) \quad$ (b) $\ds (-2, 7, 3) \quad$ (c) $\ds (10, -11, 3) \quad$ (d) $\ds (1, 1, 3)$</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>By given $\ds P(2,1,3)$ and $\ds Q(6,-5,3)$,</p>
+                
+                $$
+                \begin{aligned}
+                \langle PQ \rangle &= \langle l,m,n \rangle \\
+                &= \langle 6-2, -5-1, 3-3 \rangle \\
+                &= \langle 4,-6,0 \rangle
+                \end{aligned}
+                $$
+                
+                <p>Then the coordinates of the point $\ds (x,y,z)$ on the line $\ds PQ$ are<br>
+                $\ds (x,y,z) = (2+4k, 1-6k, 3)$.<br>
+                This means that the line $\ds PQ$ is on the plane $\ds z=3$.</p>
+
+                <p><b>(a)</b> If $\ds (x,y,z) = (4,-2,3)$, then $\ds (4,-2,3) = (2+4k, 1-6k, 3)$</p>
+                
+                $$
+                \begin{aligned}
+                2+4k &= 4 \\
+                1-6k &= -2 \\
+                k &= \frac{1}{2}
+                \end{aligned}
+                $$
+                
+                <p>Thus the point $\ds (4,-2,3)$ is on the line $\ds PQ$ with corresponding parameter $\ds \frac{1}{2}$.</p>
+
+                <p><b>(b)</b> If $\ds (x,y,z) = (-2,7,3)$, then $\ds (-2,7,3) = (2+4k, 1-6k, 3)$</p>
+                
+                $$
+                \begin{aligned}
+                2+4k &= -2 \\
+                1-6k &= 7 \\
+                k &= -1
+                \end{aligned}
+                $$
+                
+                <p>Thus the point $\ds (-2,7,3)$ is on the line $\ds PQ$ with corresponding parameter $\ds -1$.</p>
+
+                <p><b>(c)</b> If $\ds (x,y,z) = (10,-11,3)$, then $\ds (10,-11,3) = (2+4k, 1-6k, 3)$</p>
+                
+                $$
+                \begin{aligned}
+                2+4k &= 10 \\
+                1-6k &= -11 \\
+                k &= 2
+                \end{aligned}
+                $$
+                
+                <p>Thus, the point $\ds (10,-11,3)$ is on the line $\ds PQ$ with corresponding parameter $\ds 2$.</p>
+
+                <p><b>(d)</b> If $\ds (x,y,z) = (1,1,3)$, then $\ds (1,1,3) = (2+4k, 1-6k, 3)$</p>
+                
+                $$
+                \begin{aligned}
+                2+4k &= 1 \Rightarrow k = -\frac{1}{4} \\
+                1-6k &= 1 \Rightarrow k = 0
+                \end{aligned}
+                $$
+                
+                <p>There is no value $\ds k$ that satisfies this condition. Therefore, the point $\ds (1,1,3)$ is not on the line $\ds PQ$.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 3.2</h4>
+                <ol>
+                    <li>Given $\ds P(3,1,5)$ and $\ds Q(-3,7,-2)$, find the coordinates of the point $\ds R(x,y,z)$ on the line $\ds PQ$ with respect to the point $\ds P$ and the following parameters.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds k=\frac{1}{2}$</div>
+                            <div class="flex-item">(b) $\ds k=3$</div>
+                            <div class="flex-item">(c) $\ds k=-2$</div>
+                        </div>
+                    </li>
+                    <li>Given $\ds P(-2,1,3)$ and $\ds Q(4,4,-3)$ determine whether or not the following points are on the line $\ds PQ$. If the point is on the line $\ds PQ$, find the corresponding parameter with respect to the point $\ds P$.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds (6,3,-6)$</div>
+                            <div class="flex-item">(b) $\ds (6,5,-5)$</div>
+                            <div class="flex-item">(c) $\ds (-4,0,5)$</div>
+                            <div class="flex-item">(d) $\ds (7,8,-2)$</div>
+                        </div>
+                    </li>
+                    <li>Given $\ds P(-2,1,3)$ and $\ds Q(4,4,-3)$, determine whether or not the following points are on the line $\ds PQ$. If the point is on the line $\ds PQ$, find the corresponding real number with respect to point $\ds P$.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds (5, 2, 11)$</div>
+                            <div class="flex-item">(b) $\ds (2,2,-7)$</div>
+                            <div class="flex-item">(c) $\ds \left(\frac{7}{2},2,2\right)$</div>
+                            <div class="flex-item">(d) $\ds (6, 2, 10)$</div>
+                        </div>
+                    </li>
+                    <li>Find the points of intersection of the line joining the two points $\ds (2, 4, 5)$ and $\ds (3, 5, -4)$ with the following planes.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) xy-plane</div>
+                            <div class="flex-item">(b) yz-plane</div>
+                            <div class="flex-item">(c) zx-plane</div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>3.3 Parallel, Skew and Perpendicular Lines</h2>
+            
+            <h3>Parallel Lines</h3>
+
+            <div style="display: flex; justify-content: center;">
+
+            <img src="../images/parallel-lines.png" alt="Parallel Lines" style="max-width: 70%; height: auto;">
+
+            </div>
+            
+            <p>Two lines are parallel if and only if their directed values are multiples of each other by some real number.</p>
+
+            <h3>Skew Lines</h3>
+
+            <div style="display: flex; justify-content: center;">
+
+            <img src="../images/skew-lines.png" alt="Skew Lines" style="max-width: 70%; height: auto;">
+
+            </div>
+            
+            <p>In space, there are pairs of lines that are neither parallel nor intersect. These pairs of lines are called skew lines.</p>
+
+            <h3>The Measure of $\ds \angle PAQ$</h3>
+            
+            <p>Consider $\ds P(x_1,y_1,z_1)$, $\ds A(a,b,c)$ and $\ds Q(x_2,y_2,z_2)$.</p>
+            
+            $$
+            \begin{aligned}
+            \langle AP \rangle &= \langle l_1,m_1,n_1 \rangle = \langle x_1-a, y_1-b, z_1-c \rangle \\
+            \langle AQ \rangle &= \langle l_2,m_2,n_2 \rangle = \langle x_2-a, y_2-b, z_2-c \rangle \\
+            \langle PQ \rangle &= \langle l_3,m_3,n_3 \rangle = \langle x_2-x_1, y_2-y_1, z_2-z_1 \rangle \\
+            &= \langle l_2-l_1, m_2-m_1, n_2-n_1 \rangle
+            \end{aligned}
+            $$
+
+            <div style="display: flex; justify-content: center;">
+                <img src="images/angle-measure.png" alt="Angle Measure" style="max-width: 50%; height: auto;">
+            </div>
+            
+           
+            
+            
+
+            $$
+            \begin{aligned}
+            AP^2 + AQ^2 - PQ^2 &= l_1^2 + m_1^2 + n_1^2 + l_2^2 + m_2^2 + n_2^2 - (l_2-l_1)^2 - (m_2-m_1)^2 - (n_2-n_1)^2 \\
+            &= 2(l_1l_2 + m_1m_2 + n_1n_2)
+            \end{aligned}
+            $$
+            
+            <p>By the law of cosines, $\ds \cos \angle PAQ = \frac{AP^2 + AQ^2 - PQ^2}{2AP.AQ}$</p>
+            
+            $$
+            \begin{aligned}
+            \cos \angle PAQ &= \frac{2(l_1l_2 + m_1m_2 + n_1n_2)}{2AP.AQ} \\
+            &= \frac{l_1l_2 + m_1m_2 + n_1n_2}{\sqrt{l_1^2+m_1^2+n_1^2}\sqrt{l_2^2+m_2^2+n_2^2}}
+            \end{aligned}
+            $$
+            
+            <p>If $\ds l_1l_2 + m_1m_2 + n_1n_2 = 0$ then $\ds \cos \angle PAQ = 0$ and hence $\ds \angle PAQ = 90^\circ$.</p>
+
+            <h3>Perpendicular Lines</h3>
+            
+            <p>Two lines are perpendicular if and only if they intersect and $\ds l_1l_2 + m_1m_2 + n_1n_2 = 0$ for any directed values $\ds \langle l_1,m_1,n_1 \rangle$ and $\ds \langle l_2,m_2,n_2 \rangle$ of the lines.</p>
+
+            <div class="example-box">
+                <h4>Example 5.</h4>
+                
+                <p>Given $\ds P(2,1,3)$, $\ds Q(6,-5,4)$, $\ds R(2,3,4)$ and $\ds S(-1,5,1)$, determine whether the lines $\ds PQ$ and $\ds RS$ are parallel or skew or intersect.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>For $\ds P(2,1,3)$ and $\ds Q(6,-5,4)$, $\ds \langle PQ \rangle = \langle 4,-6,1 \rangle$<br>
+                For $\ds R(2,3,4)$ and $\ds S(-1,5,1)$, $\ds \langle RS \rangle = \langle -3,2,-3 \rangle$</p>
+                
+                <p>Since directed values of $\ds PQ$ are not multiple of $\ds RS$,</p>
+                
+                $$
+                \begin{aligned}
+                \frac{4}{-3} &\ne \frac{-6}{2} \ne \frac{1}{-3}
+                \end{aligned}
+                $$
+                
+                <p>So, two lines are not parallel.</p>
+                
+                <p>If a point $\ds (x,y,z)$ is on the lines $\ds PQ$ and $\ds RS$, then</p>
+                
+                $$
+                \begin{aligned}
+                x &= 2+4s \quad &x &= 2-3t \\
+                y &= 1-6s \quad &y &= 3+2t \\
+                z &= 3+s \quad &z &= 4-3t
+                \end{aligned}
+                $$
+                
+                <p>for real numbers $\ds s$ and $\ds t$.</p>
+                
+                <p>Thus,</p>
+                
+                $$
+                \begin{aligned}
+                2+4s &= 2-3t \\
+                1-6s &= 3+2t \\
+                3+s &= 4-3t
+                \end{aligned}
+                $$
+                
+                <p>Solving first two of these equations, we have<br>
+                $\ds s = -\frac{3}{5}$ and $\ds t = \frac{4}{5}$.</p>
+                
+                <p>But $\ds 3+\left(-\frac{3}{5}\right) \ne 4-3\left(\frac{4}{5}\right)$ these values of $\ds s$ and $\ds t$ do not satisfy the last equation.<br>
+                So, the system of equations has no solution and hence the given lines do not intersect.<br>
+                Therefore, the given lines are skew.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 6.</h4>
+                
+                <p>Given $\ds P(0,0,1)$, $\ds Q(3,6,4)$, $\ds R(0,3,1)$ and $\ds S(3,0,4)$, show that the lines $\ds PQ$ and $\ds RS$ are perpendicular.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>$\ds P(0,0,1)$, $\ds Q(3,6,4)$, $\ds R(0,3,1)$, $\ds S(3,0,4)$<br>
+                $\ds \langle PQ \rangle = \langle l_1,m_1,n_1 \rangle = \langle 3,6,3 \rangle$ and $\ds \langle RS \rangle = \langle l_2,m_2,n_2 \rangle = \langle 3,-3,3 \rangle$.</p>
+                
+                <p>If a point $\ds (x,y,z)$ is on the lines $\ds PQ$ and $\ds RS$, then</p>
+                
+                $$
+                \begin{aligned}
+                x &= 0+3s \quad &x &= 0+3t \\
+                y &= 0+6s \quad &y &= 3-3t \\
+                z &= 1+3s \quad &z &= 1+3t
+                \end{aligned}
+                $$
+                
+                <p>for real numbers $\ds s$ and $\ds t$.</p>
+                
+                $$
+                \begin{aligned}
+                3s &= 3t \Rightarrow s=t \\
+                6s &= 3-3t \Rightarrow 6s = 3-3s \Rightarrow s = \frac{1}{3} \\
+                1+3s &= 1+3t \Rightarrow t = \frac{1}{3}
+                \end{aligned}
+                $$
+                
+                <p>$\ds x = 3\left(\frac{1}{3}\right) = 1$, $\ds y = 6\left(\frac{1}{3}\right) = 2$, $\ds z = 1+3\left(\frac{1}{3}\right) = 2$.<br>
+                The point of intersection is $\ds (1, 2, 2)$ and two lines intersect.</p>
+                
+                $$
+                \begin{aligned}
+                l_1l_2 + m_1m_2 + n_1n_2 &= (3)(3) + (6)(-3) + (3)(3) = 0
+                \end{aligned}
+                $$
+                
+                <p>Hence $\ds PQ$ and $\ds RS$ are perpendicular.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 7.</h4>
+                
+                <p>Find the equation of the line passing through the point $\ds (-4,7,-3)$ and perpendicular to the line $\ds (x,y,z)=(3+2k, -1+3k, 1-k)$. Find also the point of intersection of two lines.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>Directed values of the given line are $\ds \langle 2, 3, -1 \rangle$.<br>
+                Directed values of the require line are</p>
+                
+                $$
+                \begin{aligned}
+                \langle -4-(3+2k), 7-(-1+3k), -3-(1-k) \rangle &= \langle -7-2k, 8-3k, -4+k \rangle \quad \text{for some real number } k
+                \end{aligned}
+                $$
+                
+                <p>If two lines are perpendicular, then</p>
+                
+                $$
+                \begin{aligned}
+                2(-7-2k) + 3(8-3k) + (-1)(-4+k) &= 0 \\
+                -14-4k+24-9k+5-k &= 0 \\
+                14k &= 14 \\
+                k &= 1
+                \end{aligned}
+                $$
+                
+                <p>So, directed values of required line are $\ds \langle -7-2(1), 8-3(1), -4+1 \rangle = \langle -9,5,-3 \rangle$<br>
+                and the equation of the line is</p>
+                
+                $$
+                \begin{aligned}
+                (x,y,z) &= (-4-9t, 7+5t, -3-3t)
+                \end{aligned}
+                $$
+                
+                <p>The point of intersection is $\ds (x,y,z) = (5,2,0)$.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 3.3</h4>
+                <ol>
+                    <li>Find $\ds \cos \angle PAQ$ for the followings.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds P(1,2,-1)$, $\ds A(-2,1,5)$, $\ds Q(2,-1,0)$</div>
+                            <div class="flex-item">(b) $\ds P(0,2,-3)$, $\ds A(2,-1,5)$, $\ds Q(-2,3,-1)$</div>
+                        </div>
+                    </li>
+                    <li>Determine whether the lines $\ds PQ$ and $\ds RS$ are parallel or skew or intersect. If $\ds PQ$ and $\ds RS$ intersect, are they perpendicular?
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds P(1,2,3)$, $\ds Q(4,5,6)$, $\ds R(-2,3,5)$, $\ds S(4, 9, 11)$</div>
+                            <div class="flex-item">(b) $\ds P(3,-1,-3)$, $\ds Q(2,-3,1)$, $\ds R(3,-2,5)$, $\ds S(-1,-2,1)$</div>
+                        </div>
+                        <div class="flex-container" style="margin-top: 10px;">
+                            <div class="flex-item">(c) $\ds P(4,-2,5)$, $\ds Q(-2,6,1)$, $\ds R(-1,1,4)$, $\ds S(3,3,2)$</div>
+                            <div class="flex-item">(d) $\ds P(-3,-1,6)$, $\ds Q(-1,3,0)$, $\ds R(0, 6, 7)$, $\ds S(-4,-4,-1)$</div>
+                        </div>
+                    </li>
+                    <li>Find the equation of the line passing through the point $\ds (8,-1,-10)$ and perpendicular to the line $\ds (x,y,z)=(1+2k, 2-k, 3-7k)$. Find also the point of intersection of two lines.</li>
+                </ol>
+            </div>
+
+            <h2>3.4 Planes</h2>
+            
+            <p>A plane is determined by three points which are not on the same line.</p>
+            
+            <p>Let $\ds P(x,y,z)$ be any point on the plane through $\ds A$, $\ds B$, $\ds C$. Since $\ds A$, $\ds B$, $\ds C$ are not on the same line, line segment joining any two points will intersect each other.</p>
+            
+            <p>Let $\ds AB$ intersect $\ds AC$ at $\ds A$. Draw a line through $\ds P$ parallel to $\ds AC$.</p>
+            
+            <p>This line will meet $\ds AB$ at $\ds R(x_1+sl_1, y_1+sm_1, z_1+sn_1)$ for some parameter $\ds s$.</p>
+            
+            <p>As shown in the given figure, coordinates of any point $\ds (x,y,z)$ on the plane are</p>
+            
+            $$
+            \begin{aligned}
+            x &= x_1+sl_1+tl_2 \\
+            y &= y_1+sm_1+tm_2 \\
+            z &= z_1+sn_1+tn_2
+            \end{aligned}
+            $$
+            
+            <p>for some parameter $\ds t$.</p>
+
+            <div style="display: flex; justify-content: center;">
+
+            <img src="../images/plane-in-space.png" alt="Plane in Space" style="max-width: 70%; height: auto;">
+
+            </div>
+
+            <p>Let</p>
+            
+            $$
+            \begin{aligned}
+            a &= m_1n_2 - m_2n_1 \\
+            b &= n_1l_2 - n_2l_1 \\
+            c &= l_1m_2 - l_2m_1
+            \end{aligned}
+            $$
+            
+            <p>Then $\ds al_1 + bm_1 + cn_1 = 0$ and $\ds al_2 + bm_2 + cn_2 = 0$.<br>
+            Thus, the plane equation is</p>
+            
+            $$
+            \begin{aligned}
+            ax+by+cz &= ax_1+by_1+cz_1
+            \end{aligned}
+            $$
+            
+            <p>Cartesian form: $\ds ax+by+cz=d$ where $\ds d = ax_1+by_1+cz_1$.</p>
+
+            <div class="svg-container" style="max-width: 650px; margin: 0 auto;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="100%" height="100%" style="--scale: 1;">
+                    <g style="transform: scale(var(--scale)); transform-origin: 0 0;">
+                        <polygon points="210,180 850,180 710,560 70,560" fill="#def2f0" stroke="#31668a" stroke-linejoin="round" style="stroke-width: calc(4 / var(--scale));" />
+                        <polyline points="230,390 260,390 260,420" fill="none" stroke="#1d2b36" stroke-linejoin="round" style="stroke-width: calc(2.5 / var(--scale));" />
+                        <polyline points="230,390 250,367 250,397" fill="none" stroke="#1d2b36" stroke-linejoin="round" style="stroke-width: calc(2.5 / var(--scale));" />
+                        <line x1="230" y1="420" x2="230" y2="60" stroke="#1d2b36" style="stroke-width: calc(2.5 / var(--scale));" />
+                        <line x1="230" y1="420" x2="430" y2="190" stroke="#1d2b36" style="stroke-width: calc(2.5 / var(--scale));" />
+                        <line x1="230" y1="420" x2="660" y2="420" stroke="#1d2b36" style="stroke-width: calc(2.5 / var(--scale));" />
+                        <circle cx="230" cy="420" fill="#1d2b36" style="r: calc(5 / var(--scale));" />
+                        <circle cx="400" cy="225" fill="#1d2b36" style="r: calc(5 / var(--scale));" />
+                        <circle cx="610" cy="420" fill="#1d2b36" style="r: calc(5 / var(--scale));" />
+                        <text x="245" y="90" font-family="Georgia, serif" font-style="italic" fill="#0b4573" font-weight="bold" style="font-size: calc(36px / var(--scale));">l</text>
+                        <text transform="translate(210, 330) rotate(-90)" font-family="Georgia, serif" fill="#1d2b36" style="font-size: calc(28px / var(--scale));">&#10216;a, b, c&#10217;</text>
+                        <text x="190" y="465" font-family="Georgia, serif" fill="#1d2b36" style="font-size: calc(32px / var(--scale));">A(x&#8321;, y&#8321;, z&#8321;)</text>
+                        <text x="415" y="245" font-family="Georgia, serif" fill="#1d2b36" style="font-size: calc(36px / var(--scale));">B</text>
+                        <text x="595" y="465" font-family="Georgia, serif" fill="#1d2b36" style="font-size: calc(36px / var(--scale));">C</text>
+                    </g>
+                </svg>
+            </div>
+            
+           
+
+            <p>The line $\ds l$ with equation $\ds \frac{x-x_1}{a} = \frac{y-y_1}{b} = \frac{z-z_1}{c}$ is perpendicular to both of the lines $\ds AB$ and $\ds AC$, so the line $\ds l$ is perpendicular to the plane $\ds ABC$.</p>
+            
+            <p>Hence any line with directed values $\ds \langle ka, kb, kc \rangle$, for some parameter $\ds k$, is perpendicular to the plane $\ds ABC$.</p>
+
+            <div class="example-box">
+                <h4>Example 8.</h4>
+                
+                <p>Find the equation of the plane containing $\ds A(1,0,1)$, $\ds B(3,6,4)$ and $\ds C(-2,3,1)$.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>$\ds A(1,0,1)$, $\ds B(3,6,4)$, $\ds C(-2,3,1)$</p>
+                
+                $$
+                \begin{aligned}
+                \langle AB \rangle &= \langle 2,6,3 \rangle \\
+                \langle AC \rangle &= \langle -3,3,0 \rangle
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                2a + 6b + 3c &= 0 \\
+                -3a + 3b + 0c &= 0
+                \end{aligned}
+                $$
+                
+                <p>Using cross multiplication method:</p>
+                
+                $$
+                \begin{aligned}
+                a &= 6(0) - 3(3) = -9 \\
+                b &= 3(-3) - 0(2) = -9 \\
+                c &= 2(3) - (-3)(6) = 24 \\
+                d &= ax_1+by_1+cz_1 \\
+                  &= -9(1) + (-9)(0) + 24(1) \\
+                  &= 15
+                \end{aligned}
+                $$
+                
+                <p>The equation of the plane</p>
+                
+                $$
+                \begin{aligned}
+                -9x - 9y + 24z &= 15 \\
+                3x + 3y - 8z &= -5
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="example-box">
+                <h4>Example 9.</h4>
+                
+                <div class="float-svg-container">
+                    <svg width="250" height="200" viewBox="0 0 250 200">
+                        <polygon points="30,160 210,160 240,60 60,60" fill="none" stroke="#333"/>
+                        <line x1="100" y1="20" x2="100" y2="130" stroke="#333"/>
+                        <line x1="100" y1="130" x2="100" y2="180" stroke="#333" stroke-dasharray="3"/>
+                        <circle cx="100" cy="30" r="3" fill="#333"/>
+                        <text x="110" y="35">$(-1, 3, 2)$</text>
+                        <circle cx="100" cy="130" r="3" fill="#333"/>
+                        <text x="110" y="135">P</text>
+                        <text x="110" y="85" transform="rotate(-90 110,85)">$\langle 3, -2, -1 \rangle$</text>
+                        <text x="130" y="110">$3x - 2y - z = 3$</text>
+                        <line x1="90" y1="120" x2="100" y2="120" stroke="#333"/>
+                        <line x1="90" y1="120" x2="90" y2="130" stroke="#333"/>
+                    </svg>
+                </div>
+                
+                <p>Find the equation of the line that passes through the point $\ds (-1,3,2)$ and perpendicular to the plane $\ds 3x-2y-z=3$. Find the point of intersection of the line and the given plane.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>$\ds \langle a,b,c \rangle = \langle 3,-2,-1 \rangle$.<br>
+                The equation of the line is</p>
+                
+                $$
+                \begin{aligned}
+                \frac{x-(-1)}{3} &= \frac{y-3}{-2} = \frac{z-2}{-1}
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                \frac{x+1}{3} &= \frac{y-3}{-2} = \frac{z-2}{-1} = k \quad \text{(say)}
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                x &= 3k-1 \\
+                y &= -2k+3 \\
+                z &= -k+2
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                3x-2y-z &= 3 \\
+                3(3k-1) - 2(-2k+3) - (-k+2) &= 3 \\
+                9k-3 + 4k-6 + k-2 &= 3 \\
+                14k &= 14 \\
+                k &= 1
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                x &= 3-1 = 2 \\
+                y &= -2+3 = 1 \\
+                z &= -1+2 = 1
+                \end{aligned}
+                $$
+                
+                <p>Hence the point of intersection is $\ds (2, 1, 1)$.</p>
+                
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 10.</h4>
+                
+                <div class="float-svg-container">
+                    <svg width="250" height="250" viewBox="0 0 250 250">
+                        <polygon points="40,110 200,110 230,30 70,30" fill="none" stroke="#333"/>
+                        <polygon points="20,230 180,230 210,150 50,150" fill="none" stroke="#333"/>
+                        <line x1="80" y1="10" x2="80" y2="200" stroke="#333"/>
+                        <line x1="80" y1="200" x2="80" y2="240" stroke="#333" stroke-dasharray="3"/>
+                        <circle cx="80" cy="60" r="3" fill="#333"/>
+                        <text x="95" y="65">$(-1, 3, 2)$</text>
+                        <text x="90" y="140">$\langle 3, -2, -3 \rangle$</text>
+                        <text x="90" y="190">$3x - 2y - 3z = 2$</text>
+                        <line x1="70" y1="50" x2="80" y2="50" stroke="#333"/>
+                        <line x1="70" y1="50" x2="70" y2="60" stroke="#333"/>
+                        <line x1="70" y1="190" x2="80" y2="190" stroke="#333"/>
+                        <line x1="70" y1="190" x2="70" y2="200" stroke="#333"/>
+                    </svg>
+                </div>
+                
+                <p>Find the equation of the plane containing the point $\ds (-1,3,2)$ and parallel to the plane $\ds 3x-2y-3z=2$.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>$\ds \langle a,b,c \rangle = \langle 3,-2,-3 \rangle$<br>
+                Thus the equation of the required plane is</p>
+                
+                $$
+                \begin{aligned}
+                3x-2y-3z &= d
+                \end{aligned}
+                $$
+                
+                <p>The point $\ds (-1,3,2)$ lies on the required plane.</p>
+                
+                $$
+                \begin{aligned}
+                3(-1) - 2(3) - 3(2) &= d \\
+                d &= -15
+                \end{aligned}
+                $$
+                
+                <p>The equation of the required plane is</p>
+                
+                $$
+                \begin{aligned}
+                3x-2y-3z &= -15
+                \end{aligned}
+                $$
+                
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 3.4</h4>
+                
+                <ol>
+                    <li>Find the equation of the plane containing
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds A(2,-5,4)$, $\ds B(-5,2,4)$ and $\ds C(-2,3,-1)$</div>
+                            <div class="flex-item">(b) $\ds A(4,2,-3)$, $\ds B(1,-2,4)$ and $\ds C(-1,0,3)$.</div>
+                        </div>
+                    </li>
+                    
+                    <li>Find the equation of the line passing through the point $\ds (3,-2,-2)$ and perpendicular to the plane $\ds -2x+3y-z=4$. Find the point of intersection of the line and the plane.</li>
+                    
+                    <li>Find the equation of the plane containing the point $\ds (2, 3, -1)$ and parallel to the plane $\ds -2x+y+3z=6$.</li>
+                </ol>
+            </div>
+
+            <h2>3.5 Sphere</h2>
+            
+            <div class="svg-container">
+                <svg width="300" height="300" viewBox="0 0 300 300">
+                    <circle cx="150" cy="150" r="120" fill="url(#sphereGrad)" stroke="#1a5276" stroke-width="1.5"/>
+                    <ellipse cx="150" cy="150" rx="120" ry="40" fill="none" stroke="#2c3e50" stroke-dasharray="5,5"/>
+                    <line x1="150" y1="150" x2="245" y2="75" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="4"/>
+                    <circle cx="150" cy="150" r="4" fill="#111"/>
+                    <text x="100" y="170" fill="#111" font-weight="bold">$(x_1, y_1, z_1)$</text>
+                    <circle cx="245" cy="75" r="4" fill="#111"/>
+                    <text x="255" y="70" fill="#111" font-weight="bold">$(x, y, z)$</text>
+                    
+                </svg>
+            </div>
+
+            <p>The distance between center $\ds (x_1,y_1,z_1)$ and any point $\ds (x,y,z)$ of a sphere is radius $\ds r$.</p>
+            
+            $$
+            \begin{aligned}
+            r &= \sqrt{(x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2}
+            \end{aligned}
+            $$
+            
+            <p>The equation of the sphere with center $\ds (x_1,y_1,z_1)$ and radius $\ds r$ is</p>
+            
+            $$
+            \begin{aligned}
+            (x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2 &= r^2
+            \end{aligned}
+            $$
+
+            <div class="example-box">
+                <h4>Example 11</h4>
+                
+                <div class="float-svg-container">
+                    <svg width="300" height="300" viewBox="0 0 300 300">
+                        <circle cx="150" cy="180" r="90" fill="url(#sphereGrad)" stroke="#1a5276" stroke-width="1.5"/>
+                        <ellipse cx="150" cy="180" rx="90" ry="30" fill="none" stroke="#2c3e50" stroke-dasharray="5,5"/>
+                        <polygon points="100,50 280,100 240,160 60,110" fill="rgba(41, 128, 185, 0.2)" stroke="#2980b9" stroke-width="1.5"/>
+                        <line x1="150" y1="180" x2="190" y2="105" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="4"/>
+                        <circle cx="150" cy="180" r="4" fill="#111"/>
+                        <text x="100" y="195" fill="#111" font-weight="bold">$C(2,1,-1)$</text>
+                        <circle cx="190" cy="105" r="4" fill="#111"/>
+                        <text x="200" y="100" fill="#111" font-weight="bold">$P(3,4,1)$</text>
+                    </svg>
+                </div>
+                
+                <p>Find the equation of the plane tangent to the sphere $\ds (x-2)^2+(y-1)^2+(z+1)^2=14$ at the point $\ds (3,4,1)$.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>$\ds \langle CP \rangle = \langle 1,3,2 \rangle$</p>
+                
+                <p>The equation of the plane is</p>
+                
+                <p>$\ds x+3y+2z = d$</p>
+                
+                <p>Since $\ds P(3,4,1)$ is on the plane, so we get</p>
+                
+                $$
+                \begin{aligned}
+                3+3(4)+2(1) &= d \\
+                d &= 17
+                \end{aligned}
+                $$
+                
+                <p>The equation of the plane is $\ds x+3y+2z=17$.</p>
+                
+                <div style="clear: both;"></div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 12</h4>
+                
+                <p>Find the equation of the sphere with center $\ds (0, 1, 0)$ and touching the plane $\ds x-2y+2z+5=0$.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>The equation of the line that passes through the center $\ds C(0,1,0)$ and perpendicular to the plane $\ds x-2y+2z+5=0$ is</p>
+                
+                $$
+                \begin{aligned}
+                \frac{x-0}{1} &= \frac{y-1}{-2} = \frac{z-0}{2}
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                \frac{x}{1} &= \frac{y-1}{-2} = \frac{z}{2} = s \quad \text{(say)}
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                x &= s \\
+                y &= -2s+1 \\
+                z &= 2s
+                \end{aligned}
+                $$
+                
+                <p>If one of these points $\ds P$ is on the plane, then</p>
+                
+                $$
+                \begin{aligned}
+                s - 2(-2s+1) + 2(2s) + 5 &= 0 \\
+                s - 2 + 4s + 4s + 5 &= 0 \\
+                9s &= -3 \\
+                s &= -\frac{1}{3}
+                \end{aligned}
+                $$
+                
+                $$
+                \begin{aligned}
+                x &= -\frac{1}{3} \\
+                y &= -2\left(-\frac{1}{3}\right)+1 = \frac{5}{3} \\
+                z &= 2\left(-\frac{1}{3}\right) = -\frac{2}{3}
+                \end{aligned}
+                $$
+                
+                <p>The point of intersection $\ds = \left(-\frac{1}{3},\frac{5}{3},-\frac{2}{3}\right)$.</p>
+                
+                <p>Radius</p>
+                
+                $$
+                \begin{aligned}
+                CP &= \sqrt{\left(-\frac{1}{3}-0\right)^2 + \left(\frac{5}{3}-1\right)^2 + \left(-\frac{2}{3}-0\right)^2} \\
+                &= \sqrt{\frac{1}{9}+\frac{4}{9}+\frac{4}{9}} \\
+                &= 1
+                \end{aligned}
+                $$
+                
+                <p>The equation of the sphere is</p>
+                
+                $$
+                \begin{aligned}
+                (x-0)^2 + (y-1)^2 + (z-0)^2 &= 1 \\
+                x^2 + (y-1)^2 + z^2 &= 1
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="example-box">
+                <h4>Example 13</h4>
+                
+                <p>Find the equation of a sphere that passes through the points $\ds (9, 0, 0)$, $\ds (3, 13, 5)$ and $\ds (11,0, 10)$, given that its center lies on the yz-plane.</p>
+                
+                <div class="solution-title">Solution</div>
+                
+                <p>The equation of the sphere with center $\ds (x_1,y_1,z_1)$ and radius $\ds r$ is</p>
+                
+                $$
+                \begin{aligned}
+                (x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2 &= r^2
+                \end{aligned}
+                $$
+                
+                <p>$\ds (x-0)^2 + (y-y_1)^2 + (z-z_1)^2 = r^2$, since its center lies on the yz-plane.</p>
+                
+                <p>At $\ds (9,0,0)$,</p>
+                
+                $$
+                \begin{aligned}
+                (9-0)^2 + (0-y_1)^2 + (0-z_1)^2 &= r^2 \\
+                81 + y_1^2 + z_1^2 &= r^2 \quad \text{(1)}
+                \end{aligned}
+                $$
+                
+                <p>At $\ds (3, 13, 5)$,</p>
+                
+                $$
+                \begin{aligned}
+                (3-0)^2 + (13-y_1)^2 + (5-z_1)^2 &= r^2 \\
+                9 + (13-y_1)^2 + (5-z_1)^2 &= r^2 \quad \text{(2)}
+                \end{aligned}
+                $$
+                
+                <p>At $\ds (11, 0, 10)$,</p>
+                
+                $$
+                \begin{aligned}
+                (11-0)^2 + (0-y_1)^2 + (10-z_1)^2 &= r^2 \\
+                121 + y_1^2 + (10-z_1)^2 &= r^2 \quad \text{(3)}
+                \end{aligned}
+                $$
+                
+                <p>From (1) and (3),</p>
+                
+                $$
+                \begin{aligned}
+                81 + y_1^2 + z_1^2 &= 121 + y_1^2 + (10-z_1)^2 \\
+                81 + z_1^2 &= 121 + 100 - 20z_1 + z_1^2 \\
+                20z_1 &= 140 \\
+                z_1 &= 7
+                \end{aligned}
+                $$
+                
+                <p>From (1) and (2),</p>
+                
+                $$
+                \begin{aligned}
+                81 + y_1^2 + z_1^2 &= 9 + (13-y_1)^2 + (5-z_1)^2 \\
+                81 + y_1^2 + 7^2 &= 9 + 169 - 26y_1 + y_1^2 + (5-7)^2 \\
+                81 + 49 &= 178 - 26y_1 + 4 \\
+                130 &= 182 - 26y_1 \\
+                26y_1 &= 52 \\
+                y_1 &= 2
+                \end{aligned}
+                $$
+                
+                <p>Center $\ds = (0,2,7)$</p>
+                
+                <p>Substitute $\ds x_1=0$, $\ds y_1=2$ and $\ds z_1=7$ in equation (1),</p>
+                
+                $$
+                \begin{aligned}
+                81 + (2)^2 + 7^2 &= r^2 \\
+                81 + 4 + 49 &= r^2 \\
+                r^2 &= 134
+                \end{aligned}
+                $$
+                
+                <p>Hence the equation of the sphere is</p>
+                
+                $$
+                \begin{aligned}
+                x^2 + (y-2)^2 + (z-7)^2 &= 134
+                \end{aligned}
+                $$
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 3.5</h4>
+
+                <ol>
+                    <li>Find the equation of the sphere with center $\displaystyle C$ and radius $\displaystyle r$.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\displaystyle C(1,-2, 4)$, $\displaystyle r = 3$</div>
+                            <div class="flex-item">(b) $\displaystyle C(2, 6, -3)$, $\displaystyle r = 2$</div>
+                            <div class="flex-item">(c) $\displaystyle C(2, 3, 5)$, $\displaystyle r = 5$</div>
+                        </div>
+                    </li>
+
+                    <li>Check whether the given point $\displaystyle P$ lies inside, outside or on a sphere.
+                        <ol style="list-style-type: lower-alpha;">
+                            <li>Center $\displaystyle C(0, 0, 0)$, radius $\displaystyle r = 3$ and point $\displaystyle P(1, 1, 1)$.</li>
+                            <li>Center $\displaystyle C(0, 0, 0)$, radius $\displaystyle r = 3$ and point $\displaystyle P(2, 1, 2)$.</li>
+                            <li>Center $\displaystyle C(0, 0, 0)$, radius $\displaystyle r = 3$ and point $\displaystyle P(10, 10, 10)$.</li>
+                        </ol>
+                    </li>
+
+                    <li>Find the equation of the sphere on the join of $\displaystyle (1, -1, 1)$ and $\displaystyle (-3, 4, 5)$ as diameter.</li>
+
+                    <li>Find the equation of the plane tangent to the sphere $\displaystyle (x + 2)^2 + (y - 1)^2 + (z + 3)^2 = 27$ at the point $\displaystyle (3, 2, -2)$.</li>
+
+                    <li>Find the equation of the sphere with center $\displaystyle (6, -7, -3)$ and touching the plane $\displaystyle 4x - 2y - z = 17$.</li>
+
+                    <li>What is the equation of the sphere which passes through the points $\displaystyle (3, 0, 2)$, $\displaystyle (-1, 1, 1)$ and $\displaystyle (2, -5, 4)$ and whose center lies on the plane $\displaystyle 2x + 3y + 4z = 6$?</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

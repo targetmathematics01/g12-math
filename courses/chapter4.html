@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Vector Algebra | Target Mathematics</title>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    ds: "\\displaystyle"
+                }
+            }
+        };
+    </script>
+   <script id="MathJax-script" async src="mathjax.js"></script>
+    
+    <style>
+        /* Base & Resets */
+        * { box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
+        
+        /* Header & Nav */
+        header { background: #0056b3; color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logo { font-size: 28px; font-weight: 600; letter-spacing: 2px; color: #f39c12; }
+        .logo span { color: #f4f6f1; }
+        
+        .top-nav-box { display: flex; justify-content: center; gap: 15px; background-color: #fff; border-radius: 12px; padding: 10px; margin-top: -25px; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: sticky; top: 15px; z-index: 100; }
+        .nav-link { padding: 12px 30px; text-decoration: none; color: #555; font-weight: 600; font-size: 15px; border-radius: 8px; transition: all 0.3s ease; }
+        .nav-link:hover { color: #0056b3; background-color: #f4f7f6; }
+
+        /* Layout & Containers */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .content-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; text-align: left; }
+        
+        /* Typography */
+        .content-box h1 { color: #333; margin-bottom: 20px; text-align: center; font-family: 'Alice', serif; }
+        .content-box h2 { color: #0056b3; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .content-box h3 { color: #444; margin-top: 25px; }
+        .content-box p { color: #555; line-height: 1.8; font-size: 16px; margin-bottom: 15px; }
+        .figure-caption { text-align: center; font-style: italic; color: #777; margin-bottom: 30px; margin-top: 10px; }
+        
+        ul, ol { margin-bottom: 20px; font-size: 1.1em; padding-left: 40px; color: #555; line-height: 1.8; }
+        li { margin-bottom: 15px; padding-left: 5px; }
+
+        /* Math & Code Components */
+        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 5px; }
+        
+        .example-box, .exercise-box, .concept-box {
+            overflow-x: auto; 
+            overflow-y: hidden; 
+            width: 100%;
+        }
+        .example-box { border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 25px 0; background: #fafafa; }
+        .example-box h4 { margin-top: 0; color: #222; font-size: 18px; }
+        
+        .exercise-box { border: 2px dashed #ccc; padding: 25px; border-radius: 8px; margin: 35px 0; }
+        .exercise-box h4 { color: #d9534f; margin-top: 0; font-size: 20px; }
+        
+        .concept-box { background-color: #e8f4f8; border-left: 5px solid #2980b9; padding: 20px; margin: 20px 0; border-radius: 4px; }
+        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 10px; }
+        
+        /* SVGs & Images */
+        .svg-container { text-align: center; margin: 30px auto; display: flex; justify-content: center; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+        svg text { font-family: 'Open Sans', sans-serif; font-size: 14px; }
+        
+        .float-svg-container { float: right; margin: 0 0 20px 20px; max-width: 100%; }
+
+        .svg-row-wrapper { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; width: 100%; margin: 30px 0; }
+        .svg-row-wrapper .svg-container { flex: 1 1 calc(33.333% - 20px); min-width: 250px; margin: 0; }
+
+        /* Flex Layouts */
+        .flex-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; }
+        .flex-item { flex: 1; min-width: 200px; }
+
+        /* Navigation Buttons */
+        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
+        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; }
+        .btn-nav:hover { background-color: #004494; }
+
+        @media (max-width: 768px) {
+            .content-box { padding: 25px 20px; }
+            .page-navigation { flex-direction: column; gap: 15px; }
+            .btn-nav { width: 100%; }
+            .top-nav-box { gap: 5px; flex-wrap: wrap; }
+            .nav-link { padding: 10px 15px; }
+            .float-svg-container { float: none; margin: 20px auto; display: flex; justify-content: center; }
+            .svg-row-wrapper .svg-container { flex: 1 1 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-box">
+            <h1>Chapter 4: VECTOR ALGEBRA</h1>
+            
+            <p>We have learned vectors in two-dimensional rectangular coordinate system. In this chapter, we will extend the system to three dimensions and we will use vectors to calculate angles, distances and areas. We will also apply vectors to geometrical problems of lines and planes.</p>
+
+            <h2>4.1 Vectors in Three Dimensions</h2>
+            
+            <p>In the plane, each point is associated with an ordered pair of real numbers. In space, each point is associated with an ordered triple of real numbers. Through a fixed point, called the origin $O$, draw three mutually perpendicular lines: the x-axis, the y-axis and the z-axis.</p>
+            <p>A point $P$ in space is determined by an ordered triple $\ds (x,y,z)$ of real numbers as shown in the diagram. These numbers $\ds x, y, z$ are called the coordinates of $P$.</p>
+
+            <div class="svg-container">
+                <svg width="350" height="350" viewBox="0 0 350 350">
+                    <line x1="150" y1="200" x2="150" y2="40" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="150" y1="200" x2="300" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="150" y1="200" x2="50" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <text x="145" y="30" font-weight="bold" font-size="16">z</text>
+                    <text x="310" y="205" font-weight="bold" font-size="16">y</text>
+                    <text x="40" y="315" font-weight="bold" font-size="16">x</text>
+                    <text x="135" y="215" font-weight="bold" font-size="18">O</text>
+
+                    <line x1="150" y1="200" x2="250" y2="200" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="150" y1="200" x2="90" y2="260" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="150" y1="200" x2="150" y2="100" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    
+                    <line x1="250" y1="200" x2="190" y2="260" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="90" y1="260" x2="190" y2="260" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    
+                    <line x1="150" y1="100" x2="250" y2="100" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="150" y1="100" x2="90" y2="160" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="90" y1="160" x2="190" y2="160" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="250" y1="100" x2="190" y2="160" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    
+                    <line x1="90" y1="260" x2="90" y2="160" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="250" y1="200" x2="250" y2="100" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+                    <line x1="190" y1="260" x2="190" y2="160" stroke="#222" stroke-width="2" stroke-dasharray="6"/>
+
+                    <text x="80" y="280" fill="#6a3d9a" font-weight="bold">$(x,0,0)$</text>
+                    <text x="260" y="220" fill="#1f78b4" font-weight="bold">$(0,y,0)$</text>
+                    <text x="60" y="95" fill="#e31a1c" font-weight="bold">$(0,0,z)$</text>
+                    <text x="195" y="155" fill="#111" font-weight="bold">$P($</text>
+                    <text x="220" y="155" fill="#6a3d9a" font-weight="bold">x,</text>
+                    <text x="235" y="155" fill="#1f78b4" font-weight="bold">y,</text>
+                    <text x="250" y="155" fill="#e31a1c" font-weight="bold">z</text>
+                    <text x="260" y="155" fill="#111" font-weight="bold">$)$</text>
+                </svg>
+            </div>
+            <p class="figure-caption">Figure 4.1</p>
+
+            <div class="example-box">
+                <h4>Example 1</h4>
+                <p>Illustrate the points (a) $\ds A(0,3,0)$ (b) $\ds B(4,0,2)$ (c) $\ds C(-1,2,2)$.</p>
+                <div class="solution-title">Solution</div>
+                
+                <div class="svg-row-wrapper">
+                    <div class="svg-container">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <line x1="100" y1="120" x2="100" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="120" x2="180" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="120" x2="40" y2="180" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <text x="95" y="15">z</text><text x="185" y="125">y</text><text x="35" y="190">x</text><text x="85" y="135">O</text>
+                            
+                            <circle cx="160" cy="120" r="4" fill="black"/>
+                            <text x="160" y="110" font-weight="bold">A</text>
+                            <text x="155" y="135">3</text>
+                            <text x="100" y="195" font-style="italic">(a)</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="svg-container">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <line x1="100" y1="120" x2="100" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="120" x2="180" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="120" x2="40" y2="180" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <text x="95" y="15">z</text><text x="185" y="125">y</text><text x="35" y="190">x</text><text x="105" y="135">O</text>
+                            
+                            <line x1="100" y1="60" x2="60" y2="100" stroke="black" stroke-width="1.5" stroke-dasharray="4"/>
+                            <line x1="60" y1="100" x2="60" y2="160" stroke="black" stroke-width="1.5" stroke-dasharray="4"/>
+                            
+                            <circle cx="60" cy="100" r="4" fill="black"/>
+                            <text x="50" y="90" font-weight="bold">B</text>
+                            <text x="105" y="65">2</text>
+                            <text x="65" y="175">4</text>
+                            <text x="100" y="195" font-style="italic">(b)</text>
+                        </svg>
+                    </div>
+
+                    <div class="svg-container">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <line x1="100" y1="140" x2="100" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="140" x2="180" y2="140" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="140" x2="50" y2="190" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                            <line x1="100" y1="140" x2="130" y2="110" stroke="#333" stroke-width="2" stroke-dasharray="4"/>
+                            
+                            <text x="95" y="15">z</text><text x="185" y="145">y</text><text x="40" y="205">x</text><text x="85" y="155">O</text>
+                            
+                            <line x1="130" y1="110" x2="190" y2="110" stroke="#888" stroke-width="1.5" stroke-dasharray="4"/>
+                            <line x1="160" y1="140" x2="190" y2="110" stroke="#888" stroke-width="1.5" stroke-dasharray="4"/>
+                            
+                            <line x1="100" y1="80" x2="130" y2="50" stroke="#888" stroke-width="1.5"/>
+                            <line x1="100" y1="80" x2="160" y2="80" stroke="#888" stroke-width="1.5"/>
+                            <line x1="160" y1="80" x2="190" y2="50" stroke="#888" stroke-width="1.5"/>
+                            <line x1="130" y1="50" x2="190" y2="50" stroke="#888" stroke-width="1.5"/>
+                            
+                            <line x1="130" y1="110" x2="130" y2="50" stroke="#888" stroke-width="1.5" stroke-dasharray="4"/>
+                            <line x1="160" y1="140" x2="160" y2="80" stroke="#888" stroke-width="1.5"/>
+                            <line x1="190" y1="110" x2="190" y2="50" stroke="#888" stroke-width="1.5"/>
+                            
+                            <circle cx="190" cy="50" r="4" fill="black"/>
+                            <text x="200" y="45" font-weight="bold">C</text>
+                            
+                            <circle cx="130" cy="110" r="3" fill="black"/>
+                            <text x="110" y="115">-1</text>
+                            <text x="160" y="155">2</text>
+                            <text x="90" y="85">2</text>
+                            
+                            <text x="100" y="195" font-style="italic">(c)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Standard Unit Vectors in Three Dimensions</h3>
+            <p>To represent vectors in space, we introduce the standard unit vectors $\ds \hat{i}$, $\ds \hat{j}$ and $\ds \hat{k}$ where</p>
+            <p>$\ds \hat{i} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}, \quad \hat{j} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}, \quad \hat{k} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$</p>
+            <p>$\ds \hat{i}$ represents the unit vector in the positive x direction, $\ds \hat{j}$ represents the unit vector in the positive y direction and $\ds \hat{k}$ represents the unit vector in the positive z direction.</p>
+
+            <div class="svg-container">
+                <svg width="350" height="350" viewBox="0 0 350 350">
+                    <line x1="150" y1="220" x2="150" y2="40" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="150" y1="220" x2="300" y2="220" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="150" y1="220" x2="50" y2="320" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <text x="145" y="30" font-weight="bold" font-size="16">z</text>
+                    <text x="310" y="225" font-weight="bold" font-size="16">y</text>
+                    <text x="40" y="335" font-weight="bold" font-size="16">x</text>
+                    <text x="135" y="235" font-weight="bold" font-size="18">O</text>
+
+                    <line x1="150" y1="220" x2="250" y2="220" stroke="red" stroke-width="3" marker-end="url(#arrowRed)"/>
+                    <line x1="150" y1="220" x2="150" y2="120" stroke="red" stroke-width="3" marker-end="url(#arrowRed)"/>
+                    <line x1="150" y1="220" x2="80" y2="290" stroke="red" stroke-width="3" marker-end="url(#arrowRed)"/>
+                    
+                    <line x1="150" y1="220" x2="210" y2="90" stroke="gray" stroke-width="3" marker-end="url(#arrowGray)"/>
+                    <circle cx="215" cy="80" r="5" fill="#3b82f6"/>
+                    <text x="225" y="75" font-weight="bold" fill="#777">$P(a,b,c)$</text>
+
+                    <text x="210" y="200" fill="red">$(0,1,0)$</text>
+                    <text x="230" y="245" font-weight="bold" font-size="18">$\hat{j}$</text>
+                    
+                    <text x="60" y="125" fill="red">$(0,0,1)$</text>
+                    <text x="160" y="115" font-weight="bold" font-size="18">$\hat{k}$</text>
+                    
+                    <text x="50" y="260" fill="red">$(1,0,0)$</text>
+                    <text x="115" y="285" font-weight="bold" font-size="18">$\hat{i}$</text>
+                </svg>
+            </div>
+            <p class="figure-caption">Figure 4.2</p>
+
+            <h3>Position Vectors in Three Dimensions</h3>
+            <p>If $\ds \overrightarrow{OA}$ is a vector with initial point at the origin $O$ and terminal point at point $\ds A(2,3,4)$, then we can represent $\ds \overrightarrow{OA}$ in terms of the vectors $\ds \hat{i}$, $\ds \hat{j}$ and $\ds \hat{k}$ as $\ds \overrightarrow{OA} = 2\hat{i} + 3\hat{j} + 4\hat{k}$.</p>
+            <p>We can also represent vector in three dimensions using column vector as like in two dimensions: $\ds \overrightarrow{OA} = \begin{pmatrix} 2 \\ 3 \\ 4 \end{pmatrix}$. The numbers in each column are called the components of the vector.</p>
+            <p>A vector whose initial point at the origin is called a position vector. For example, the position of point $\ds P(a,b,c)$ in the diagram can be represented by its position vector, $\ds \overrightarrow{OP}$.</p>
+            <p>$\ds \vec{p} = \overrightarrow{OP} = \begin{pmatrix} a \\ b \\ c \end{pmatrix} = a\hat{i} + b\hat{j} + c\hat{k}$</p>
+            <p>The magnitude of a vector $\ds \overrightarrow{OP} = \vec{p} = \begin{pmatrix} a \\ b \\ c \end{pmatrix}$ is given by $\ds |\vec{p}| = \sqrt{a^2+b^2+c^2}$.</p>
+            <p>In general, for the position vectors of two points $\ds A(x_1,y_1,z_1)$ and $\ds B(x_2,y_2,z_2)$, we can find the vector $\ds \overrightarrow{AB}$ as follows:</p>
+            <p>$\ds \overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \begin{pmatrix} x_2-x_1 \\ y_2-y_1 \\ z_2-z_1 \end{pmatrix}$</p>
+            <p>and $\ds \overrightarrow{AB}$ is called the position vector of B relative to A.</p>
+
+            <div class="example-box">
+                <h4>Example 2</h4>
+                <p>If P is $\ds (-3,1,2)$ and Q is $\ds (1,-1,3)$, find:</p>
+                <div class="flex-container">
+                    <div class="flex-item">(a) $\ds \overrightarrow{OP}$</div>
+                    <div class="flex-item">(b) $\ds \overrightarrow{PQ}$</div>
+                    <div class="flex-item">(c) $\ds |\overrightarrow{PQ}|$</div>
+                    <div class="flex-item">(d) $\ds \overrightarrow{QP}$</div>
+                    <div class="flex-item">(e) $\ds |\overrightarrow{QP}|$</div>
+                </div>
+                
+                <div class="solution-title">Solution</div>
+                <p>(a) $\ds \overrightarrow{OP} = \begin{pmatrix} -3 \\ 1 \\ 2 \end{pmatrix}.$</p>
+                <p>(b) $\ds \overrightarrow{PQ} = \overrightarrow{OQ} - \overrightarrow{OP} = \begin{pmatrix} 1 \\ -1 \\ 3 \end{pmatrix} - \begin{pmatrix} -3 \\ 1 \\ 2 \end{pmatrix} = \begin{pmatrix} 1+3 \\ -1-1 \\ 3-2 \end{pmatrix} = \begin{pmatrix} 4 \\ -2 \\ 1 \end{pmatrix}.$</p>
+                <p>(c) $\ds |\overrightarrow{PQ}| = \sqrt{4^2 + (-2)^2 + 1^2} = \sqrt{21}.$</p>
+                <p>(d) $\ds \overrightarrow{QP} = \overrightarrow{OP} - \overrightarrow{OQ} = \begin{pmatrix} -3 \\ 1 \\ 2 \end{pmatrix} - \begin{pmatrix} 1 \\ -1 \\ 3 \end{pmatrix} = \begin{pmatrix} -3-1 \\ 1+1 \\ 2-3 \end{pmatrix} = \begin{pmatrix} -4 \\ 2 \\ -1 \end{pmatrix}.$</p>
+                <p>(e) $\ds |\overrightarrow{QP}| = \sqrt{(-4)^2 + 2^2 + (-1)^2} = \sqrt{21}.$</p>
+            </div>
+
+            <h3>Algebraic Operations with Vectors</h3>
+            
+            <h4>Negative Vector</h4>
+            <p>The vector $\ds -\vec{a}$ has the same length as the vector $\ds \vec{a}$ but the opposite direction. When is given in component form, the components of $\ds -\vec{a}$ are the same as those for $\ds \vec{a}$ but with their sign reversed.</p>
+            
+            <div class="svg-container">
+                <svg width="300" height="200" viewBox="0 0 300 200">
+                    <line x1="50" y1="180" x2="150" y2="40" stroke="#3b82f6" stroke-width="4" marker-end="url(#arrowBlue)"/>
+                    <text x="70" y="80" fill="#3b82f6" font-size="24" font-weight="bold">$\vec{a}$</text>
+                    
+                    <line x1="280" y1="40" x2="180" y2="180" stroke="#e31a1c" stroke-width="4" marker-end="url(#arrowRed)"/>
+                    <text x="240" y="120" fill="#e31a1c" font-size="24" font-weight="bold">$-\vec{a}$</text>
+                </svg>
+            </div>
+            <p class="figure-caption">Figure 4.3</p>
+
+            <p>So if $\ds \vec{a} = \begin{pmatrix} 11 \\ -6 \\ 5 \end{pmatrix}$, then $\ds -\vec{a} = -\begin{pmatrix} 11 \\ -6 \\ 5 \end{pmatrix} = \begin{pmatrix} -11 \\ 6 \\ -5 \end{pmatrix}$.</p>
+
+            <h4>Zero Vector</h4>
+            <p>In three dimensional space, the zero vector is denoted by $\ds \vec{0} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$.</p>
+
+            <h4>The Rules for Algebra with Vectors</h4>
+            <p>The rule for algebra with vectors extend from two dimensions to three dimensions:</p>
+            <p>If $\ds \vec{a} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix}$, then</p>
+            <ul>
+                <li>$\ds \vec{a} + \vec{b} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix} + \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix} = \begin{pmatrix} x_1+x_2 \\ y_1+y_2 \\ z_1+z_2 \end{pmatrix}$</li>
+                <li>$\ds \vec{a} - \vec{b} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix} - \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix} = \begin{pmatrix} x_1-x_2 \\ y_1-y_2 \\ z_1-z_2 \end{pmatrix}$</li>
+                <li>$\ds k\vec{a} = k\begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix} = \begin{pmatrix} k x_1 \\ k y_1 \\ k z_1 \end{pmatrix}$ for any scalar k.</li>
+            </ul>
+
+            <div class="example-box">
+                <h4>Example 3</h4>
+                <p>If $\ds \vec{p} = \begin{pmatrix} 1 \\ -1 \\ 4 \end{pmatrix}$ and $\ds \vec{q} = \begin{pmatrix} -2 \\ 0 \\ 2 \end{pmatrix}$, find:</p>
+                <div class="flex-container">
+                    <div class="flex-item">(a) $\ds \vec{p} + \vec{q}$</div>
+                    <div class="flex-item">(b) $\ds \vec{p} - \frac{1}{2}\vec{q}$</div>
+                    <div class="flex-item">(c) $\ds \frac{3}{2}\vec{q} - \vec{p}$</div>
+                </div>
+                
+                <div class="solution-title">Solution</div>
+                <p>(a) $\ds \vec{p} + \vec{q} = \begin{pmatrix} 1 \\ -1 \\ 4 \end{pmatrix} + \begin{pmatrix} -2 \\ 0 \\ 2 \end{pmatrix} = \begin{pmatrix} 1-2 \\ -1+0 \\ 4+2 \end{pmatrix} = \begin{pmatrix} -1 \\ -1 \\ 6 \end{pmatrix}.$</p>
+                <p>(b) $\ds \vec{p} - \frac{1}{2}\vec{q} = \begin{pmatrix} 1 \\ -1 \\ 4 \end{pmatrix} - \frac{1}{2}\begin{pmatrix} -2 \\ 0 \\ 2 \end{pmatrix} = \begin{pmatrix} 1+1 \\ -1-0 \\ 4-1 \end{pmatrix} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}.$</p>
+                <p>(c) $\ds \frac{3}{2}\vec{q} - \vec{p} = \frac{3}{2}\begin{pmatrix} -2 \\ 0 \\ 2 \end{pmatrix} - \begin{pmatrix} 1 \\ -1 \\ 4 \end{pmatrix} = \begin{pmatrix} -3-1 \\ 0+1 \\ 3-4 \end{pmatrix} = \begin{pmatrix} -4 \\ 1 \\ -1 \end{pmatrix}.$</p>
+            </div>
+
+            <h3>Equal Vectors and Parallel Vectors</h3>
+            <p>Two vectors are equal if they have the same magnitude and direction. So, if arrows are used to represent vectors, then equal vectors are parallel and equal in length. This means that equal vector arrows are translations of one another; but in space.</p>
+            <p>If $\ds \vec{a} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix}$, then $\ds \vec{a} = \vec{b} \iff x_1 = x_2, y_1 = y_2, z_1 = z_2$.</p>
+            <p>Two vectors $\ds \vec{a}$ and $\ds \vec{b}$ are parallel $\ds \iff \vec{a} = k\vec{b}$ for some scalar k.</p>
+
+            <div class="example-box">
+                <h4>Example 4</h4>
+                <p>Find u and v given that $\ds \vec{a} = \begin{pmatrix} -1 \\ -1 \\ u \end{pmatrix}$ is parallel to $\ds \vec{b} = \begin{pmatrix} v \\ 2 \\ -2 \end{pmatrix}$</p>
+                <div class="solution-title">Solution</div>
+                <p>Since $\ds \vec{a}$ and $\ds \vec{b}$ are parallel, we have $\ds \vec{a} = k\vec{b}$ for some scalar k.</p>
+                <p>$\ds \begin{pmatrix} -1 \\ -1 \\ u \end{pmatrix} = k\begin{pmatrix} v \\ 2 \\ -2 \end{pmatrix}$</p>
+                <p>$\ds -1 = kv$, $\ds -1 = 2k$ and $\ds u = -2k$</p>
+                <p>We have $\ds k = -\frac{1}{2}$</p>
+                <p>Thus $\ds u = 1$ and $\ds v = 2$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 5</h4>
+                <p>ABCD is a parallelogram. A is $\ds (-1, 1, 1)$, B is $\ds (2, 0, -2)$ and D is $\ds (3, 1, 4)$. Find the coordinates of C.</p>
+                <div class="solution-title">Solution</div>
+                <p>Let C be $\ds (x, y, z)$.</p>
+                <p>Since ABCD is a parallelogram, AB // DC, and they have the same length, so</p>
+                <p>$\ds \overrightarrow{DC} = \overrightarrow{AB}$</p>
+                <p>$\ds \overrightarrow{OC} - \overrightarrow{OD} = \overrightarrow{OB} - \overrightarrow{OA}$</p>
+                <p>$\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} - \begin{pmatrix} 3 \\ 1 \\ 4 \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \\ -2 \end{pmatrix} - \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$</p>
+                <p>$\ds \begin{pmatrix} x-3 \\ y-1 \\ z-4 \end{pmatrix} = \begin{pmatrix} 3 \\ -1 \\ -3 \end{pmatrix}$</p>
+                <p>$\ds x-3 = 3$, $\ds y-1 = -1$, $\ds z-4 = -3$.</p>
+                <p>$\ds x = 6$, $\ds y = 0$, $\ds z = 1$.</p>
+                <p>Therefore C is $\ds (6, 0, 1)$.</p>
+            </div>
+
+            <h3>Unit Vector</h3>
+            <p>A vector with magnitude 1 is called a unit vector. For a nonzero vector $\ds \vec{a}$, the unit vector in the direction of $\ds \vec{a}$, denoted by $\ds \hat{a}$ is given by</p>
+            <p>$\ds \hat{a} = \frac{\vec{a}}{|\vec{a}|}.$</p>
+
+            <div class="example-box">
+                <h4>Example 6</h4>
+                <p>(a) Find the unit vector in the same direction as $\ds \vec{a} = \begin{pmatrix} 2 \\ -2 \\ 1 \end{pmatrix}.$</p>
+                <p>(b) Find a vector of magnitude 5 that is parallel to $\ds \vec{a}.$</p>
+                <div class="solution-title">Solution</div>
+                <p>(a) $\ds |\vec{a}| = \sqrt{2^2 + (-2)^2 + 1^2} = 3$.</p>
+                <p>The unit vector of $\ds \vec{a}$ is $\ds \hat{a} = \frac{\vec{a}}{|\vec{a}|} = \frac{1}{3}\begin{pmatrix} 2 \\ -2 \\ 1 \end{pmatrix} = \begin{pmatrix} \frac{2}{3} \\ -\frac{2}{3} \\ \frac{1}{3} \end{pmatrix}.$</p>
+                <p>(b) Let $\ds \vec{b}$ be parallel to $\ds \vec{a}$ and $\ds |\vec{b}| = 5$.</p>
+                <p>Then $\ds \vec{b} = 5\hat{a} = \begin{pmatrix} \frac{10}{3} \\ -\frac{10}{3} \\ \frac{5}{3} \end{pmatrix}$ or $\ds \vec{b} = -5\hat{a} = \begin{pmatrix} -\frac{10}{3} \\ \frac{10}{3} \\ -\frac{5}{3} \end{pmatrix}.$</p>
+            </div>
+
+            <h3>Collinear Points</h3>
+            <p>Three or more points are said to be collinear if they lie on the same straight line. A, B and C are collinear if $\ds \overrightarrow{AB} = k\overrightarrow{BC}$ for some scalar k.</p>
+            
+            <div class="svg-container">
+                <svg width="400" height="100" viewBox="0 0 400 100">
+                    <line x1="50" y1="50" x2="350" y2="50" stroke="#333" stroke-width="2"/>
+                    <circle cx="100" cy="50" r="4" fill="black"/>
+                    <text x="95" y="40" font-weight="bold">A</text>
+                    <circle cx="200" cy="50" r="4" fill="black"/>
+                    <text x="195" y="40" font-weight="bold">B</text>
+                    <circle cx="300" cy="50" r="4" fill="black"/>
+                    <text x="295" y="40" font-weight="bold">C</text>
+                    <text x="355" y="55" font-style="italic">L</text>
+                </svg>
+            </div>
+            <p class="figure-caption">Figure 4.4</p>
+
+            <div class="example-box">
+                <h4>Example 7</h4>
+                <p>Prove that $\ds A(8,2,2)$, $\ds C(20,5,5)$ and $\ds B(12,3,3)$ are collinear.</p>
+                <div class="solution-title">Solution</div>
+                <p>$\ds \overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \begin{pmatrix} 12 \\ 3 \\ 3 \end{pmatrix} - \begin{pmatrix} 8 \\ 2 \\ 2 \end{pmatrix} = \begin{pmatrix} 4 \\ 1 \\ 1 \end{pmatrix}.$</p>
+                <p>$\ds \overrightarrow{BC} = \overrightarrow{OC} - \overrightarrow{OB} = \begin{pmatrix} 20 \\ 5 \\ 5 \end{pmatrix} - \begin{pmatrix} 12 \\ 3 \\ 3 \end{pmatrix} = \begin{pmatrix} 8 \\ 2 \\ 2 \end{pmatrix} = 2\begin{pmatrix} 4 \\ 1 \\ 1 \end{pmatrix} = 2\overrightarrow{AB}.$</p>
+                <p>Therefore BC is parallel to AB.</p>
+                <p>Since B is common to both, it follows that A, B and C are collinear.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 4.1</h4>
+                <ol>
+                    <li>Let $\ds \vec{a} = \begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix}$, $\ds \vec{b} = \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix}$ and $\ds \vec{c} = \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix}$. Find the following vectors.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds 3\vec{a}$</div>
+                            <div class="flex-item">(b) $\ds 4\vec{b}$</div>
+                            <div class="flex-item">(c) $\ds \vec{a}-\vec{b}$</div>
+                            <div class="flex-item">(d) $\ds \vec{b}+\vec{c}$</div>
+                        </div>
+                        <div class="flex-container">
+                            <div class="flex-item">(e) $\ds 2\vec{b}+\vec{c}$</div>
+                            <div class="flex-item">(f) $\ds \vec{a}-2\vec{b}$</div>
+                            <div class="flex-item">(g) $\ds \vec{a}+\vec{b}-2\vec{c}$</div>
+                            <div class="flex-item">(h) $\ds 3\vec{a}-\vec{b}+\vec{c}$</div>
+                        </div>
+                    </li>
+                    <li>Given vectors $\ds \vec{a} = \begin{pmatrix} 1 \\ 2 \\ 7 \end{pmatrix}$, $\ds \vec{b} = \begin{pmatrix} -3 \\ 4 \\ 2 \end{pmatrix}$ and $\ds \vec{c} = \begin{pmatrix} -2 \\ p \\ q \end{pmatrix}$.
+                        <ol type="a">
+                            <li>Find the values of p and q such that $\ds \vec{c}$ is parallel to $\ds \vec{a}.$</li>
+                            <li>Find the value of scalar k such that $\ds \vec{a}+k\vec{b}$ is parallel to vector $\ds \begin{pmatrix} 0 \\ 10 \\ 23 \end{pmatrix}.$</li>
+                        </ol>
+                    </li>
+                    <li>Points A, B, C and D have position vectors $\ds \vec{a} = \begin{pmatrix} 3 \\ -1 \\ 1 \end{pmatrix}$, $\ds \vec{b} = \begin{pmatrix} 5 \\ 0 \\ 3 \end{pmatrix}$, $\ds \vec{c} = \begin{pmatrix} 7 \\ 8 \\ -3 \end{pmatrix}$ and $\ds \vec{d} = \begin{pmatrix} 4 \\ 3 \\ -2 \end{pmatrix}$ respectively. Point E is the midpoint of BC.
+                        <ol type="a">
+                            <li>Find the position vector of E.</li>
+                            <li>Show that ABED is a parallelogram.</li>
+                        </ol>
+                    </li>
+                    <li>Points A, B and C have position vectors $\ds \vec{a} = \begin{pmatrix} 2 \\ -1 \\ 4 \end{pmatrix}$, $\ds \vec{b} = \begin{pmatrix} 5 \\ 1 \\ 2 \end{pmatrix}$ and $\ds \vec{c} = \begin{pmatrix} 3 \\ 1 \\ 4 \end{pmatrix}$ respectively. Find the position vector of point D such that ABCD is a parallelogram.</li>
+                    <li>$\ds K(1,-1,0)$, $\ds L(4,-3,7)$ and $\ds M(a,2,b)$ are collinear. Find a and b.</li>
+                </ol>
+            </div>
+
+            <h2>4.2 Angle between Two Vectors and Scalar Product</h2>
+            
+            <p>First, we consider the angle $\ds \theta$ between the two vectors $\ds \vec{a}$ and $\ds \vec{b}$ for two dimensions. By using the cosine rule on the triangle formed by the vectors, we obtain:</p>
+            <p>$\ds \cos \theta = \frac{x_1x_2 + y_1y_2}{|\vec{a}||\vec{b}|}$</p>
+            <p>The expression $\ds x_1x_2 + y_1y_2$ can be written by $\ds \vec{a} \cdot \vec{b}$. That is, $\ds \vec{a} \cdot \vec{b} = x_1x_2 + y_1y_2$ for two dimensions.</p>
+            
+            <p>This method can be extended into three dimensions. If $\ds \vec{a} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix}$, it can be written by</p>
+            <p>$\ds \cos \theta = \frac{x_1x_2 + y_1y_2 + z_1z_2}{|\vec{a}||\vec{b}|}$</p>
+            <p>Thus $\ds \vec{a} \cdot \vec{b}$ is also written by $\ds \vec{a} \cdot \vec{b} = x_1x_2 + y_1y_2 + z_1z_2$. The expression $\ds \vec{a} \cdot \vec{b}$ is called the scalar product or dot product of the vectors $\ds \vec{a}$ and $\ds \vec{b}$.</p>
+            <p>In both cases, we can write $\ds \cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}||\vec{b}|}$. This result can be written in the form, $\ds \vec{a} \cdot \vec{b} = |\vec{a}||\vec{b}|\cos \theta$.</p>
+
+            <div class="example-box">
+                <h4>Example 8</h4>
+                <p>Find the angle between the two vectors $\ds \begin{pmatrix} 3 \\ 4 \end{pmatrix}$ and $\ds \begin{pmatrix} 5 \\ -12 \end{pmatrix}$.</p>
+                <div class="solution-title">Solution</div>
+                <p>Let $\ds \vec{a} = \begin{pmatrix} 3 \\ 4 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} 5 \\ -12 \end{pmatrix}$.</p>
+                <p>We can find that $\ds |\vec{a}| = \sqrt{3^2+4^2} = 5$ and $\ds |\vec{b}| = \sqrt{5^2+(-12)^2} = 13$,</p>
+                <p>and $\ds \vec{a} \cdot \vec{b} = \begin{pmatrix} 3 \\ 4 \end{pmatrix} \cdot \begin{pmatrix} 5 \\ -12 \end{pmatrix} = 3 \times 5 + 4 \times (-12) = 15 - 48 = -33$.</p>
+                <p>$\ds \cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}||\vec{b}|} = \frac{-33}{5 \times 13} = \frac{-33}{65}$</p>
+                <p>$\ds \theta \approx 120.5^\circ$</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 9</h4>
+                <p>Given points $\ds P(1,0,-1)$, $\ds Q(2,4,1)$ and $\ds R(3,5,6)$, find $\ds \angle QPR$.</p>
+                <div class="solution-title">Solution</div>
+                <p>The angle between $\ds \overrightarrow{PQ}$ and $\ds \overrightarrow{PR}$ is given by $\ds \theta$ in $\ds \cos \theta = \frac{\overrightarrow{PQ} \cdot \overrightarrow{PR}}{|\overrightarrow{PQ}||\overrightarrow{PR}|}$</p>
+                <p>$\ds \overrightarrow{PQ} = \begin{pmatrix} 2 \\ 4 \\ 1 \end{pmatrix} - \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} = \begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}$, $\ds |\overrightarrow{PQ}| = \sqrt{1^2+4^2+2^2} = \sqrt{21}.$</p>
+                <p>Again $\ds \overrightarrow{PR} = \begin{pmatrix} 3 \\ 5 \\ 6 \end{pmatrix} - \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} = \begin{pmatrix} 2 \\ 5 \\ 7 \end{pmatrix}$, we get $\ds |\overrightarrow{PR}| = \sqrt{2^2+5^2+7^2} = \sqrt{78}.$</p>
+                <p>$\ds \overrightarrow{PQ} \cdot \overrightarrow{PR} = \begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix} \cdot \begin{pmatrix} 2 \\ 5 \\ 7 \end{pmatrix} = (1)(2)+(4)(5)+(2)(7) = 2+20+14=36.$</p>
+                <p>$\ds \cos \theta = \frac{\overrightarrow{PQ} \cdot \overrightarrow{PR}}{|\overrightarrow{PQ}||\overrightarrow{PR}|} = \frac{36}{\sqrt{21}\sqrt{78}}$</p>
+                <p>$\ds \theta = \cos^{-1} \left( \frac{36}{\sqrt{21}\sqrt{78}} \right) \approx 27.2^\circ$</p>
+            </div>
+
+            <h3>Algebraic Properties of the Scalar Product</h3>
+            <p>If $\ds \vec{a}$, $\ds \vec{b}$ and $\ds \vec{c}$ are vectors in space and k is a scalar, then</p>
+            <ol>
+                <li>$\ds \vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}.$</li>
+                <li>$\ds (-\vec{a}) \cdot \vec{b} = \vec{a} \cdot (-\vec{b}) = -(\vec{a} \cdot \vec{b}).$</li>
+                <li>$\ds \vec{a} \cdot (\vec{b} + \vec{c}) = \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}.$</li>
+                <li>$\ds (k\vec{a}) \cdot \vec{b} = k(\vec{a} \cdot \vec{b}) = \vec{a} \cdot (k\vec{b}).$</li>
+                <li>$\ds \vec{0} \cdot \vec{a} = 0$</li>
+            </ol>
+
+            <h3>Geometric Properties of the Scalar Product</h3>
+            <p>Let $\ds \vec{a}$ and $\ds \vec{b}$ be nonzero vectors.</p>
+            <ol>
+                <li>If $\ds \vec{a}$ and $\ds \vec{b}$ are perpendicular, then $\ds \vec{a} \cdot \vec{b} = 0$</li>
+                <li>If $\ds \vec{a}$ and $\ds \vec{b}$ are parallel in same direction, then $\ds \vec{a} \cdot \vec{b} = |\vec{a}||\vec{b}|$, in particular $\ds \vec{a} \cdot \vec{a} = |\vec{a}|^2$.</li>
+                <li>If $\ds \vec{a}$ and $\ds \vec{b}$ are parallel in opposite direction, then $\ds \vec{a} \cdot \vec{b} = -|\vec{a}||\vec{b}|$.</li>
+            </ol>
+
+            <div class="example-box">
+                <h4>Example 10</h4>
+                <p>Given that $\ds \vec{a}$ and $\ds \vec{b}$ are perpendicular vectors such that $\ds |\vec{a}|=3$ and $\ds |\vec{b}|=1$, evaluate $\ds (\vec{a}-\vec{b}) \cdot (\vec{a}+5\vec{b})$.</p>
+                <div class="solution-title">Solution</div>
+                <p>Since $\ds \vec{a}$ and $\ds \vec{b}$ are perpendicular, so $\ds \vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a} = 0$.</p>
+                <p>$\ds (\vec{a}-\vec{b}) \cdot (\vec{a}+5\vec{b}) = \vec{a} \cdot \vec{a} + 5(\vec{a} \cdot \vec{b}) - \vec{b} \cdot \vec{a} - 5(\vec{b} \cdot \vec{b})$</p>
+                <p>$\ds = \vec{a} \cdot \vec{a} - 5(\vec{b} \cdot \vec{b})$</p>
+                <p>$\ds = |\vec{a}|^2 - 5|\vec{b}|^2$</p>
+                <p>$\ds = 3^2 - 5 \times 1^2$</p>
+                <p>$\ds = 4$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 11</h4>
+                <p>Points A, B and C have position vectors $\ds \vec{a} = k\begin{pmatrix} 2 \\ -1 \\ 1 \end{pmatrix}$, $\ds \vec{b} = \begin{pmatrix} 3 \\ 2 \\ -2 \end{pmatrix}$ and $\ds \vec{c} = \begin{pmatrix} 1 \\ 1 \\ 4 \end{pmatrix}$</p>
+                <ol type="a">
+                    <li>Find $\ds \overrightarrow{BC}$.</li>
+                    <li>Find $\ds \overrightarrow{AB}$ in terms of k.</li>
+                    <li>Find the value of k for which AB is perpendicular to BC.</li>
+                </ol>
+                <div class="solution-title">Solution</div>
+                <p>(a) $\ds \overrightarrow{BC} = \vec{c} - \vec{b} = \begin{pmatrix} 1 \\ 1 \\ 4 \end{pmatrix} - \begin{pmatrix} 3 \\ 2 \\ -2 \end{pmatrix} = \begin{pmatrix} -2 \\ -1 \\ 6 \end{pmatrix}.$</p>
+                <p>(b) $\ds \overrightarrow{AB} = \vec{b} - \vec{a} = \begin{pmatrix} 3 \\ 2 \\ -2 \end{pmatrix} - k\begin{pmatrix} 2 \\ -1 \\ 1 \end{pmatrix} = \begin{pmatrix} 3-2k \\ 2+k \\ -2-k \end{pmatrix}.$</p>
+                <p>(c) Since $\ds \overrightarrow{AB}$ is perpendicular to $\ds \overrightarrow{BC}$ it follows that $\ds \overrightarrow{AB} \cdot \overrightarrow{BC} = 0$</p>
+                <p>$\ds \begin{pmatrix} 3-2k \\ 2+k \\ -2-k \end{pmatrix} \cdot \begin{pmatrix} -2 \\ -1 \\ 6 \end{pmatrix} = 0$</p>
+                <p>$\ds -6 + 4k - 2 - k - 12 - 6k = 0$</p>
+                <p>$\ds -3k = 20$</p>
+                <p>$\ds k = -\frac{20}{3}.$</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 4.2</h4>
+                <ol>
+                    <li>For $\ds \vec{p} = \begin{pmatrix} 3 \\ 2 \end{pmatrix}$, $\ds \vec{q} = \begin{pmatrix} -1 \\ 5 \end{pmatrix}$ and $\ds \vec{r} = \begin{pmatrix} -2 \\ 4 \end{pmatrix}$, find:
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds \vec{q} \cdot \vec{p}$</div>
+                            <div class="flex-item">(b) $\ds \vec{q} \cdot \vec{r}$</div>
+                            <div class="flex-item">(c) $\ds \vec{q} \cdot (\vec{p} + \vec{r})$</div>
+                        </div>
+                        <div class="flex-container">
+                            <div class="flex-item">(d) $\ds \hat{i} \cdot \vec{p}$</div>
+                            <div class="flex-item">(e) $\ds \vec{q} \cdot \hat{j}$</div>
+                            <div class="flex-item">(f) $\ds \hat{i} \cdot \hat{i}$</div>
+                        </div>
+                    </li>
+                    <li>For $\ds \vec{a} = \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}$, $\ds \vec{b} = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$ and $\ds \vec{c} = \begin{pmatrix} 0 \\ -1 \\ 1 \end{pmatrix}$. Find
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds \vec{a} \cdot \vec{b}$</div>
+                            <div class="flex-item">(b) $\ds \vec{b} \cdot \vec{a}$</div>
+                            <div class="flex-item">(c) $\ds |\vec{a}|^2$</div>
+                            <div class="flex-item">(d) $\ds \vec{a} \cdot \vec{a}$</div>
+                        </div>
+                        <div class="flex-container">
+                            <div class="flex-item">(e) $\ds \vec{a} \cdot (\vec{b} + \vec{c})$</div>
+                            <div class="flex-item">(f) $\ds \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}$</div>
+                        </div>
+                    </li>
+                    <li>Find the angle between $\ds \vec{m}$ and $\ds \vec{n}$ if:
+                        <ol type="a">
+                            <li>$\ds \vec{m} = \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix}$, and $\ds \vec{n} = \begin{pmatrix} -1 \\ 3 \\ 2 \end{pmatrix}$</li>
+                            <li>$\ds \vec{m} = 2\hat{j} - \hat{k}$ and $\ds \vec{n} = \hat{i} + 2\hat{k}$</li>
+                        </ol>
+                    </li>
+                    <li>Find t if the given pair of vectors are (i) perpendicular (ii) parallel.
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds \vec{p} = \begin{pmatrix} 3 \\ t \end{pmatrix}$ and $\ds \vec{q} = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$</div>
+                            <div class="flex-item">(b) $\ds \vec{a} = \begin{pmatrix} 0 \\ t+2 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} 2-3t \\ t \end{pmatrix}$</div>
+                        </div>
+                        <div style="margin-top: 10px;">(c) $\ds \vec{r} = \begin{pmatrix} t \\ t+2 \end{pmatrix}$ and $\ds \vec{s} = \begin{pmatrix} t \\ -4 \end{pmatrix}$</div>
+                    </li>
+                    <li>Find t if $\ds \begin{pmatrix} 3 \\ t \\ -2 \end{pmatrix}$ is perpendicular to $\ds \begin{pmatrix} 1-t \\ -3 \\ 4 \end{pmatrix}$.</li>
+                    <li>ABCD is a parallelogram with AB parallel to DC. Let $\ds \overrightarrow{AB} = \vec{a}$ and $\ds \overrightarrow{AD} = \vec{b}$.
+                        <ol type="a">
+                            <li>Express $\ds \overrightarrow{AC}$ and $\ds \overrightarrow{BD}$ in terms of $\ds \vec{a}$ and $\ds \vec{b}$.</li>
+                            <li>Simplify $\ds (\vec{a} + \vec{b}) \cdot (\vec{b} - \vec{a})$.</li>
+                            <li>Hence show that if ABCD is a rhombus then its diagonals are perpendicular.</li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>4.3 Area of a Parallelogram and Vector Product</h2>
+            
+            <h3>Vector Product (or) Cross Product</h3>
+            <p>The vector product is only defined when both vectors are three-dimensional.</p>
+            <p>The vector product (or cross product) of $\ds \vec{a} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix}$ is given by</p>
+            <p>$\ds \vec{a} \times \vec{b} = \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix} \times \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix} = \begin{pmatrix} y_1z_2 - y_2z_1 \\ z_1x_2 - z_2x_1 \\ x_1y_2 - x_2y_1 \end{pmatrix}$</p>
+            
+            <div class="concept-box">
+                <p>Instead of memorizing the formula for the vector product try using the following shortcut.</p>
+                <ol>
+                    <li>Eliminate the component column that you are trying to calculate.</li>
+                    <li>Calculate: Down Product - Up Product.</li>
+                </ol>
+                
+                <div style="display: flex; justify-content: center;">
+                <img src="images/cross-product.png" alt="Vector Product" style="max-width: 40%; height: auto;">
+                </div>
+            
+
+            <p>$\ds \vec{a} \times \vec{b}$ is perpendicular to both $\ds \vec{a}$ and $\ds \vec{b}$.</p>
+            <p>We can examine: $\ds (\vec{a} \times \vec{b}) \cdot \vec{a} = \begin{pmatrix} y_1z_2 - y_2z_1 \\ z_1x_2 - z_2x_1 \\ x_1y_2 - x_2y_1 \end{pmatrix} \cdot \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix}$</p>
+            <p>$\ds = (y_1z_2 - y_2z_1)x_1 + (z_1x_2 - z_2x_1)y_1 + (x_1y_2 - x_2y_1)z_1$</p>
+            <p>$\ds = x_1y_1z_2 - x_1y_2z_1 + z_1x_2y_1 - z_2x_1y_1 + x_1y_2z_1 - x_2y_1z_1 = 0$.</p>
+            <p>Therefore $\ds (\vec{a} \times \vec{b})$ is perpendicular to $\ds \vec{a}.$ Similarly, we can show that $\ds \vec{a} \times \vec{b}$ is also perpendicular to $\ds \vec{b}.$</p>
+
+            <h3>Area of a parallelogram</h3>
+            <p>Consider the parallelogram OACB lying on the plane. The area of OACB is given by</p>
+            <p>$\ds OA |\vec{b}| \sin \theta = |\vec{a}|(|\vec{b}|\sin \theta) = |\vec{a} \times \vec{b}|;$</p>
+            <p>i.e., the area of the parallelogram with sides defined by vectors $\ds \overrightarrow{OA} = \vec{a}$ and $\ds \overrightarrow{OB} = \vec{b}$ is equal to the magnitude of the vector $\ds \vec{a} \times \vec{b}$.</p>
+            <p>Consequently, Area of triangle $\ds \alpha(\triangle ACB) = \frac{1}{2}(\alpha(OACB)) = \frac{1}{2}|\vec{a} \times \vec{b}|$.</p>
+
+            <div class="svg-container">
+                <svg width="400" height="300" viewBox="0 0 400 300">
+                    <line x1="100" y1="250" x2="100" y2="40" stroke="black" stroke-width="4" marker-end="url(#arrow)"/>
+                    <text x="50" y="100" font-weight="bold" font-size="18">$\vec{a} \times \vec{b}$</text>
+                    
+                    <polygon points="100,250 300,250 380,120 180,120" fill="none" stroke="#e67e22" stroke-width="3"/>
+                    <line x1="100" y1="250" x2="300" y2="250" stroke="#8e44ad" stroke-width="3" marker-end="url(#arrow)"/>
+                    <line x1="100" y1="250" x2="180" y2="120" stroke="#7f8c8d" stroke-width="3" marker-end="url(#arrow)"/>
+                    <line x1="180" y1="120" x2="300" y2="250" stroke="#c0392b" stroke-width="2" stroke-dasharray="5"/>
+
+                    <text x="80" y="270" font-size="24" font-weight="bold">O</text>
+                    <text x="295" y="280" font-size="24" font-weight="bold">A</text>
+                    <text x="160" y="110" font-size="24" font-weight="bold">B</text>
+                    <text x="390" y="110" font-size="24" font-weight="bold">C</text>
+
+                    <text x="200" y="280" font-size="20" fill="#8e44ad" font-weight="bold">$\vec{a}$</text>
+                    <text x="115" y="160" font-size="20" fill="#7f8c8d" font-weight="bold">$\vec{b}$</text>
+                </svg>
+            </div>
+            <p class="figure-caption">Figure 4.5</p>
+
+            <div class="example-box">
+                <h4>Example 12</h4>
+                <p>Find the area of the parallelogram determined by the vectors $\ds \vec{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} 1 \\ 4 \\ -1 \end{pmatrix}.$</p>
+                <div class="solution-title">Solution</div>
+                <p>We can find that</p>
+                <p>$\ds \vec{a} \times \vec{b} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \times \begin{pmatrix} 1 \\ 4 \\ -1 \end{pmatrix} = \begin{pmatrix} 2 \times (-1) - 3 \times 4 \\ 3 \times 1 - 1 \times (-1) \\ 1 \times 4 - 2 \times 1 \end{pmatrix} = \begin{pmatrix} -14 \\ 4 \\ 2 \end{pmatrix}.$</p>
+                <p>Now, $\ds |\vec{a} \times \vec{b}| = \sqrt{(-14)^2 + 4^2 + 2^2} = \sqrt{196+16+4} = \sqrt{216}$</p>
+                <p>Therefore, the area of the parallelogram is $\ds \sqrt{216} \text{ unit}^2$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 13</h4>
+                <p>Find the area of the triangle ABC with vertices $\ds A(1,-1,3)$, $\ds B(0,4,1)$ and $\ds C(2,7,2).$</p>
+                <div class="solution-title">Solution</div>
+                <p>$\ds \overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \begin{pmatrix} 0 \\ 4 \\ 1 \end{pmatrix} - \begin{pmatrix} 1 \\ -1 \\ 3 \end{pmatrix} = \begin{pmatrix} -1 \\ 5 \\ -2 \end{pmatrix}$ and</p>
+                <p>$\ds \overrightarrow{AC} = \overrightarrow{OC} - \overrightarrow{OA} = \begin{pmatrix} 2 \\ 7 \\ 2 \end{pmatrix} - \begin{pmatrix} 1 \\ -1 \\ 3 \end{pmatrix} = \begin{pmatrix} 1 \\ 8 \\ -1 \end{pmatrix}.$</p>
+                <p>Then, we find their vector product</p>
+                <p>$\ds \overrightarrow{AB} \times \overrightarrow{AC} = \begin{pmatrix} -1 \\ 5 \\ -2 \end{pmatrix} \times \begin{pmatrix} 1 \\ 8 \\ -1 \end{pmatrix} = \begin{pmatrix} 11 \\ -3 \\ -13 \end{pmatrix}.$</p>
+                <p>Next $\ds |\overrightarrow{AB} \times \overrightarrow{AC}| = \sqrt{11^2 + (-3)^2 + (-13)^2} = \sqrt{299}$</p>
+                <p>Therefore, we have</p>
+                <p>Area of triangle $\ds ABC = \frac{1}{2}|\overrightarrow{AB} \times \overrightarrow{AC}| = \frac{1}{2}\sqrt{299} \text{ unit}^2$.</p>
+            </div>
+
+            <h3>Algebraic Properties of Vector Product</h3>
+            <p>If $\ds \vec{a}$, $\ds \vec{b}$ and $\ds \vec{c}$ are vectors in space and k is a scalar, then</p>
+            <ol>
+                <li>$\ds \vec{a} \times \vec{b} = -(\vec{b} \times \vec{a}).$</li>
+                <li>$\ds (k\vec{a}) \times \vec{b} = k(\vec{a} \times \vec{b})$</li>
+                <li>$\ds \vec{a} \times (\vec{b} + \vec{c}) = (\vec{a} \times \vec{b}) + (\vec{a} \times \vec{c})$</li>
+                <li>$\ds \vec{a} \times \vec{0} = \vec{0}$</li>
+            </ol>
+
+            <h3>Geometric Properties of the Vector Product</h3>
+            <ol>
+                <li>If two nonzero vectors $\ds \vec{a}$ and $\ds \vec{b}$ are parallel, then $\ds \vec{a} \times \vec{b} = \vec{0}.$ In particular, $\ds \vec{a} \times \vec{a} = \vec{0}$.</li>
+                <li>If two nonzero vectors $\ds \vec{a}$ and $\ds \vec{b}$ are perpendicular, then $\ds |\vec{a} \times \vec{b}| = |\vec{a}||\vec{b}|$.</li>
+            </ol>
+
+            <div class="example-box">
+                <h4>Example 14</h4>
+                <p>(a) Calculate $\ds \vec{a} \times \vec{b}$ when $\ds \vec{a} = 3\hat{i} + 2\hat{j} + 5\hat{k}$ and $\ds \vec{b} = \hat{i} - 4\hat{j} + 2\hat{k}.$</p>
+                <p>(b) Find a unit vector $\ds \hat{n}$ that is perpendicular to both $\ds \vec{a}$ and $\ds \vec{b}$.</p>
+                <div class="solution-title">Solution</div>
+                <p>(a) $\ds \vec{a} \times \vec{b} = \begin{pmatrix} 3 \\ 2 \\ 5 \end{pmatrix} \times \begin{pmatrix} 1 \\ -4 \\ 2 \end{pmatrix} = \begin{pmatrix} 2 \times 2 - 5 \times (-4) \\ 5 \times 1 - 3 \times 2 \\ 3 \times (-4) - 2 \times 1 \end{pmatrix} = \begin{pmatrix} 24 \\ -1 \\ -14 \end{pmatrix}.$</p>
+                <p>(b) $\ds \vec{a} \times \vec{b} = \begin{pmatrix} 24 \\ -1 \\ -14 \end{pmatrix}.$ This vector is perpendicular to $\ds \vec{a}$ and $\ds \vec{b}.$</p>
+                <p>$\ds |\vec{a} \times \vec{b}| = \sqrt{24^2 + (-1)^2 + (-14)^2} = \sqrt{773}$.</p>
+                <p>So, a unit vector perpendicular to both $\ds \vec{a}$ and $\ds \vec{b}$ is $\ds \hat{n} = \frac{1}{\sqrt{773}}\begin{pmatrix} 24 \\ -1 \\ -14 \end{pmatrix}.$</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 15</h4>
+                <p>Given that $\ds |\vec{a}|=4$, $\ds |\vec{b}|=5$ and that $\ds \vec{a}$ and $\ds \vec{b}$ are perpendicular, evaluate $\ds |(2\vec{a}-\vec{b}) \times (\vec{a}+3\vec{b})|$.</p>
+                <div class="solution-title">Solution</div>
+                <p>$\ds (2\vec{a}-\vec{b}) \times (\vec{a}+3\vec{b}) = 2\vec{a} \times \vec{a} + 2\vec{a} \times 3\vec{b} - \vec{b} \times \vec{a} - \vec{b} \times 3\vec{b}$</p>
+                <p>$\ds = 2(\vec{a} \times \vec{a}) + 6(\vec{a} \times \vec{b}) - (\vec{b} \times \vec{a}) - 3(\vec{b} \times \vec{b})$</p>
+                <p>$\ds = 6(\vec{a} \times \vec{b}) - (\vec{b} \times \vec{a})$</p>
+                <p>$\ds = 6(\vec{a} \times \vec{b}) + (\vec{a} \times \vec{b})$</p>
+                <p>$\ds = 7(\vec{a} \times \vec{b})$</p>
+                <p>$\ds |(2\vec{a}-\vec{b}) \times (\vec{a}+3\vec{b})| = 7|\vec{a} \times \vec{b}| = 7|\vec{a}||\vec{b}| = 7 \times 4 \times 5 = 140$.</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 4.3</h4>
+                <ol>
+                    <li>Find a vector perpendicular to the following pair of vectors:
+                        <div class="flex-container">
+                            <div class="flex-item">(a) $\ds \begin{pmatrix} 3 \\ 1 \\ 1 \end{pmatrix}$ and $\ds \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$</div>
+                            <div class="flex-item">(b) $\ds \begin{pmatrix} 3 \\ -1 \\ 4 \end{pmatrix}$ and $\ds \begin{pmatrix} -1 \\ 1 \\ 5 \end{pmatrix}.$</div>
+                        </div>
+                    </li>
+                    <li>Consider $\ds \vec{a} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}.$
+                        <ol type="a">
+                            <li>Find $\ds \vec{a} \times \vec{b}.$</li>
+                            <li>Find $\ds \sin \theta$ using $\ds |\vec{a} \times \vec{b}| = |\vec{a}||\vec{b}|\sin \theta.$</li>
+                        </ol>
+                    </li>
+                    <li>Prove that for any two vectors $\ds \vec{a}$ and $\ds \vec{b}$, $\ds |\vec{a} \times \vec{b}|^2 + (\vec{a} \cdot \vec{b})^2 = |\vec{a}|^2|\vec{b}|^2$.</li>
+                    <li>Given points A, B and C with coordinates $\ds (3, 5, 1)$, $\ds (7, 7, 2)$ and $\ds (-1,1,3)$.
+                        <ol type="a">
+                            <li>Calculate $\ds \vec{p} = \overrightarrow{AB} \times \overrightarrow{AC}$ and $\ds \vec{q} = \overrightarrow{BA} \times \overrightarrow{BC}$.</li>
+                            <li>What can you say about vectors $\ds \vec{p}$ and $\ds \vec{q}$?</li>
+                        </ol>
+                    </li>
+                    <li>The points $\ds A(3,1,2)$, $\ds B(-1,1,5)$ and $\ds C(7,2,3)$ are vertices of a parallelogram ABCD.
+                        <ol type="a">
+                            <li>Find the coordinates of D.</li>
+                            <li>Calculate the area of the parallelogram.</li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>4.4 Lines and Planes in Space</h2>
+            
+            <h3>Lines in Three-Dimensional Space</h3>
+            <p>A direction vector of a straight line is a vector parallel to the line. In three dimensions geometry we can determined the equation of a line using its direction and any fixed point on the line.</p>
+            <p>Suppose a line passes through a fixed point A with $\ds \overrightarrow{OA} = \vec{a}$ and that the line is parallel to a vector $\ds \vec{b}$. Let R be any point on the line with $\ds \overrightarrow{OR} = \vec{r}$.</p>
+            <p>Then, $\ds \overrightarrow{OR} = \overrightarrow{OA} + \overrightarrow{AR}$. Since $\ds \overrightarrow{AR} // \vec{b}$, $\ds \overrightarrow{AR} = t\vec{b}$ for some $\ds t \in \mathbb{R}$.</p>
+            <p>So, $\ds \vec{r} = \vec{a} + t\vec{b}$, $\ds t \in \mathbb{R}$ is the vector equation of the line.</p>
+            
+            <div class="svg-container">
+                <svg width="350" height="250" viewBox="0 0 350 250">
+                    <line x1="50" y1="120" x2="300" y2="60" stroke="#c0392b" stroke-width="3"/>
+                    <text x="155" y="80" font-weight="bold" font-size="18">A</text>
+                    <text x="270" y="52" font-weight="bold" font-size="18">R</text>
+                    
+                    <text x="40" y="220" font-weight="bold" font-size="18">O</text>
+                    
+                    <line x1="50" y1="200" x2="152" y2="97" stroke="#27ae60" stroke-width="3" marker-end="url(#arrowGreen)"/>
+                    <line x1="50" y1="200" x2="265" y2="70" stroke="#f1c40f" stroke-width="3" marker-end="url(#arrowYellow)"/>
+                    
+                    <text x="90" y="145" fill="#27ae60" font-weight="bold" font-size="20">$\vec{a}$</text>
+                    <text x="180" y="155" fill="#f1c40f" font-weight="bold" font-size="20">$\vec{r}$</text>
+                </svg>
+            </div>
+            <p class="figure-caption">Figure 4.6</p>
+
+            <p>In three dimensions, let $\ds \overrightarrow{OR} = \vec{r} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$, $\ds \vec{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}$ and $\ds \vec{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}$</p>
+            <p>$\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix} + t\begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}.$ is the vector equation of the line where $\ds R(x,y,z)$ is any point on the line, $\ds A(a_1,a_2,a_3)$ is the known (fixed) point on the line and $\ds \vec{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}$ is the direction vector of the line.</p>
+
+            <h3>Parametric Equation</h3>
+            <p>Since we can write the parametric equation of the line</p>
+            <p>$\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} a_1 + tb_1 \\ a_2 + tb_2 \\ a_3 + tb_3 \end{pmatrix}$</p>
+            <p>$\ds \begin{cases} x = a_1 + tb_1 \\ y = a_2 + tb_2 \\ z = a_3 + tb_3 \end{cases}$ where $\ds t \in \mathbb{R}$ is the parameter.</p>
+            <p>Note: Each point on the line corresponds to exactly one value of t.</p>
+
+            <h3>Cartesian Equation</h3>
+            <p>By equating t values, we obtain the Cartesian equation of the line</p>
+            <p>$\ds \frac{x-a_1}{b_1} = \frac{y-a_2}{b_2} = \frac{z-a_3}{b_3}.$</p>
+
+            <div class="example-box">
+                <h4>Example 16</h4>
+                <p>Find the Cartesian equation of the line with vector equation $\ds \vec{r} = \begin{pmatrix} 1 \\ 4 \\ -1 \end{pmatrix} + t\begin{pmatrix} 3 \\ 2 \\ 5 \end{pmatrix}.$</p>
+                <div class="solution-title">Solution</div>
+                <p>The vector equation is $\ds \vec{r} = \vec{a} + t\vec{b}$ therefore $\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 \\ 4 \\ -1 \end{pmatrix} + t\begin{pmatrix} 3 \\ 2 \\ 5 \end{pmatrix}$, $\ds t \in \mathbb{R}$</p>
+                <p>The parametric equations are:</p>
+                <p>$\ds x = 1 + 3t \Rightarrow t = \frac{x-1}{3}$</p>
+                <p>$\ds y = 4 + 2t \Rightarrow t = \frac{y-4}{2}$</p>
+                <p>$\ds z = -1 + 5t \Rightarrow t = \frac{z+1}{5}$</p>
+                <p>The Cartesian equation of the line is $\ds \frac{x-1}{3} = \frac{y-4}{2} = \frac{z+1}{5}.$</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 17</h4>
+                <p>Does the point $\ds A(3,-2,2)$ lie on the line with equation $\ds \frac{x+1}{2} = \frac{4-y}{3} = \frac{2z}{3}$ ?</p>
+                <div class="solution-title">Solution</div>
+                <p>Consider the given Cartesian equation passing through the point $\ds A(3,-2,2)$.</p>
+                <p>$\ds \frac{x+1}{2} = \frac{3+1}{2} = 2$</p>
+                <p>$\ds \frac{4-y}{3} = \frac{4+2}{3} = 2$</p>
+                <p>$\ds \frac{2z}{3} = \frac{2\times2}{3} = \frac{4}{3}$</p>
+                <p>and so $\ds 2 = 2 \ne \frac{4}{3}$</p>
+                <p>The coordinates do not satisfy the Cartesian equation. Therefore, the point does not lie on the line.</p>
+            </div>
+
+            <h3>ပြင်ညီများ (Planes in Three Dimensions)</h3>
+            <p>To determine the vector equation of the plane, we requires extension of the ideas of the equation of line. If we fix two nonparallel vectors in that plane, the position vector of any point in the plane is a sum of scalar multiples of those two vectors.</p>
+            <p>Consider A, B and C be three noncollinear points on the plane with $\ds \overrightarrow{OA} = \vec{a}.$ Let $\ds \vec{d_1}$ and $\ds \vec{d_2}$ be the two nonparallel vectors on the plane. If the plane passing through A and having two nonparallel vectors $\ds \vec{d_1}$ and $\ds \vec{d_2}$, then the position vector $\ds \vec{r}$ of any point R on the plane is given by following equation.</p>
+
+            <div style="display: flex; justify-content: center;">
+                <img src="images/plane1.png" alt="Plane in Space" style="max-width: 50%; height: auto;">
+            </div>
+            <p class="figure-caption">Figure 4.7</p>
+
+            <p>Vector Equation of the Plane is $\ds \vec{r} = \vec{a} + t_1\vec{d_1} + t_2\vec{d_2}$ where $\ds t_1, t_2 \in \mathbb{R}$. ($\ds \overrightarrow{AR} = t_1\vec{d_1} + t_2\vec{d_2}$).</p>
+
+            <h3>Normal Vector</h3>
+            <p>Any vector that is perpendicular to a plane is called a normal vector or simply normal to the plane. Normal is perpendicular to every line on the plane.</p>
+
+            <div style="display: flex; justify-content: center;">
+                <img src="images/plane2.png" alt="Plane in Space" style="max-width: 50%; height: auto;">
+            </div>
+            
+            <p class="figure-caption">Figure 4.8</p>
+
+            <p>To find the different vector form of the equation of a plane, we can use the position vector of one point and the normal vector is perpendicular to the plane.</p>
+            <p>Thus, we consider a plane passing through a point A with position vector $\ds \vec{a}$ and $\ds \vec{n} = a\hat{i} + b\hat{j} + c\hat{k}$ is perpendicular to the given plane. Let $\ds \vec{r}$ be the position vector of an arbitrary point $\ds R(x,y,z)$ on the plane.</p>
+            <p>Since AR is a line in the plane, it follows that AR is at right angle to the normal vector $\ds \vec{n}$.</p>
+            <p>$\ds \vec{n} \cdot \overrightarrow{AR} = 0$</p>
+            <p>The vector $\ds \overrightarrow{AR}$ is given by $\ds \overrightarrow{AR} = \vec{r} - \vec{a}$ and so</p>
+            <p>$\ds (\vec{r} - \vec{a}) \cdot \vec{n} = 0$</p>
+            <p>This is the vector equation of the plane. We can write this in an alternative form as</p>
+            <p>$\ds \vec{r} \cdot \vec{n} - \vec{a} \cdot \vec{n} = 0$</p>
+            <p>$\ds \vec{r} \cdot \vec{n} = \vec{a} \cdot \vec{n}$</p>
+            <p>$\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} \cdot \begin{pmatrix} a \\ b \\ c \end{pmatrix} = \vec{a} \cdot \vec{n}$</p>
+            <p>$\ds ax + by + cz = d \quad \text{where } d = \vec{a} \cdot \vec{n}, \text{Note that d is a constant.}$</p>
+            <p>The Cartesian equation of a plane has the form $\ds ax + by + cz = d$ where $\ds \begin{pmatrix} a \\ b \\ c \end{pmatrix}$ the normal vector of the plane.</p>
+
+            <div class="example-box">
+                <h4>Example 18</h4>
+                <p>Find the vector equation of the plane containing points $\ds M(2,2,-2)$, $\ds N(1,-1,3)$ and $\ds P(4,0,2)$.</p>
+                <div class="solution-title">Solution</div>
+                <p>Let $\ds \vec{a} = \overrightarrow{OM} = \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix}.$ We can find that</p>
+                <p>$\ds \vec{d_1} = \overrightarrow{MN} = \overrightarrow{ON} - \overrightarrow{OM} = \begin{pmatrix} 1 \\ -1 \\ 3 \end{pmatrix} - \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix} = \begin{pmatrix} -1 \\ -3 \\ 5 \end{pmatrix}.$</p>
+                <p>$\ds \vec{d_2} = \overrightarrow{MP} = \overrightarrow{OP} - \overrightarrow{OM} = \begin{pmatrix} 4 \\ 0 \\ 2 \end{pmatrix} - \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix} = \begin{pmatrix} 2 \\ -2 \\ 4 \end{pmatrix}.$</p>
+                <p>Therefore, the vector equation of the plane is</p>
+                <p>$\ds \vec{r} = \vec{a} + t_1\vec{d_1} + t_2\vec{d_2} = \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix} + t_1\begin{pmatrix} -1 \\ -3 \\ 5 \end{pmatrix} + t_2\begin{pmatrix} 2 \\ -2 \\ 4 \end{pmatrix}.$</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 19</h4>
+                <p>Find the Cartesian equation of the plane containing points $\ds M(2,2,-2)$, $\ds N(1,-1,3)$ and $\ds P(4,0,2)$.</p>
+                <div class="solution-title">Solution</div>
+                <p>The equation of the plane containing M, N and P is</p>
+                <p>$\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 2 \\ 2 \\ -2 \end{pmatrix} + t_1\begin{pmatrix} -1 \\ -3 \\ 5 \end{pmatrix} + t_2\begin{pmatrix} 2 \\ -2 \\ 4 \end{pmatrix}.$ [See Example 18]</p>
+                <p>$\ds x = 2 - t_1 + 2t_2 \quad \text{------(1)}$</p>
+                <p>$\ds y = 2 - 3t_1 - 2t_2 \quad \text{------(2)}$</p>
+                <p>$\ds z = -2 + 5t_1 + 4t_2 \quad \text{------(3)}$</p>
+                <p>Add equations (1) and (2),</p>
+                <p>$\ds x + y = 4 - 4t_1 \quad \text{------(4)}$</p>
+                <p>Multiply equation (2) by 2 and then add (3),</p>
+                <p>$\ds 2y + z = 2 - t_1 \quad \text{------(5)}$</p>
+                <p>From equations (4) and (5), we obtain</p>
+                <p>$\ds \frac{x+y-4}{-4} = \frac{2y+z-2}{-1}$</p>
+                <p>$\ds -x - y + 4 = -8y - 4z + 8$</p>
+                <p>$\ds x - 7y - 4z = -4$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 20</h4>
+                <p>Determine whether points $\ds A(3,-1,4),$ $\ds B(2,1,1)$, $\ds C(4,3,1)$ and $\ds D(-3,1,4)$ lie in the same plane.</p>
+                <div class="solution-title">Solution</div>
+                <p>The equation of the plane containing A, B and C is</p>
+                <p>$\ds \vec{r} = \overrightarrow{OA} + t_1\overrightarrow{AB} + t_2\overrightarrow{AC} = \begin{pmatrix} 3 \\ -1 \\ 4 \end{pmatrix} + t_1\begin{pmatrix} -1 \\ 2 \\ -3 \end{pmatrix} + t_2\begin{pmatrix} 1 \\ 4 \\ -3 \end{pmatrix} = \begin{pmatrix} 3-t_1+t_2 \\ -1+2t_1+4t_2 \\ 4-3t_1-3t_2 \end{pmatrix}$</p>
+                <p>If D is on the plane, then $\ds \vec{r} = \overrightarrow{OD},$</p>
+                <p>$\ds 3 - t_1 + t_2 = -3 \quad \text{------(1)}$</p>
+                <p>$\ds -1 + 2t_1 + 4t_2 = 1 \quad \text{------(2)}$</p>
+                <p>$\ds 4 - 3t_1 - 3t_2 = 4 \quad \text{------(3)}$</p>
+                <p>Multiply equation (1) by 2, we get</p>
+                <p>$\ds -2t_1 + 2t_2 = -12 \quad \text{------(4)}$</p>
+                <p>From (2) and (4), we obtain</p>
+                <p>$\ds t_1 = \frac{13}{3}, t_2 = -\frac{5}{3}.$</p>
+                <p>Substitute the values of $\ds t_1$ and $\ds t_2$ in left hand side of equation (3), we get</p>
+                <p>$\ds 4 - 3\left(\frac{13}{3}\right) - 3\left(-\frac{5}{3}\right) = -4 \ne 4.$</p>
+                <p>So, D does not lie on the same plane as A, B and C.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 21</h4>
+                <p>Find a vector equation of the plane containing the line $\ds \vec{r} = \begin{pmatrix} -2 \\ 1 \\ 2 \end{pmatrix} + t\begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$ and point $\ds A(3,-1,2)$.</p>
+                <div class="solution-title">Solution</div>
+                <p>Let $\ds \overrightarrow{OA} = \begin{pmatrix} 3 \\ -1 \\ 2 \end{pmatrix}.$ The vector $\ds \vec{d_1} = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$ is on the plane.</p>
+                <p>$\ds B(-2,1,2)$ is on the plane and so</p>
+                <p>$\ds \vec{d_2} = \overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \begin{pmatrix} -2 \\ 1 \\ 2 \end{pmatrix} - \begin{pmatrix} 3 \\ -1 \\ 2 \end{pmatrix} = \begin{pmatrix} -5 \\ 2 \\ 0 \end{pmatrix}.$</p>
+                <p>We see that $\ds \vec{d_2}$ is also on the plane. Therefore, the vector equation of the plane is</p>
+                <p>$\ds \vec{r} = \begin{pmatrix} 3 \\ -1 \\ 2 \end{pmatrix} + t_1\begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix} + t_2\begin{pmatrix} -5 \\ 2 \\ 0 \end{pmatrix}.$</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 22</h4>
+                <p>Vector $\ds \vec{n} = \begin{pmatrix} 2 \\ 4 \\ -2 \end{pmatrix}$ is perpendicular to the plane which contains point $\ds A(1,-5,2)$</p>
+                <p>(a) Write an equation of the plane in the form $\ds \vec{r} \cdot \vec{n} = d$</p>
+                <p>(b) Find the Cartesian equation of the plane.</p>
+                <div class="solution-title">Solution</div>
+                <p>(a) The vector equation of the plane is $\ds \vec{r} \cdot \vec{n} = \vec{a} \cdot \vec{n}.$</p>
+                <p>$\ds \vec{r} \cdot \vec{n} = \begin{pmatrix} 1 \\ -5 \\ 2 \end{pmatrix} \cdot \begin{pmatrix} 2 \\ 4 \\ -2 \end{pmatrix} = 2 - 20 - 4 = -22$</p>
+                <p>$\ds \vec{r} \cdot \vec{n} = -22$</p>
+                <p>(b) $\ds \begin{pmatrix} x \\ y \\ z \end{pmatrix} \cdot \begin{pmatrix} 2 \\ 4 \\ -2 \end{pmatrix} = -22$</p>
+                <p>$\ds 2x + 4y - 2z = -22$</p>
+            </div>
+
+            <div class="exercise-box">
+                <h4>Exercise 4.4</h4>
+                <ol>
+                    <li>Find the vector equation of the line:
+                        <ol type="a">
+                            <li>parallel to $\ds \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}$ and through the point $\ds (1,3,-7)$.</li>
+                            <li>through $\ds (0,1,2)$ and with direction vector $\ds \hat{i} + \hat{j} - 2\hat{k}.$</li>
+                            <li>parallel to the x-axis and through the point $\ds (-2,2,2)$.</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <ol type="a">
+                            <li>Find the Cartesian equation of the line with parametric equation $\ds x = 3t + 1$, $\ds y = 4 - 2t$, $\ds z = 3t - 1.$</li>
+                            <li>Find the unit vector in the direction of the line.</li>
+                        </ol>
+                    </li>
+                    <li>Find the equation of the plane:
+                        <ol type="a">
+                            <li>with normal vector $\ds \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$ and which passes through $\ds (-1, 2, 4)$.</li>
+                            <li>perpendicular to the line joining points $\ds A(2, 3, 1)$ and $\ds B(5, 7, 2)$ and which passes through A.</li>
+                            <li>containing $\ds A(3, 2, 1)$ and the line $\ds x=1+t$, $\ds y=2-t$, $\ds z=3+2t$.</li>
+                        </ol>
+                    </li>
+                    <li>Find the equation of the plane through $\ds A(-1,2,1)$, $\ds B(4,1,1)$ and $\ds C(2,0,3)$:
+                        <ol type="a">
+                            <li>in vector form</li>
+                            <li>in Cartesian form.</li>
+                        </ol>
+                    </li>
+                    <li>Find the Cartesian equation of the plane with vector equation $\ds \vec{r} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} + t_1\begin{pmatrix} 1 \\ 1 \\ 2 \end{pmatrix} + t_2\begin{pmatrix} 2 \\ -1 \\ 5 \end{pmatrix}.$</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
