@@ -3,127 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 1: Complex Number | Target Mathematics</title>
+    <title>Chapter 1: Complex Numbers | Target Mathematics</title>
     <link rel="icon" type="image/ico" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     
     <script>
+        // Recursive Error လုံးဝမဖြစ်စေရန် Native \over ကိုသာ သုံးထားပါသည်
+        // Math Font များ Uniform ဖြစ်စေရန် matchFontHeight: false ကို ထည့်သွင်းထားပါသည်
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    frac: ["{\\displaystyle {#1 \\over #2}}", 2]
+                }
+            },
+            chtml: {
+                displayAlign: "center",
+                matchFontHeight: false, 
+                scale: 1
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        // Display Math များအတွက် Wrapper (Block Level Swipe)
+                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'math-display-wrapper';
+                            node.parentNode.insertBefore(wrapper, node);
+                            wrapper.appendChild(node);
+                        });
+                        
+                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
+                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
+                            const wrapper = document.createElement('span');
+                            wrapper.className = 'math-inline-wrapper';
+                            node.parentNode.insertBefore(wrapper, node);
+                            wrapper.appendChild(node);
+                        });
+                    });
+                }
             }
         };
     </script>
-   <script id="MathJax-script" async src="mathjax.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     
     <style>
-        body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
-        header { background: #0056b3; color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        /* Global Styles & Fixed Width Prevention */
+        html, body { 
+            overflow-x: hidden; 
+            width: 100%; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background-color: #f4f7f6; 
+        }
+        
+        header { 
+            background: #0056b3; 
+            color: white; 
+            padding: 20px 0; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        
         .logo { font-size: 28px; font-weight: 600; letter-spacing: 2px; color: #f39c12; }
         .logo span { color: #f4f6f1; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        .content-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; text-align: left; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+        
+        .content-box { 
+            background: #fff; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+            margin-bottom: 40px; 
+            text-align: left; 
+            box-sizing: border-box; 
+            width: 100%;
+        }
+        
         .content-box h1 { color: #333; margin-bottom: 20px; text-align: center; font-family: 'Alice', serif; }
         .content-box h2 { color: #0056b3; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
         .content-box h3 { color: #444; margin-top: 25px; }
-        .content-box p { color: #555; line-height: 1.8; font-size: 16px; margin-bottom: 15px; }
-        
-        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+        .content-box p { color: #555; line-height: 1.8; font-size: 16px; margin-bottom: 15px; word-wrap: break-word; }
 
-        .example-box { border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 25px 0; background: #fafafa; overflow-x: auto; max-width: 100%; box-sizing: border-box; }
-        .example-box h4 { margin-top: 0; color: #222; font-size: 18px; }
-        .exercise-box { border: 2px dashed #ccc; padding: 25px; border-radius: 8px; margin: 35px 0; overflow-x: auto; max-width: 100%; box-sizing: border-box; }
-        .exercise-box h4 { color: #d9534f; margin-top: 0; font-size: 20px; }
-        .problem-box { border: 1px solid #e0e0e0; padding: 35px; border-radius: 10px; margin-bottom: 40px; background: #fafafa; box-shadow: 0 2px 10px rgba(0,0,0,0.02); overflow-x: auto; max-width: 100%; box-sizing: border-box; }
-        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 22px; margin-bottom: 20px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
-        .problem-box p { color: #333; font-size: 16px; line-height: 1.8; margin-bottom: 15px; word-wrap: break-word; }
+        /* 1. Box များကို မျက်နှာပြင်အပြည့်ယူစေပြီး Page အပြင်သို့ Scroll မထွက်စေရန် Fixed ထားခြင်း */
+        .example-box, .exercise-box, .problem-box, .concept-box, .hint-box { 
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 8px; 
+            overflow: hidden; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
         
+        .example-box { border: 1px solid #e0e0e0; padding: 25px; margin: 25px 0; background: #fafafa; }
+        .example-box h4 { margin-top: 0; color: #222; font-size: 18px; }
+        .exercise-box { border: 2px dashed #ccc; padding: 25px; margin: 35px 0; background: #fff; }
+        .exercise-box h4 { color: #d9534f; margin-top: 0; font-size: 20px; margin-bottom: 20px; }
+        .problem-box { border: 1px solid #e0e0e0; padding: 35px; margin-bottom: 40px; background: #fafafa; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 22px; margin-bottom: 20px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .concept-box { background-color: #e8f4f8; border-left: 5px solid #2980b9; padding: 20px; margin: 20px 0; }
+        .hint-box { background-color: #fcebeb; border-left: 5px solid #c0392b; padding: 15px; margin: 20px 0; font-style: italic; }
+
+        /* ==================================================================== */
+        /* 2. THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Inline & Display Wrapper) */
+        /* ==================================================================== */
+        .math-display-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            scrollbar-width: none;
+        }
+        .math-display-wrapper::-webkit-scrollbar { display: none; }
+
+        .math-inline-wrapper {
+            display: inline-block;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            vertical-align: middle;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .math-inline-wrapper::-webkit-scrollbar { display: none; }
+
+        mjx-container {
+            max-width: none !important; /* Wrapper က ထိန်းချုပ်မည်ဖြစ်၍ Math ကို လွတ်လပ်စွာ နေရာယူခွင့်ပေးမည် */
+        }
+        
+        mjx-container[display="true"] {
+            margin: 0 !important; 
+            padding: 5px 0 !important;
+        }
+        /* ==================================================================== */
+
         .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 10px; }
-        table.math-table { width: 100%; max-width: 500px; border-collapse: collapse; margin: 20px auto; }
+        
+        table.math-table { 
+            width: 100%; 
+            max-width: 500px; 
+            border-collapse: collapse; 
+            margin: 20px auto; 
+            word-wrap: break-word;
+        }
         table.math-table th, table.math-table td { border: 1px solid #ccc; padding: 10px; text-align: center; }
         table.math-table th { background-color: #f0f0f0; }
-        .flex-container { display: flex; flex-wrap: wrap; gap: 20px; }
-        .flex-item { flex: 1; min-width: 200px; }
-        .svg-container { text-align: center; margin: 30px 0; display: flex; justify-content: center; max-width: 100%; overflow-x: auto; }
+        
+        /* Exercise Box အတွင်း Responsive Flex-container များ */
+        .flex-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        
+        /* Flex item ကိုယ်တိုင် Swipe လုပ်နိုင်အောင် ထပ်မံကာကွယ်ပေးထားသည် */
+        .flex-item { 
+            flex: 1 1 200px; 
+            min-width: 0; 
+            max-width: 100%;
+            box-sizing: border-box; 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .flex-item::-webkit-scrollbar { display: none; }
+        
+        /* SVG Responsive Settings - Desktop တွင် အဆမတန် မကြီးစေရန် ထိန်းချုပ်ထားသည် */
+        .svg-container { 
+            text-align: center; 
+            margin: 30px 0; 
+            display: flex; 
+            justify-content: center; 
+            width: 100%; 
+            align-items: center; 
+            overflow: hidden; 
+            box-sizing: border-box;
+        }
+        .svg-diagram { 
+            width: 100%; 
+            max-width: 350px; 
+            height: auto; 
+            display: block;
+        }
         svg text { font-family: 'Open Sans', sans-serif; font-size: 14px; }
-        .concept-box { background-color: #e8f4f8; border-left: 5px solid #2980b9; padding: 20px; margin: 20px 0; border-radius: 4px; overflow-x: auto; max-width: 100%; box-sizing: border-box; }
-        .concept-box p { margin-bottom: 10px; }
-        .hint-box { background-color: #fcebeb; border-left: 5px solid #c0392b; padding: 15px; margin: 20px 0; font-style: italic; overflow-x: auto; max-width: 100%; box-sizing: border-box; }
 
-        ul, ol {
-            margin-bottom: 20px;
-            font-size: 1.1em;
-            padding-left: 40px; 
-            color: #555;
-            line-height: 1.8;
-        }
-        li {
-            margin-bottom: 15px;
-            padding-left: 5px; 
-        }
-        ol ol, ul ul, ol ul, ul ol {
-            margin-top: 15px;
-        }
+        ul, ol { margin-bottom: 20px; font-size: 1.1em; padding-left: 35px; color: #555; line-height: 1.8; word-wrap: break-word; }
+        li { margin-bottom: 15px; padding-left: 5px; }
+        ol ol, ul ul, ol ul, ul ol { margin-top: 15px; }
 
-        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
-        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; }
-        .btn-nav:hover { background-color: #004494; }
-
+        /* ==================================================================== */
+        /* 3. MOBILE RESPONSIVE (100% Uniform Adjustments) */
+        /* ==================================================================== */
         @media (max-width: 768px) {
-            .content-box { padding: 25px 20px; }
-            .problem-box { padding: 20px; margin-bottom: 25px; }
+            .content-box { padding: 25px 15px; }
+            .example-box, .exercise-box, .problem-box, .concept-box { padding: 15px; }
             .problem-box h4 { font-size: 18px; }
-            .page-navigation { flex-direction: column; gap: 15px; }
-            .btn-nav { width: 100%; box-sizing: border-box; }
-        }
-        .top-nav-box {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background-color: #fff;
-            border-radius: 12px;
-            padding: 10px;
-            margin-top: -25px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 15px;
-            z-index: 100;
-        }
-        .nav-link {
-            padding: 12px 30px;
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            font-size: 15px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #0056b3;
-            background-color: #f4f7f6;
-        }
-        .nav-link.active {
-            color: #0056b3;
-            background-color: #e8f4f8;
-        }
-        @media (max-width: 768px) {
-            .top-nav-box { flex-direction: row; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
-            .nav-link { flex: 1; text-align: center; padding: 12px 10px; font-size: 14px; }
+            
+            /* Mobile တွင် Flex Item များကို အလိုအလျောက် အောက်သို့ စီချမည် (Stack vertically) */
+            .flex-container { 
+                flex-direction: column; 
+                gap: 15px; 
+            }
+            .flex-item { 
+                flex: 1 1 100%; 
+                width: 100%; 
+            }
+            
+            ul, ol { padding-left: 20px; } /* Mobile တွင် ဘေးသားနေရာ ပိုရစေရန် */
+            
+            /* SVG များကို mobile တွင် ပိုမိုရှင်းလင်းစေရန် */
+            .svg-container { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    
-
     <div class="container">
         
         <div class="content-box">
             <h1>Chapter 1: Complex Numbers</h1>
+
             <p>In this chapter we introduce a new number system which is the extension of the real number system.</p>
+            
             <h2>1.1 Pure Imaginary Unit i</h2>
             
             <div class="concept-box">
@@ -136,18 +247,27 @@
             </div>
 
             <p>Since we have known that $x^{2}\ge0$ for every real number $x$, the equation $x^{2}=-4$ has no real solution.</p>
+
             <p>But if there is a pure imaginary unit $i$ such that</p>
+
             $$i^{2}=-1$$
+
             <p>with acceptance of the usual operations on real numbers and $i$ such as</p>
+
             $$(2i)^{2}=4i^{2}=4(-1)=-4 \quad \text{and} \quad (-2i)^{2}=4i^{2}=4(-1)=-4$$
+
             <p>then $x^{2}=-4$ has two solutions $2i$ and $-2i$.</p>
+
             <p>If we try to solve $x^{2}=-n$, for $n>0$, like $x^{2}=-4$, then $\sqrt{n}i$ and $-\sqrt{n}i$ are solutions because</p>
+
             $$(\pm\sqrt{n}i)^{2}=ni^{2}=n(-1)=-n$$
 
             <div class="example-box">
                 <h4>Example 1.</h4>
                 <p>Solve $x^{2}+2x+5=0$</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 x^{2}+2x+5&=0 \\
@@ -157,13 +277,16 @@
                 x&=-1\pm2i
                 \end{aligned}
                 $$
+
                 <p>So there are two solutions $x=-1+2i$ and $x=-1-2i$.</p>
             </div>
 
             <div class="example-box">
                 <h4>Example 2.</h4>
                 <p>Solve $x^{2}+2x+3=0$ and check your answers.</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 x^{2}+2x+3&=0 \\
@@ -173,8 +296,11 @@
                 x&=-1\pm\sqrt{2}i
                 \end{aligned}
                 $$
+
                 <p>So two solutions are $x=-1+\sqrt{2}i$ and $x=-1-\sqrt{2}i$.</p>
+
                 <p>For $x=-1+\sqrt{2}i$,</p>
+
                 $$
                 \begin{aligned}
                 x^{2}+2x+3&=(-1+\sqrt{2}i)^{2}+2(-1+\sqrt{2}i)+3 \\
@@ -183,7 +309,9 @@
                 &=0
                 \end{aligned}
                 $$
+
                 <p>For $x=-1-\sqrt{2}i$,</p>
+
                 $$
                 \begin{aligned}
                 x^{2}+2x+3&=(-1-\sqrt{2}i)^{2}+2(-1-\sqrt{2}i)+3 \\
@@ -207,10 +335,15 @@
             <div class="example-box">
                 <h4>Example 3.</h4>
                 <p>If given that $-1$ is a root of the cubic equation $z^3 - z^2 + 3z + 5 = 0$, find the remaining roots.</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p>Since $-1$ is a root, $(z+1)$ is a factor.</p>
+
                 <p>Use algebraic long division (or inspection) to divide $z^3 - z^2 + 3z + 5$ by $(z+1)$ to get a quadratic factor $(z^2 - 2z + 5)$.</p>
+
                 <p>Solve the quadratic factor $z^2 - 2z + 5 = 0$ by completing the square:</p>
+
                 $$
                 \begin{aligned}
                 z^{2}-2z+1&=-4 \\
@@ -219,6 +352,7 @@
                 z&=1\pm2i
                 \end{aligned}
                 $$
+
                 <p>The remaining two complex roots are a conjugate pair: $1+2i$ and $1-2i$.</p>
             </div>
 
@@ -229,8 +363,6 @@
                         <div class="flex-container">
                             <div class="flex-item">(a) $x^{2}-6x+10=0$</div>
                             <div class="flex-item">(b) $-2x^{2}+4x-3=0$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(c) $5x^{2}-2x+1=0$</div>
                             <div class="flex-item">(d) $3x^{2}+7x+5=0$</div>
                         </div>
@@ -246,11 +378,15 @@
             </div>
 
             <h2>1.2 Complex Number (x, y)</h2>
+
             <p>As we have just seen in Section 1.1, there are numbers like $x_{1}+y_{1}i$ and $x_{2}+y_{2}i$ such that</p>
+
             $$
             (x_{1}+y_{1}i)+(x_{2}+y_{2}i)=(x_{1}+x_{2})+(y_{1}+y_{2})i
             $$
+
             <p>and</p>
+
             $$
             \begin{aligned}
             (x_{1}+y_{1}i)(x_{2}+y_{2}i)&=x_{1}x_{2}+(x_{1}y_{2}+y_{1}x_{2})i+y_{1}y_{2}i^{2} \\
@@ -258,17 +394,22 @@
             &=(x_{1}x_{2}-y_{1}y_{2})+(x_{1}y_{2}+y_{1}x_{2})i
             \end{aligned}
             $$
+
             <p>for real numbers $x_{1}$, $x_{2}$, $y_{1}$, $y_{2}$, so we define the number $x+yi$ as follows.</p>
+
             <p>A complex number is an ordered pair $(x, y)$ of real numbers with equality and operations - sum and product - of two complex numbers $(x_{1},y_{1})$, $(x_{2},y_{2})$ are defined as follows:</p>
             <ul>
                 <li><b>Equality:</b> $(x_{1},y_{1})=(x_{2},y_{2})$ if and only if $x_{1}=x_{2}$ and $y_{1}=y_{2}$</li>
                 <li><b>Sum:</b> $(x_{1},y_{1})+(x_{2},y_{2})=(x_{1}+x_{2},y_{1}+y_{2})$</li>
                 <li><b>Product:</b> $(x_{1},y_{1})(x_{2},y_{2})=(x_{1}x_{2}-y_{1}y_{2},x_{1}y_{2}+y_{1}x_{2})$</li>
             </ul>
+
             <p>Then we have</p>
+
             $$
             (x,0)+(y,0)=(x+y,0) \quad \text{and} \quad (x,0)(y,0)=(xy,0)
             $$
+
             <p>From these facts, all real numbers can be considered as complex numbers as shown in the following table.</p>
             
             <table class="math-table">
@@ -283,10 +424,15 @@
             </table>
 
             <p>Since $(0,1)(0,1)=(0-1,0+0)=(-1,0)$, let us denote</p>
+
             $$i=(0,1)$$
+
             <p>and with the convention $i^{2}=ii$, $i^{3}=i^{2}i$, etc., we have</p>
+
             $$i^{2}=(0,1)(0,1)=(0-1,0+0)=(-1,0)=-1$$
+
             <p>And we have</p>
+
             $$
             \begin{aligned}
             x+yi&=(x,0)+(y,0)(0,1) \\
@@ -295,13 +441,17 @@
             x+yi&=(x,y)
             \end{aligned}
             $$
+
             <p>Note that sum and product of complex numbers satisfy commutative, associative and distributive properties.</p>
 
             <div class="example-box">
                 <h4>Example 4.</h4>
                 <p>Compute $(-2,3)(1,-2)+(1,1)(0,1)$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p><b>Method 1</b></p>
+
                 $$
                 \begin{aligned}
                 (-2,3)(1,-2)+(1,1)(0,1)&=(-2-(-6),4+3)+(0-1,1+0) \\
@@ -309,7 +459,9 @@
                 &=(3,8)
                 \end{aligned}
                 $$
+
                 <p><b>Method 2</b></p>
+
                 $$
                 \begin{aligned}
                 (-2,3)(1,-2)+(1,1)(0,1)&=(-2+3i)(1-2i)+(1+i)i \\
@@ -326,8 +478,11 @@
                 <h4>Example 5.</h4>
                 <p>You can multiply complex numbers using the same technique that you use for multiplying brackets in algebra. You can use the fact that $i^2 = -1$ to simplify powers of $i$. Express in the form $x+yi$:</p>
                 <p>(a) $(2+3i)(4+5i) \quad$ (b) $(7-4i)^2$</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p><b>(a)</b></p>
+
                 $$
                 \begin{aligned}
                 (2+3i)(4+5i)&= 2(4+5i) + 3i(4+5i) \\
@@ -336,7 +491,9 @@
                 &= -7 + 22i
                 \end{aligned}
                 $$
+
                 <p><b>(b)</b></p>
+
                 $$
                 \begin{aligned}
                 (7-4i)^2&= (7-4i)(7-4i) \\
@@ -354,8 +511,6 @@
                         <div class="flex-container">
                             <div class="flex-item">(a) $(2,0)(3,5)+(3,-2)(0,1)$</div>
                             <div class="flex-item">(b) $(2,-5)(-1,0)+(1,0)(5,1)$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(c) $(-3,-2)(-2,-3)+(-2,-3)(-3,-2)$</div>
                             <div class="flex-item">(d) $(1,0)(0,1)+(0,1)(1,0)$</div>
                         </div>
@@ -364,8 +519,6 @@
                         <div class="flex-container">
                             <div class="flex-item">(a) $(3+2i)(3-2i)+(-5+7i)(-1-i)$</div>
                             <div class="flex-item">(b) $(-1+i)(1-i)+(2+3i)$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(c) $(1+i)(1-i)+(-2+i)(-2+i)$</div>
                             <div class="flex-item">(d) $(3+2i)+(7-i)(-3+3i)$</div>
                         </div>
@@ -374,7 +527,9 @@
             </div>
 
             <h2>1.3 Operations on Complex Numbers</h2>
+
             <p>Sum and product of complex numbers were defined in Section 1.2. Subtraction of complex numbers is defined as in real numbers as follows:</p>
+
             $$
             (x_{1}+y_{1}i)-(x_{2}+y_{2}i)=(x_{1}+y_{1}i)+(-x_{2}-y_{2}i)
             $$
@@ -383,48 +538,76 @@
 
             <div class="flex-container" style="justify-content: space-around; margin: 30px 0;">
                 <div class="svg-container">
-                    <svg width="350" height="300" viewBox="-50 -200 300 300">
-                        <text x="0" y="-180" font-weight="bold">Addition: z₁ + z₂</text>
-                        <line x1="-30" y1="0" x2="230" y2="0" stroke="black"/>
-                        <line x1="0" y1="50" x2="0" y2="-170" stroke="black"/>
-                        <line x1="0" y1="0" x2="120" y2="-40" stroke="#27ae60" stroke-width="2"/>
-                        <text x="130" y="-30" fill="#27ae60">z₁ (4+i)</text>
-                        <line x1="0" y1="0" x2="60" y2="-100" stroke="#8e44ad" stroke-width="2"/>
-                        <text x="50" y="-110" fill="#8e44ad">z₂ (3+3i)</text>
-                        <line x1="0" y1="0" x2="180" y2="-140" stroke="#e67e22" stroke-width="3"/>
-                        <text x="190" y="-140" fill="#e67e22">z₁+z₂ (7+4i)</text>
-                        <line x1="120" y1="-40" x2="180" y2="-140" stroke="#7f8c8d" stroke-dasharray="4"/>
-                        <line x1="60" y1="-100" x2="180" y2="-140" stroke="#7f8c8d" stroke-dasharray="4"/>
+                    <svg class="svg-diagram" viewBox="0 0 250 200">
+                        <text x="0" y="15" font-weight="bold" font-size="14">Addition: z₁ + z₂</text>
+                        <line x1="20" y1="160" x2="230" y2="160" stroke="#888" stroke-width="1.5" />
+                        <line x1="40" y1="180" x2="40" y2="20" stroke="#888" stroke-width="1.5" />
+                        <text x="215" y="150" fill="#555" font-size="12">Re</text>
+                        <text x="15" y="30" fill="#555" font-size="12">Im</text>
+                        <text x="25" y="175" fill="#555" font-size="12">O</text>
+
+                        <line x1="40" y1="160" x2="120" y2="140" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="120" cy="140" r="3" fill="#27ae60"/>
+                        <text x="125" y="135" fill="#27ae60" font-size="12">z₁</text>
+
+                        <line x1="40" y1="160" x2="80" y2="80" stroke="#8e44ad" stroke-width="2"/>
+                        <circle cx="80" cy="80" r="3" fill="#8e44ad"/>
+                        <text x="85" y="75" fill="#8e44ad" font-size="12">z₂</text>
+
+                        <line x1="40" y1="160" x2="160" y2="60" stroke="#e67e22" stroke-width="2.5"/>
+                        <circle cx="160" cy="60" r="3" fill="#e67e22"/>
+                        <text x="165" y="55" fill="#e67e22" font-size="12" font-weight="bold">z₁+z₂</text>
+
+                        <line x1="120" y1="140" x2="160" y2="60" stroke="#7f8c8d" stroke-dasharray="4"/>
+                        <line x1="80" y1="80" x2="160" y2="60" stroke="#7f8c8d" stroke-dasharray="4"/>
                     </svg>
                 </div>
                 
                 <div class="svg-container">
-                    <svg width="350" height="300" viewBox="-150 -200 200 300">
-                        <text x="-120" y="-180" font-weight="bold">Subtraction: z₁ - z₂</text>
-                        <line x1="-140" y1="0" x2="40" y2="0" stroke="black"/>
-                        <line x1="0" y1="50" x2="0" y2="-170" stroke="black"/>
-                        <line x1="0" y1="0" x2="40" y2="-100" stroke="#27ae60" stroke-width="2"/>
-                        <text x="45" y="-105" fill="#27ae60">z₁</text>
-                        <line x1="0" y1="0" x2="80" y2="-40" stroke="#8e44ad" stroke-width="2"/>
-                        <text x="85" y="-45" fill="#8e44ad">z₂</text>
-                        <line x1="0" y1="0" x2="-80" y2="40" stroke="#8e44ad" stroke-width="2" stroke-dasharray="4"/>
-                        <text x="-90" y="55" fill="#8e44ad">-z₂</text>
-                        <line x1="0" y1="0" x2="-40" y2="-60" stroke="#e67e22" stroke-width="3"/>
-                        <text x="-60" y="-70" fill="#e67e22">z₁-z₂</text>
-                        <line x1="-80" y1="40" x2="-40" y2="-60" stroke="#7f8c8d" stroke-dasharray="4"/>
-                        <line x1="40" y1="-100" x2="-40" y2="-60" stroke="#7f8c8d" stroke-dasharray="4"/>
+                    <svg class="svg-diagram" viewBox="0 0 250 250">
+                        <text x="0" y="15" font-weight="bold" font-size="14">Subtraction: z₁ - z₂</text>
+                        <line x1="20" y1="120" x2="230" y2="120" stroke="#888" stroke-width="1.5" />
+                        <line x1="125" y1="230" x2="125" y2="20" stroke="#888" stroke-width="1.5" />
+                        <text x="215" y="110" fill="#555" font-size="12">Re</text>
+                        <text x="95" y="30" fill="#555" font-size="12">Im</text>
+                        <text x="110" y="135" fill="#555" font-size="12">O</text>
+
+                        <line x1="125" y1="120" x2="185" y2="80" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="185" cy="80" r="3" fill="#27ae60"/>
+                        <text x="190" y="75" fill="#27ae60" font-size="12">z₁</text>
+
+                        <line x1="125" y1="120" x2="165" y2="40" stroke="#8e44ad" stroke-width="2"/>
+                        <circle cx="165" cy="40" r="3" fill="#8e44ad"/>
+                        <text x="170" y="35" fill="#8e44ad" font-size="12">z₂</text>
+
+                        <line x1="125" y1="120" x2="85" y2="200" stroke="#8e44ad" stroke-width="2" stroke-dasharray="4"/>
+                        <circle cx="85" cy="200" r="3" fill="#8e44ad"/>
+                        <text x="55" y="210" fill="#8e44ad" font-size="12">-z₂</text>
+
+                        <line x1="125" y1="120" x2="145" y2="160" stroke="#e67e22" stroke-width="2.5"/>
+                        <circle cx="145" cy="160" r="3" fill="#e67e22"/>
+                        <text x="150" y="175" fill="#e67e22" font-size="12" font-weight="bold">z₁-z₂</text>
+
+                        <line x1="185" y1="80" x2="145" y2="160" stroke="#7f8c8d" stroke-dasharray="4"/>
+                        <line x1="85" y1="200" x2="145" y2="160" stroke="#7f8c8d" stroke-dasharray="4"/>
+                        <line x1="165" y1="40" x2="185" y2="80" stroke="#95a5a6" stroke-width="1.5" stroke-dasharray="2"/>
                     </svg>
                 </div>
             </div>
 
             <p>Therefore sum, product and subtraction of complex numbers can be performed as in the real numbers, except only that $i^{2}=-1$. But the division of complex numbers is a little different from the division of real numbers. We need some notations to define the division.</p>
+
             <p>From now on let us denote a complex number by $z$, so that</p>
+
             $$z=x+yi=(x,y)$$
             
             <div class="concept-box">
                 <p>The conjugate $\overline{z}$ (also denoted as $z^*$) of a complex number $z=x+yi=(x,y)$ is defined by</p>
+
                 $$\overline{z}=x-yi=(x,-y)$$
+
                 <p>Together, $z$ and $\overline{z}$ are called a complex conjugate pair.</p>
+
                 <p><strong>Important Properties:</strong></p>
                 <ul>
                     <li>$z + \overline{z} = (x+yi) + (x-yi) = 2x$ (which is always a real number).</li>
@@ -433,6 +616,7 @@
             </div>
 
             <p>Let $z_{1}=x_{1}+y_{1}i$ and $z_{2}=x_{2}+y_{2}i$. We will calculate $\frac{z_{1}}{z_{2}}$, $(z_{2}\ne0)$, as follows:</p>
+
             $$
             \begin{aligned}
             \frac{z_{1}}{z_{2}}&=\frac{z_{1}}{z_{2}}\frac{\overline{z}_{2}}{\overline{z}_{2}} \\
@@ -445,7 +629,9 @@
             <div class="example-box">
                 <h4>Example 6.</h4>
                 <p>Calculate $\frac{2+3i}{3+i}$</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 \frac{2+3i}{3+i}&=\frac{2+3i}{3+i}\frac{3-i}{3-i} \\
@@ -459,8 +645,11 @@
             <div class="example-box">
                 <h4>Example 7.</h4>
                 <p>Write $\frac{5+4i}{2-3i}$ in the form $x+yi$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p>Multiply numerator and denominator by the conjugate of the denominator ($2+3i$):</p>
+
                 $$
                 \begin{aligned}
                 \frac{5+4i}{2-3i}&=\frac{5+4i}{2-3i} \times \frac{2+3i}{2+3i} \\
@@ -473,6 +662,7 @@
             </div>
 
             <p>Now we calculate $\frac{1}{z}$ for $z=x+yi$, $z\ne0$.</p>
+
             $$
             \begin{aligned}
             \frac{1}{z}&=\frac{1}{x+yi}\frac{x-yi}{x-yi} \\
@@ -480,7 +670,9 @@
             &=\frac{x}{x^{2}+y^{2}}-\frac{y}{x^{2}+y^{2}}i
             \end{aligned}
             $$
+
             <p>And we can check that</p>
+
             $$
             \begin{aligned}
             z\left(\frac{1}{z}\right)&=(x+yi)\left(\frac{x}{x^{2}+y^{2}}-\frac{y}{x^{2}+y^{2}}i\right) \\
@@ -488,9 +680,13 @@
             &=1
             \end{aligned}
             $$
+
             <p>So, for a non-zero complex number $z$, $\frac{1}{z}$ is the multiplicative inverse of $z$ and is denoted by $z^{-1}$.</p>
+
             <p>From these facts, division of complex numbers is defined as</p>
+
             $$\frac{z_{1}}{z_{2}}=z_{1}{z_{2}}^{-1}$$
+
             <p>but we usually calculate $\frac{z_{1}}{z_{2}}$ as in Example 6 and 7.</p>
 
             <div class="exercise-box">
@@ -501,18 +697,12 @@
                             <div class="flex-item">(a) $z_{1}^{2}-2z_{1}+1$</div>
                             <div class="flex-item">(b) $3z_{2}^{2}+2z_{2}-1$</div>
                             <div class="flex-item">(c) $z_{1}\overline{z_{2}}+z_{2}\overline{z_{1}}$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(d) $\frac{1}{z_{1}}$</div>
                             <div class="flex-item">(e) $\frac{1}{z_{2}}$</div>
                             <div class="flex-item">(f) $\frac{\overline{z_{1}}}{\overline{z_{2}}}$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(g) $\frac{z_{1}}{z_{2}}$</div>
                             <div class="flex-item">(h) $\frac{1}{z_{1}z_{2}}$</div>
                             <div class="flex-item">(i) $\frac{z_{2}}{z_{1}}$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(k) $\frac{\overline{z_{1}}z_{2}}{z_{1}\overline{z_{2}}}$</div>
                             <div class="flex-item">(l) $\frac{z_{2}}{z_{1}}+\frac{z_{1}}{z_{2}}$</div>
                             <div class="flex-item">(m) $\left(\frac{z_{2}}{z_{1}}\right)^{2}$</div>
@@ -529,11 +719,12 @@
             </div>
 
             <h2>1.4 Trigonometric Form</h2>
+
             <p>As a complex number $z=x+yi$ is an ordered pair $(x, y)$ of real numbers, we can place $z$ in $xy$-coordinate plane as usual. You can represent complex numbers on an Argand diagram. The x-axis is called the <strong>real axis (Re)</strong> and the y-axis is called the <strong>imaginary axis (Im)</strong>. The complex number $z = x + iy$ is represented by the point $P(x,y)$.</p>
             
             <div class="flex-container" style="justify-content: space-around; margin: 30px 0;">
-                <div class="svg-container">
-                    <svg width="250" height="250" viewBox="0 0 250 250">
+                <div class="svg-container" style="max-width: 45%;">
+                    <svg class="svg-diagram" viewBox="0 0 250 250">
                         <line x1="30" y1="200" x2="230" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
                         <line x1="60" y1="230" x2="60" y2="30" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
                         <text x="40" y="220">O</text>
@@ -548,8 +739,8 @@
                     </svg>
                 </div>
                 
-                <div class="svg-container">
-                    <svg width="250" height="250" viewBox="-50 -120 250 250">
+                <div class="svg-container" style="max-width: 45%;">
+                    <svg class="svg-diagram" viewBox="-50 -120 250 250">
                         <line x1="-30" y1="0" x2="180" y2="0" stroke="black" />
                         <line x1="0" y1="120" x2="0" y2="-120" stroke="black" />
                         <text x="160" y="-10" font-style="italic">Re</text>
@@ -574,6 +765,7 @@
                     </svg>
                 </div>
             </div>
+
             <p style="text-align:center; font-style:italic; margin-bottom: 20px;">Complex conjugate pairs are symmetrical about the real axis.</p>
 
             <div class="concept-box">
@@ -582,7 +774,9 @@
             </div>
 
             <h3>Finding Arguments in Different Quadrants</h3>
+
             <p>Let $\alpha$ be the positive acute angle made with the real axis by the line joining the origin and $z$.</p>
+
             <ul>
                 <li>First quadrant: $\arg z = \alpha$</li>
                 <li>Second quadrant: $\arg z = \pi - \alpha$</li>
@@ -591,7 +785,7 @@
             </ul>
 
             <div class="svg-container">
-                <svg width="400" height="300" viewBox="-150 -150 300 300">
+                <svg class="svg-diagram" viewBox="-150 -150 300 300">
                     <line x1="-140" y1="0" x2="140" y2="0" stroke="black"/>
                     <line x1="0" y1="140" x2="0" y2="-140" stroke="black"/>
                     <text x="120" y="-10">Re</text>
@@ -624,35 +818,44 @@
             </div>
 
             <p>From trigonometry, we have known that</p>
+
             $$r=\sqrt{x^{2}+y^{2}}$$
             $$x=r~\cos~\theta$$
             $$y=r~\sin~\theta$$
+
             <p>So we have $z=(x,y)=x+yi=r~\cos~\theta+i~r~\sin~\theta$</p>
+
             $$z=r(\cos~\theta+i~\sin~\theta)$$
+
             <p>which is called the trigonometric form (or modulus-argument form) of a complex number. $z=(r,\theta)$ is called the polar form of $z$.</p>
 
             <div class="example-box">
                 <h4>Example 8.</h4>
                 <p>Find the trigonometric form with $-\pi<\theta\le\pi$.</p>
                 <p>(a) $z=1+\sqrt{3}i \quad$ (b) $z=-1+i \quad$ (c) $z=-\sqrt{3}-i \quad$ (d) $z=-1$</p>
+
                 <div class="solution-title">Solution</div>
                 
                 <p>(a) $z=1+\sqrt{3}i=(1,\sqrt{3})$</p>
+
                 $$r=\sqrt{1+3}=2, \quad \cos~\theta=\frac{1}{2}, \quad \sin~\theta=\frac{\sqrt{3}}{2}$$
                 $$\theta=\frac{\pi}{3}$$
                 $$z=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right)$$
                 
                 <p>(b) $z=-1+i=(-1,1)$</p>
+
                 $$r=\sqrt{1+1}=\sqrt{2}, \quad \cos~\theta=-\frac{1}{\sqrt{2}}, \quad \sin~\theta=\frac{1}{\sqrt{2}}$$
                 $$\theta=\frac{3\pi}{4}$$
                 $$z=\sqrt{2}\left(\cos\frac{3\pi}{4}+i~\sin\frac{3\pi}{4}\right)$$
                 
                 <p>(c) $z=-\sqrt{3}-i=(-\sqrt{3},-1)$</p>
+
                 $$r=\sqrt{3+1}=2, \quad \cos~\theta=-\frac{\sqrt{3}}{2}, \quad \sin~\theta=-\frac{1}{2}$$
                 $$\theta=-\frac{5\pi}{6}$$
                 $$z=2\left(\cos\left(-\frac{5\pi}{6}\right)+i~\sin\left(-\frac{5\pi}{6}\right)\right)$$
                 
                 <p>(d) $z=-1=(-1,0)$</p>
+
                 $$r=1, \quad \cos~\theta=-1, \quad \sin~\theta=0$$
                 $$\theta=\pi$$
                 $$z=\cos~\pi+i~\sin~\pi$$
@@ -661,20 +864,27 @@
             <div class="example-box">
                 <h4>Example 9.</h4>
                 <p>Express $z = -1 - i$ in the form $r(\cos \theta + i \sin \theta)$, where $-\pi < \theta \le \pi$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p>1. Find $r$ (modulus): $r = \sqrt{(-1)^2 + (-1)^2} = \sqrt{2}$</p>
+
                 <p>2. Find $\theta$ (argument): The point $(-1, -1)$ is in the third quadrant.</p>
+
                 $$
                 \begin{aligned}
-                \alpha&= \arctan\left(\frac{1}{1}\right) = \frac{\pi}{4} \\
+                \alpha&= \arctan\left( 1 \right) = \frac{\pi}{4} \\
                 \theta&= -(\pi - \alpha) = -\left(\pi - \frac{\pi}{4}\right) = -\frac{3\pi}{4}
                 \end{aligned}
                 $$
+
                 <p>Therefore, $z = \sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i \sin\left(-\frac{3\pi}{4}\right)\right)$</p>
             </div>
 
             <h3>Product in Trigonometric Form</h3>
+
             <p>Let $z_{1}=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})$ and $z_{2}=r_{2}(\cos~\theta_{2}+i~\sin~\theta_{2})$. Then their product is</p>
+
             $$
             \begin{aligned}
             z_{1}z_{2}&=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})r_{2}(\cos~\theta_{2}+i~\sin~\theta_{2}) \\
@@ -686,7 +896,9 @@
             <div class="example-box">
                 <h4>Example 10.</h4>
                 <p>Given that $z_{1}=1+\sqrt{3}i$, $z_{2}=-1+i$ find $z_{1}z_{2}$ by using trigonometric forms. Check your answer by direct multiplication.</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 z_{1}&=1+\sqrt{3}i=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right) \\
@@ -695,7 +907,9 @@
                 &=-1-\sqrt{3}+(1-\sqrt{3})i
                 \end{aligned}
                 $$
+
                 <p>By direct multiplication:</p>
+
                 $$
                 \begin{aligned}
                 z_{1}z_{2}&=(1+\sqrt{3}i)(-1+i) \\
@@ -706,7 +920,9 @@
             </div>
 
             <h3>Multiplicative Inverse in Trigonometric Form</h3>
+
             <p>Since $z^{-1}=\frac{x}{x^{2}+y^{2}}-\frac{y}{x^{2}+y^{2}}i$ for $z=x+yi$,</p>
+
             $$
             \begin{aligned}
             z^{-1}&=\frac{1}{x^{2}+y^{2}}(x-yi) \\
@@ -719,7 +935,9 @@
             <div class="example-box">
                 <h4>Example 11.</h4>
                 <p>Given that $z=-\sqrt{3}-i$ using trigonometric form of z, find $z^{-1}$. Check your answer by showing that $zz^{-1}=1$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 z&=-\sqrt{3}-i=2\left(\cos\left(-\frac{5\pi}{6}\right)+i~\sin\left(-\frac{5\pi}{6}\right)\right) \\
@@ -728,12 +946,16 @@
                 &=-\frac{\sqrt{3}}{4}+\frac{1}{4}i
                 \end{aligned}
                 $$
+
                 <p>Checking:</p>
+
                 $$zz^{-1}=(-\sqrt{3}-i)\left(-\frac{\sqrt{3}}{4}+\frac{1}{4}i\right)=\frac{3}{4}-\frac{\sqrt{3}}{4}i+\frac{\sqrt{3}}{4}i-\frac{1}{4}i^{2}=\frac{3}{4}+\frac{1}{4}=1$$
             </div>
 
             <h3>Division in Trigonometric Form</h3>
+
             <p>Let $z_{1}=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})$ and $z_{2}=r_{2}(\cos~\theta_{2}+i~\sin~\theta_{2})$. Then</p>
+
             $$
             \begin{aligned}
             \frac{z_{1}}{z_{2}}&=z_{1}z_{2}^{-1} \\
@@ -745,7 +967,9 @@
             <div class="example-box">
                 <h4>Example 12.</h4>
                 <p>Given that $z_{1}=1+\sqrt{3}i$, $z_{2}=-1+i$, find $\frac{z_{1}}{z_{2}}$ by using trigonometric forms. Check your answer by direct calculation.</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 z_{1}&=1+\sqrt{3}i=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right) \\
@@ -754,7 +978,9 @@
                 &=\frac{-1+\sqrt{3}}{2}-\frac{1+\sqrt{3}}{2}i
                 \end{aligned}
                 $$
+
                 <p>By direct calculation:</p>
+
                 $$
                 \begin{aligned}
                 \frac{z_{1}}{z_{2}}&=\frac{1+\sqrt{3}i}{-1+i}\frac{-1-i}{-1-i} \\
@@ -766,15 +992,21 @@
             </div>
 
             <h3>Powers of Complex Numbers</h3>
+
             <p>The powers of a complex number $z=r(\cos~\theta+i~\sin~\theta)$ is given by</p>
+
             $$z^{n}=r^{n}(\cos~n\theta+i~\sin~n\theta) \quad \text{(n is an integer)}$$
 
             <div class="example-box">
                 <h4>Example 13.</h4>
                 <p>Given that $z=1+\sqrt{3}i$ find (a) $z^{10}$ (b) $z^{-10}$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p>$z=1+\sqrt{3}i=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right)$</p>
+
                 $$\text{(a)} \quad z^{10}=2^{10}\left(\cos\frac{10\pi}{3}+i~\sin\frac{10\pi}{3}\right)=1024\left(-\frac{1}{2}-\frac{\sqrt{3}}{2}i\right)=-512-512\sqrt{3}i$$
+
                 $$\text{(b)} \quad z^{-10}=\frac{1}{2^{10}}\left(\cos\left(-\frac{10\pi}{3}\right)+i~\sin\left(-\frac{10\pi}{3}\right)\right)=\frac{1}{1024}\left(-\frac{1}{2}+\frac{\sqrt{3}}{2}i\right)=-\frac{1}{2048}+\frac{\sqrt{3}}{2048}i$$
             </div>
 
@@ -786,8 +1018,6 @@
                             <div class="flex-item">(a) $z=1-\sqrt{3}i$</div>
                             <div class="flex-item">(b) $z=-\sqrt{2}+\sqrt{2}i$</div>
                             <div class="flex-item">(c) $z=-2-2i$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(d) $z=\sqrt{3}-i$</div>
                             <div class="flex-item">(e) $z=i$</div>
                             <div class="flex-item">(f) $z=-3i$</div>
@@ -807,27 +1037,37 @@
             </div>
 
             <h2>1.5 Roots of Complex Numbers</h2>
+
             <p>An $n^{th}$ root of a complex number $z$ is a complex number $w$ that satisfies the equation $w^{n}=z$.</p>
+
             <p>Since $z=r(\cos~\theta+i~\sin~\theta)$ and</p>
+
             $$
             \left(\sqrt[n]{r}\left(\cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}\right)\right)^{n}=(\sqrt[n]{r})^{n}\left(\cos~n\left(\frac{\theta}{n}\right)+i~\sin~n\left(\frac{\theta}{n}\right)\right)=r(\cos~\theta+i~\sin~\theta)=z
             $$
+
             <p>we have an $n^{th}$ root of a complex number $z$ as $\sqrt[n]{r}\left(\cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}\right)$.</p>
+
             <p>Moreover, since $z$ can also be represented as $z=r(\cos(\theta+2k\pi)+i~\sin(\theta+2k\pi))$ for every integer $k$, we have</p>
+
             $$
             \begin{aligned}
             \left(\sqrt[n]{r}\left(\cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}\right)\right)^{n}&=(\sqrt[n]{r})^{n}\left(\cos~n\frac{\theta+2k\pi}{n}+i~\sin~n\frac{\theta+2k\pi}{n}\right) \\
             &=r(\cos(\theta+2k\pi)+i~\sin(\theta+2k\pi)) = z
             \end{aligned}
             $$
+
             <p>But for $k=n$ we have</p>
+
             $$
             \begin{aligned}
             \cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}&=\cos\frac{\theta+2n\pi}{n}+i~\sin\frac{\theta+2n\pi}{n} \\
             &=\cos\left(\frac{\theta}{n}+2\pi\right)+i~\sin\left(\frac{\theta}{n}+2\pi\right) = \cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}
             \end{aligned}
             $$
+
             <p>so the root for $k=n$ is the same as the root for $k=0$. The same is also true for $k>n$ as the root for $k=n+1$ is same as the root for $k=1$, and so on. Therefore the roots of $z$, denoted by $w_{k}$ of $z$ are</p>
+
             $$
             w_{k}=\sqrt[n]{r}\left(\cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}\right), \quad k=0,1,2,...,n-1.
             $$
@@ -835,23 +1075,36 @@
             <div class="example-box">
                 <h4>Example 14.</h4>
                 <p>Find the cube roots of $z=-2-2i$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 <p>$z=-2-2i=(-2,-2)$</p>
+
                 <p>$r=\sqrt{4+4}=2\sqrt{2}, \quad \cos~\theta=-\frac{1}{\sqrt{2}}, \quad \sin~\theta=-\frac{1}{\sqrt{2}}$</p>
+
                 <p>$\theta=-\frac{3\pi}{4}$</p>
+
                 <p>$z=2\sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right)+i~\sin\left(-\frac{3\pi}{4}\right)\right)$</p>
+
                 <p>Then we have</p>
+
                 $$w_{k}=\sqrt[3]{2\sqrt{2}}\left(\cos\frac{-\frac{3\pi}{4}+2k\pi}{3}+i~\sin\frac{-\frac{3\pi}{4}+2k\pi}{3}\right), \quad k=0,1,2.$$
+
                 <p>Therefore the cube roots are</p>
+
                 <p>$w_{0}=\sqrt{2}\left(\cos\left(-\frac{3\pi}{12}\right)+i~\sin\left(-\frac{3\pi}{12}\right)\right)=\sqrt{2}\left(\frac{\sqrt{2}}{2}-i\frac{\sqrt{2}}{2}\right)=1-i$</p>
+
                 <p>$w_{1}=\sqrt{2}\left(\cos\frac{5\pi}{12}+i~\sin\frac{5\pi}{12}\right)=\sqrt{2}\left(\frac{\sqrt{6}-\sqrt{2}}{4}+i\frac{\sqrt{6}+\sqrt{2}}{4}\right)=\frac{-1+\sqrt{3}}{2}+\frac{1+\sqrt{3}}{2}i$</p>
+
                 <p>$w_{2}=\sqrt{2}\left(\cos\left(\frac{13\pi}{12}\right)+i~\sin\left(\frac{13\pi}{12}\right)\right)=\sqrt{2}\left(-\frac{\sqrt{6}+\sqrt{2}}{4}+i\frac{-\sqrt{6}+\sqrt{2}}{4}\right)=-\frac{1+\sqrt{3}}{2}+\frac{1-\sqrt{3}}{2}i$</p>
             </div>
 
             <div class="example-box">
                 <h4>Example 15.</h4>
                 <p>Solve $z^{6}=1$.</p>
+
                 <div class="solution-title">Solution</div>
+
                 $$
                 \begin{aligned}
                 1&=(1,0)=1(\cos~0+i~\sin~0)=1(\cos(0+2k\pi)+i~\sin(0+2k\pi)) \\
@@ -860,11 +1113,17 @@
                 z&=\sqrt[6]{1}\left(\cos\frac{0+2k\pi}{6}+i~\sin\frac{0+2k\pi}{6}\right)
                 \end{aligned}
                 $$
+
                 <p>When $k=0, \quad z=\cos~0+i~\sin~0=1.$</p>
+
                 <p>When $k=1, \quad z=\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}=\frac{1}{2}+i\frac{\sqrt{3}}{2}.$</p>
+
                 <p>When $k=2, \quad z=\cos\frac{2\pi}{3}+i~\sin\frac{2\pi}{3}=-\frac{1}{2}+i\frac{\sqrt{3}}{2}.$</p>
+
                 <p>When $k=3, \quad z=\cos~\pi+i~\sin~\pi=-1.$</p>
+
                 <p>When $k=4, \quad z=\cos\frac{4\pi}{3}+i~\sin\frac{4\pi}{3}=-\frac{1}{2}-i\frac{\sqrt{3}}{2}.$</p>
+
                 <p>When $k=5, \quad z=\cos\frac{5\pi}{3}+i~\sin\frac{5\pi}{3}=\frac{1}{2}-i\frac{\sqrt{3}}{2}.$</p>
             </div>
 
@@ -876,8 +1135,6 @@
                             <div class="flex-item">(a) $1+\sqrt{3}i$</div>
                             <div class="flex-item">(b) $i$</div>
                             <div class="flex-item">(c) $-\sqrt{3}+i$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(d) $-1-\sqrt{3}i$</div>
                             <div class="flex-item">(e) $-i$</div>
                             <div class="flex-item">(f) $\sqrt{3}-i$</div>
@@ -888,8 +1145,6 @@
                             <div class="flex-item">(a) $1+i$</div>
                             <div class="flex-item">(b) $i$</div>
                             <div class="flex-item">(c) $-1+i$</div>
-                        </div>
-                        <div class="flex-container" style="margin-top: 10px;">
                             <div class="flex-item">(d) $-1-i$</div>
                             <div class="flex-item">(e) $-i$</div>
                             <div class="flex-item">(f) $1-i$</div>
@@ -905,9 +1160,170 @@
                     </li>
                 </ol>
             </div>
+
+            <h2>1.6 Exponential Form (Euler's Formula)</h2>
+
+            <p>In addition to the Cartesian form $z = x + yi$ and the trigonometric form $z = r(\cos\theta + i\sin\theta)$, complex numbers can be expressed in an extremely powerful form known as the exponential form. This is based on <strong>Euler's Formula</strong>.</p>
+            
+            <div class="concept-box">
+                <p><strong>Euler's Formula:</strong> For any real number $\theta$,</p>
+
+                $$ e^{i\theta} = \cos\theta + i\sin\theta $$
+
+                <p>By multiplying both sides by the modulus $r$, we obtain the <strong>exponential form</strong> of a complex number:</p>
+
+                $$ z = r e^{i\theta} $$
+
+                <p>Where:</p>
+                <ul>
+                    <li>$r = |z|$ is the modulus.</li>
+                    <li>$\theta = \arg z$ is the argument, <strong>strictly measured in radians</strong>.</li>
+                </ul>
+            </div>
+
+            <p>This form makes multiplication, division, and finding powers or roots exceptionally straightforward due to the standard laws of indices.</p>
+
+            <div class="example-box">
+                <h4>Example 16.</h4>
+                <p>Express $z = -1 + \sqrt{3}i$ in exponential form.</p>
+
+                <div class="solution-title">Solution</div>
+
+                <p>First, find the modulus $r$ and argument $\theta$.</p>
+
+                $$
+                \begin{aligned}
+                r &= \sqrt{(-1)^2 + (\sqrt{3})^2} = \sqrt{1 + 3} = 2 \\
+                \alpha &= \arctan\left({ \sqrt{3} \over 1 }\right) = {\pi \over 3}
+                \end{aligned}
+                $$
+
+                <p>Since the point $(-1, \sqrt{3})$ lies in the second quadrant:</p>
+
+                $$
+                \begin{aligned}
+                \theta &= \pi - \alpha \\
+                &= \pi - {\pi \over 3} \\
+                &= {2\pi \over 3}
+                \end{aligned}
+                $$
+
+                <p>Therefore, the exponential form is $z = 2e^{i {2\pi \over 3}}$.</p>
+            </div>
+
+            <h2>1.7 Loci in the Argand Plane</h2>
+
+            <p>A locus is a set of points that satisfy a certain given condition. In the Argand plane, points are represented by complex numbers. If we consider the vector $\overrightarrow{OZ_1}$ representing a fixed complex number $z_1$, and $\overrightarrow{OZ}$ representing a variable complex number $z$, the distance between them is $|z - z_1|$.</p>
+
+            <h3>1. Circle Locus</h3>
+
+            <p>The equation $|z - z_1| = r$ represents the locus of a point $z$ which moves such that its distance from a fixed point $z_1$ is always a constant $r$. This defines a circle with center $z_1$ and radius $r$.</p>
+
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="-50 -50 300 300">
+                    <line x1="-30" y1="200" x2="250" y2="200" stroke="#888" stroke-width="1.5" />
+                    <line x1="20" y1="250" x2="20" y2="-20" stroke="#888" stroke-width="1.5" />
+                    <text x="230" y="215" fill="#555" font-size="12">Re</text>
+                    <text x="-5" y="-10" fill="#555" font-size="12">Im</text>
+                    <text x="5" y="215" fill="#555" font-size="12">O</text>
+                    
+                    <circle cx="120" cy="100" r="70" fill="none" stroke="#2980b9" stroke-width="2.5" />
+                    <circle cx="120" cy="100" r="4" fill="#c0392b" />
+                    <text x="110" y="120" fill="#c0392b" font-weight="bold">z₁</text>
+                    
+                    <line x1="120" y1="100" x2="170" y2="50" stroke="#e67e22" stroke-width="2" stroke-dasharray="4" />
+                    <text x="135" y="65" fill="#e67e22" font-weight="bold">r</text>
+                    
+                    <circle cx="170" cy="50" r="4" fill="#2c3e50" />
+                    <text x="180" y="45" fill="#2c3e50" font-weight="bold">z</text>
+                    <text x="30" y="-30" fill="#2980b9" font-weight="bold" font-size="16">|z - z₁| = r</text>
+                </svg>
+            </div>
+
+            <h3>2. Half-Line Locus (Ray)</h3>
+
+            <p>The equation $\arg(z - z_1) = \theta$ represents a half-line starting from, <strong>but not including</strong>, the fixed point $z_1$, and making an angle $\theta$ with the positive real axis direction.</p>
+
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="-50 -50 300 300">
+                    <line x1="-30" y1="200" x2="250" y2="200" stroke="#888" stroke-width="1.5" />
+                    <line x1="20" y1="250" x2="20" y2="-20" stroke="#888" stroke-width="1.5" />
+                    <text x="230" y="215" fill="#555" font-size="12">Re</text>
+                    <text x="-5" y="-10" fill="#555" font-size="12">Im</text>
+                    
+                    <circle cx="80" cy="140" r="4" fill="none" stroke="#c0392b" stroke-width="2" />
+                    <text x="65" y="160" fill="#c0392b" font-weight="bold">z₁</text>
+                    
+                    <line x1="80" y1="140" x2="180" y2="140" stroke="#95a5a6" stroke-width="1.5" stroke-dasharray="4" />
+                    <line x1="83" y1="137" x2="200" y2="20" stroke="#27ae60" stroke-width="2.5" />
+                    
+                    <path d="M 120 140 A 40 40 0 0 0 108 112" fill="none" stroke="#e74c3c" stroke-width="1.5" />
+                    <text x="130" y="125" fill="#e74c3c" font-weight="bold">θ</text>
+                    
+                    <circle cx="160" cy="60" r="4" fill="#2c3e50" />
+                    <text x="170" y="55" fill="#2c3e50" font-weight="bold">z</text>
+                    <text x="30" y="-30" fill="#27ae60" font-weight="bold" font-size="16">arg(z - z₁) = θ</text>
+                </svg>
+            </div>
+
+            <h3>3. Perpendicular Bisector Locus</h3>
+
+            <p>The equation $|z - z_1| = |z - z_2|$ represents the locus of a point $z$ which is equidistant from two fixed points $z_1$ and $z_2$. This forms the perpendicular bisector of the line segment joining $z_1$ and $z_2$.</p>
+
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="-50 -50 300 300">
+                    <line x1="-30" y1="200" x2="250" y2="200" stroke="#888" stroke-width="1.5" />
+                    <line x1="20" y1="250" x2="20" y2="-20" stroke="#888" stroke-width="1.5" />
+                    <text x="230" y="215" fill="#555" font-size="12">Re</text>
+                    <text x="-5" y="-10" fill="#555" font-size="12">Im</text>
+                    
+                    <circle cx="60" cy="140" r="4" fill="#c0392b" />
+                    <text x="45" y="160" fill="#c0392b" font-weight="bold">z₁</text>
+                    
+                    <circle cx="180" cy="80" r="4" fill="#c0392b" />
+                    <text x="190" y="90" fill="#c0392b" font-weight="bold">z₂</text>
+                    
+                    <line x1="60" y1="140" x2="180" y2="80" stroke="#95a5a6" stroke-width="1.5" stroke-dasharray="4" />
+                    <circle cx="120" cy="110" r="3" fill="#7f8c8d" />
+                    <path d="M 125 100 L 135 105 L 130 115" fill="none" stroke="#7f8c8d" stroke-width="1.5" />
+                    
+                    <line x1="60" y1="0" x2="160" y2="200" stroke="#8e44ad" stroke-width="2.5" />
+                    
+                    <circle cx="90" cy="60" r="4" fill="#2c3e50" />
+                    <text x="75" y="55" fill="#2c3e50" font-weight="bold">z</text>
+                    
+                    <line x1="60" y1="140" x2="90" y2="60" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="2" />
+                    <line x1="180" y1="80" x2="90" y2="60" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="2" />
+                    <text x="30" y="-30" fill="#8e44ad" font-weight="bold" font-size="16">|z - z₁| = |z - z₂|</text>
+                </svg>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 17.</h4>
+                <p>Sketch the locus of points $z$ satisfying $|z - 2 + i| \le 3$ and $\displaystyle 0 \le \arg(z - 2 + i) \le {\pi \over 4}$.</p>
+
+                <div class="solution-title">Solution</div>
+
+                <p>First, rewrite the conditions to clearly identify the fixed point $z_1$:</p>
+
+                $$
+                \begin{aligned}
+                |z - (2 - i)| &\le 3 \\
+                0 \le \arg(z - (2 - i)) &\le {\pi \over 4}
+                \end{aligned}
+                $$
+
+                <p>The fixed point is $z_1 = 2 - i$.</p>
+
+                <ul>
+                    <li>$|z - (2 - i)| \le 3$ represents the <strong>interior and boundary</strong> of a circle with center $2 - i$ and radius $3$.</li>
+                    <li>$0 \le \arg(z - (2 - i)) \le {\pi \over 4}$ represents the region bounded by two half-lines originating from $2 - i$: one horizontally to the right (angle $0$) and one at an angle of ${\pi \over 4}$.</li>
+                </ul>
+
+                <p>The required region is the intersection of these two loci (a sector of the circle).</p>
+            </div>
+
         </div>
     </div>
-
-    
 </body>
 </html>
