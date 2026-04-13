@@ -59,8 +59,9 @@
         
         .infobox { background-color: #ebf8ff; border-left: 5px solid var(--primary-light); padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; }
         .strategy-card { background-color: var(--warning-bg); border: 1px solid var(--warning-border); padding: 30px; margin: 30px 0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        
         .template-box { background-color: #f8fafc; border: 2px dashed var(--primary-light); padding: 25px; border-radius: 8px; font-family: monospace; font-size: 0.95em; line-height: 1.6; }
-        .math-block { background-color: #f4f6f8; padding: 15px; border-radius: 8px; border-left: 4px solid var(--text-muted); font-family: monospace; overflow-wrap: break-word; }
+        
         .takeaway-box { background-color: var(--success-bg); border-left: 5px solid var(--success-border); padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; }
         .quote-box { background-color: var(--quote-bg); color: var(--quote-text); padding: 40px; margin: 40px 0 20px 0; border-radius: 12px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; }
         .quote-box::before { content: '\"'; font-size: 4em; color: rgba(255,255,255,0.1); position: absolute; top: -10px; left: 20px; font-family: serif; }
@@ -77,7 +78,35 @@
 
         .svg-container { text-align: center; margin: 30px 0; padding: 20px; background: #fafafa; border-radius: 8px; border: 1px dashed var(--border-light); }
 
-        mjx-container { max-width: 100%; overflow-wrap: break-word; word-break: break-word; white-space: normal; }
+        /* Super Micro-Level Fix: Swipeable Math Blocks with NO Scrollbars */
+        .math-block { 
+            background-color: #f4f6f8; 
+            padding: 15px; 
+            border-radius: 8px; 
+            border-left: 4px solid var(--text-muted); 
+            font-family: monospace;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            max-width: 100%;
+        }
+        
+        mjx-container[display="true"] {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+            max-width: 100%;
+        }
+
+        .math-block::-webkit-scrollbar, mjx-container[display="true"]::-webkit-scrollbar { 
+            display: none; /* Chrome, Safari, WebKit */
+        }
+
+        mjx-container { overflow-wrap: break-word; word-break: break-word; white-space: normal; }
 
         @media (max-width: 768px) {
             .article-section { padding: 30px 20px; }
@@ -87,6 +116,10 @@
 </head>
 <body>
 
+    <header>
+        <h1>Mathematical Induction</h1>
+        <p>Theory, Concept, Applications, and A Complete Problem-Solving Guide</p>
+    </header>
 
     <div class="container">
         
@@ -189,22 +222,22 @@
             <h2>5. Illustrative Examples</h2>
 
             <h3>5.1 Classic Sum of First $\displaystyle n$ Odd Numbers</h3>
-            <p><strong>Proposition:</strong> For all $\displaystyle n \geq 1$, $\displaystyle \sum_{i=1}^{n} (2i-1) = n^2$.</p>
+            <p><strong>Claim:</strong> For all $\displaystyle n \geq 1$, $\displaystyle \sum_{i=1}^{n} (2i-1) = n^2$.</p>
             <div class="math-block">
                 <strong>Base case ($\displaystyle n=1$):</strong><br>
-                $$ \begin{aligned} \text{LHS} &= 2(1) - 1 = 1 \\ \text{RHS} &= 1^2 = 1 \end{aligned} $$
+                $$ \displaystyle \begin{aligned} \text{LHS} &= 2(1) - 1 = 1 \\ \text{RHS} &= 1^2 = 1 \end{aligned} $$
                 LHS = RHS. True.<br><br>
 
                 <strong>Inductive hypothesis:</strong> Assume for some integer $\displaystyle k \geq 1$ that<br>
-                $$ \begin{aligned} 1 + 3 + 5 + \dots + (2k-1) &= k^2 \end{aligned} $$
+                $$ \displaystyle \begin{aligned} 1 + 3 + 5 + \dots + (2k-1) &= k^2 \end{aligned} $$
 
                 <strong>Inductive step:</strong> Consider $\displaystyle n = k+1$.<br>
-                $$ \begin{aligned} \text{LHS} &= 1 + 3 + 5 + \dots + (2k-1) + (2(k+1)-1) \\ &= [k^2] + (2k+1) \quad (\text{by hypothesis}) \\ &= k^2 + 2k + 1 \\ &= (k+1)^2 \end{aligned} $$
+                $$ \displaystyle \begin{aligned} \text{LHS} &= 1 + 3 + 5 + \dots + (2k-1) + (2(k+1)-1) \\ &= [k^2] + (2k+1) \quad (\text{by hypothesis}) \\ &= k^2 + 2k + 1 \\ &= (k+1)^2 \end{aligned} $$
                 This is exactly the required formula for $\displaystyle n = k+1$. Thus, the statement holds for all $\displaystyle n \geq 1$.
             </div>
 
             <h3>5.2 Divisibility Example</h3>
-            <p><strong>Proposition:</strong> For all $\displaystyle n \geq 0$, $\displaystyle 7^n - 2^n$ is divisible by $\displaystyle 5$.</p>
+            <p><strong>Claim:</strong> For all $\displaystyle n \geq 0$, $\displaystyle 7^n - 2^n$ is divisible by $\displaystyle 5$.</p>
             <div class="math-block">
                 <strong>Base case ($\displaystyle n=0$):</strong><br>
                 $\displaystyle 7^0 - 2^0 = 1 - 1 = 0$, which is divisible by $\displaystyle 5$. True.<br><br>
@@ -212,23 +245,23 @@
                 <strong>Inductive hypothesis:</strong> Assume $\displaystyle 7^k - 2^k = 5m$ for some integer $\displaystyle m$, where $\displaystyle k \geq 0$.<br><br>
 
                 <strong>Inductive step:</strong> Consider $\displaystyle n = k+1$.<br>
-                $$ \begin{aligned} 7^{k+1} - 2^{k+1} &= 7 \cdot 7^k - 2 \cdot 2^k \\ &= 7 \cdot 7^k - 7 \cdot 2^k + 7 \cdot 2^k - 2 \cdot 2^k \\ &= 7(7^k - 2^k) + 2^k(7 - 2) \\ &= 7(5m) + 2^k(5) \quad (\text{by hypothesis}) \\ &= 5(7m + 2^k) \end{aligned} $$
+                $$ \displaystyle \begin{aligned} 7^{k+1} - 2^{k+1} &= 7 \cdot 7^k - 2 \cdot 2^k \\ &= 7 \cdot 7^k - 7 \cdot 2^k + 7 \cdot 2^k - 2 \cdot 2^k \\ &= 7(7^k - 2^k) + 2^k(7 - 2) \\ &= 7(5m) + 2^k(5) \quad (\text{by hypothesis}) \\ &= 5(7m + 2^k) \end{aligned} $$
                 Since $\displaystyle (7m + 2^k)$ is an integer, the expression is divisible by $\displaystyle 5$. Hence proved.
             </div>
 
             <h3>5.3 Inequality Example</h3>
-            <p><strong>Proposition:</strong> For all integers $\displaystyle n \geq 4$, $\displaystyle 2^n \geq n^2$.</p>
+            <p><strong>Claim:</strong> For all integers $\displaystyle n \geq 4$, $\displaystyle 2^n \geq n^2$.</p>
             <div class="math-block">
                 <strong>Base case ($\displaystyle n=4$):</strong><br>
-                $$ \begin{aligned} 2^4 &= 16 \\ 4^2 &= 16 \end{aligned} $$
+                $$ \displaystyle \begin{aligned} 2^4 &= 16 \\ 4^2 &= 16 \end{aligned} $$
                 Since $\displaystyle 16 \geq 16$, it is true.<br><br>
 
                 <strong>Inductive hypothesis:</strong> Assume $\displaystyle 2^k \geq k^2$ for some integer $\displaystyle k \geq 4$.<br><br>
 
                 <strong>Inductive step:</strong> Consider $\displaystyle n = k+1$.<br>
-                $$ \begin{aligned} 2^{k+1} &= 2 \cdot 2^k \\ &\geq 2 \cdot k^2 \quad (\text{by hypothesis}) \\ &= k^2 + k^2 \end{aligned} $$
+                $$ \displaystyle \begin{aligned} 2^{k+1} &= 2 \cdot 2^k \\ &\geq 2 \cdot k^2 \quad (\text{by hypothesis}) \\ &= k^2 + k^2 \end{aligned} $$
                 Since $\displaystyle k \geq 4$, we know $\displaystyle k \geq 3 \implies k^2 \geq 3k > 2k+1$.<br>
-                $$ \begin{aligned} 2^{k+1} &\geq k^2 + (2k+1) \\ &= (k+1)^2 \end{aligned} $$
+                $$ \displaystyle \begin{aligned} 2^{k+1} &\geq k^2 + (2k+1) \\ &= (k+1)^2 \end{aligned} $$
                 Hence proved.
             </div>
         </div>
