@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Algebra: From Basic Operations to Spatial Geometry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Alice&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    frac: ["{\\displaystyle {#1 \\over #2}}", 2]
+                }
+            },
+            chtml: {
+                displayAlign: "center",
+                matchFontHeight: false, 
+                scale: 1
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'math-display-wrapper';
+                            node.parentNode.insertBefore(wrapper, node);
+                            wrapper.appendChild(node);
+                        });
+                        
+                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
+                            const wrapper = document.createElement('span');
+                            wrapper.className = 'math-inline-wrapper';
+                            node.parentNode.insertBefore(wrapper, node);
+                            wrapper.appendChild(node);
+                        });
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-dark: #1a365d;
+            --primary-light: #2b6cb0;
+            --accent: #e53e3e;
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #4a5568;
+            --border-light: #e2e8f0;
+            --quote-bg: #2d3748;
+            --quote-text: #edf2f7;
+            --example-bg: #fafafa;
+        }
+        
+        html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
+        body { font-family: 'Open Sans', 'Pyidaungsu', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.8; font-size: 16px; }
+        
+       
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+        
+        .content-box { background: var(--bg-card); padding: 50px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; word-wrap: break-word; overflow-wrap: break-word; }
+        
+        h2 { color: var(--primary-dark); margin-top: 50px; margin-bottom: 20px; border-bottom: 2px solid var(--border-light); padding-bottom: 10px; font-family: 'Open Sans', sans-serif; font-size: 1.7em; }
+        h3 { color: var(--primary-light); margin-top: 35px; font-size: 1.3em; font-family: 'Open Sans', sans-serif; }
+        h4 { color: var(--accent); font-size: 1.1em; margin-bottom: 10px; font-family: 'Open Sans', sans-serif; }
+        
+        p { text-align: justify; color: var(--text-muted); margin-bottom: 20px; }
+        
+        .concept-box { background-color: #ebf8ff; border-left: 5px solid var(--primary-light); padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+        .insight-box { background-color: #fffaf0; border-left: 5px solid #d69e2e; padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+        .tech-box { background-color: #f0fff4; border-left: 5px solid #38a169; padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+        
+        .example-box { border: 1px solid var(--border-light); padding: 30px; margin: 30px 0; background: var(--example-bg); border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .example-box h4 { margin-top: 0; color: var(--text-main); font-size: 1.2em; }
+        .solution-title { font-weight: bold; color: #27ae60; margin-top: 25px; margin-bottom: 15px; border-bottom: 1px dashed #cbd5e0; padding-bottom: 5px; }
+        
+        .quote-box { background-color: var(--quote-bg); color: var(--quote-text); padding: 40px; margin: 50px 0 20px 0; border-radius: 12px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; }
+        .quote-box::before { content: '\"'; font-size: 5em; color: rgba(255,255,255,0.1); position: absolute; top: -15px; left: 20px; font-family: serif; }
+        .quote-box h4 { color: var(--quote-text); font-size: 1.4em; margin: 0; font-style: italic; line-height: 1.6; font-family: 'Alice', serif;}
+        
+        ul, ol { padding-left: 25px; color: var(--text-muted); margin-bottom: 25px; }
+        li { margin-bottom: 12px; }
+        li strong { color: var(--primary-dark); }
+
+        .svg-container { text-align: center; margin: 40px 0; padding: 30px; background: #fdfdfd; border-radius: 10px; border: 1px dashed var(--border-light); display: flex; justify-content: center; flex-direction: column; align-items: center; overflow: hidden; }
+        .svg-diagram { width: 100%; max-width: 450px; height: auto; display: block; font-family: 'Open Sans', sans-serif; }
+        .svg-caption { margin-top: 15px; font-size: 0.9em; color: #718096; font-style: italic; }
+
+        /* Swipeable Math Blocks */
+        .math-display-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; padding-bottom: 5px; margin-bottom: 15px; scrollbar-width: none; }
+        .math-display-wrapper::-webkit-scrollbar { display: none; }
+        .math-inline-wrapper { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .math-inline-wrapper::-webkit-scrollbar { display: none; }
+        mjx-container { max-width: none !important; }
+        mjx-container[display="true"] { margin: 0 !important; padding: 10px 0 !important; }
+        .math-block { background-color: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-light); font-family: monospace; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .math-block::-webkit-scrollbar { display: none; }
+
+        @media (max-width: 768px) {
+            .content-box { padding: 30px 20px; }
+            header h1 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="container">
+        <div class="content-box">
+            
+            <h2>1. The Foundation: What is a Vector?</h2>
+            <p>ကမ္ဘာကြီးကို လေ့လာရာတွင် အပူချိန်၊ အချိန်၊ ဒြပ်ထု (Mass) ကဲ့သို့သော "ပမာဏ" (Magnitude) တစ်ခုတည်းရှိသည့် Scalars များဖြင့် မလုံလောက်ပါ။ ဥပမာအားဖြင့် လေတိုက်ခတ်မှု၊ ဒုံးပျံလွှတ်တင်မှု၊ လျှပ်စစ်သံလိုက်စက်ကွင်းများကို ဖော်ပြရန် သို့မဟုတ် ကားတစ်စီး ခရီးရောက်မည့်နေရာကို ခန့်မှန်းရန် <strong>"မည်သည့် အရပ်သို့" (Which way)</strong> ဟူသော 'ဦးတည်ရာ' (Direction) မရှိမဖြစ် လိုအပ်ပါသည်။</p>
+            <p><strong>Magnitude နှင့် Direction နှစ်ခုလုံး</strong> ပါဝင်နေသော လှုပ်ရှားမှုများနှင့် အင်အားများကို ဖော်ပြရန် သင်္ချာပညာရှင်များသည် <strong>Vectors</strong> များကို ဖန်တီးခဲ့ကြသည်။ ဂျီဩမေတြီအရ Vector တစ်ခုကို "မြား" (Arrow) တစ်စင်းဖြင့် ဖော်ပြပြီး၊ အက္ခရာသင်္ချာ (Algebraically) အရ <strong>Directed Values $\displaystyle \langle a, b, c \rangle$</strong> အဖြစ် ဖော်ပြသည်။</p>
+
+            <div class="svg-container">
+                <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   width="346.35229"
+   height="225.51401"
+   viewBox="0 0 346.35229 225.51401"
+   sodipodi:docname="intro1.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     id="namedview4"
+     showgrid="false"
+     inkscape:zoom="3.7216443"
+     inkscape:cx="173.17614"
+     inkscape:cy="112.75701"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker2523"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2521"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Sstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1322"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path1320"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Send"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path973"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1250"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1248"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#008080;fill-opacity:1;fill-rule:evenodd;stroke:#008080;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Sstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Sstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path952"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Send"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path955"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 127.47498,3.2922879 V 142.36774 l 209.34132,71.72215"
+     id="path817"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ccc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 127.47498,142.36774 v 0 L 0.41390208,219.1869"
+     id="path819"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 230.39809,61.034384 V 178.6657"
+     id="path843"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     id="path819-7"
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 230.39809,178.6657 v 0 l -76.23664,46.09149 M 49.490785,188.89611 154.16145,224.75719"
+     inkscape:connector-curvature="0" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path819-7-7"
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 230.39809,61.034384 v 0 L 154.16145,107.12588 M 49.490775,71.264804 154.16145,107.12588" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path819-7-7-4"
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 49.490775,71.264804 v 0 l 76.236645,-46.0915 m 104.67067,35.86108 -104.67067,-35.86108" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 49.490775,71.264804 V 188.89611"
+     id="path843-9"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 154.16145,107.12588 V 224.75719"
+     id="path843-9-1"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:3.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker1322)"
+     d="M 157.80217,103.84923 C 183.21439,88.485404 204.98588,76.398224 230.39809,61.034384"
+     id="path938"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:3.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1Sstart)"
+     d="M 227.41271,176.40846 127.47498,142.36774"
+     id="path819-7-7-4-0"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:#ff0000;fill-rule:evenodd;stroke:#ff0000;stroke-width:3.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker2523)"
+     d="m 230.39809,66.495464 1.74756,111.733356"
+     id="path843-95"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#008080;stroke-width:3.20000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1250)"
+     d="m 127.47498,142.36774 23.04575,-30.50892"
+     id="path3443"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333206px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="118.37319"
+     y="164.9402"
+     id="text4281"><tspan
+       sodipodi:role="line"
+       id="tspan4279"
+       x="118.37319"
+       y="164.9402"
+       style="font-style:italic;stroke-width:0.80000001px">O</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333206px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="160.58165"
+     y="122.22261"
+     id="text4285"><tspan
+       sodipodi:role="line"
+       id="tspan4283"
+       x="160.58165"
+       y="122.22261"
+       style="font-style:italic;stroke-width:0.80000001px">P</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333206px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="336.81628"
+     y="205.71625"
+     id="text4289"><tspan
+       sodipodi:role="line"
+       id="tspan4287"
+       x="336.81628"
+       y="205.71625"
+       style="font-style:italic;stroke-width:0.80000001px">x</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333206px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="108.17918"
+     y="22.588095"
+     id="text4293"><tspan
+       sodipodi:role="line"
+       id="tspan4291"
+       x="108.17918"
+       y="22.588095"
+       style="font-style:italic;stroke-width:0.80000001px">z</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333206px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="5.1468368"
+     y="206.08032"
+     id="text4297"><tspan
+       sodipodi:role="line"
+       id="tspan4295"
+       x="5.1468368"
+       y="206.08032"
+       style="font-style:italic;stroke-width:0.80000001px">y</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333206px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="135.96968"
+     y="114.7588"
+     id="text4301"><tspan
+       sodipodi:role="line"
+       id="tspan4299"
+       x="135.96968"
+       y="114.7588"
+       style="font-style:italic;font-weight:bold;stroke-width:0.80000001px">r</tspan></text>
+  <g
+     id="g4391"
+     transform="matrix(0.92744766,0,0,0.79493811,-213.26135,-88.589482)">
+    <rect
+       y="113.60226"
+       x="421.23239"
+       height="46.338783"
+       width="149.95744"
+       id="rect4383"
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#008080;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+  </g>
+  <g
+     id="g1105"
+     transform="matrix(1.2,0,0,1.2,63.127802,28.771499)">
+    <g
+       word-spacing="normal"
+       letter-spacing="normal"
+       font-size-adjust="none"
+       font-stretch="normal"
+       font-weight="normal"
+       font-variant="normal"
+       font-style="normal"
+       stroke-miterlimit="10.433"
+       xml:space="preserve"
+       transform="matrix(0.32216287,0,0,-0.32216287,-56.378503,259.76422)"
+       id="g1103"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"><path
+         id="path1095"
+         d="m 470.72,420.54 -1,2.75 c -0.61,1.64 -1.54,3.69 -3.73,4.88 l -6.58,-1.64 0.14,-0.89 c 0.5,0.18 1.25,0.29 1.89,0.29 2.75,0 4.05,-2.04 4.89,-4.43 l 1.64,-4.58 -3.23,-5.05 c -1.6,-2.44 -2.89,-2.94 -3.49,-2.94 -1.25,0 -1.04,1 -2.34,1 -1.25,0 -1.89,-1.04 -1.89,-1.84 0,-1.09 0.8,-2.34 2.58,-2.34 2.79,0 4.23,2.14 5.84,4.59 l 3.13,4.87 2,-5.62 c 0.64,-1.8 1.59,-3.84 3.64,-3.84 2.89,0 5.12,4.78 5.72,5.53 l -0.69,0.5 c -1.05,-2.14 -2.25,-2.85 -3.05,-2.85 -2.23,0 -3.39,6.74 -4.87,9.83 l 2.73,4.24 c 0.7,1.09 1.25,1.89 2.75,1.89 0.84,0 1.09,-0.46 2.19,-0.46 1.3,0 1.94,1.14 1.94,2.1 0,1.04 -0.85,1.64 -2.44,1.64 -2.49,0 -4.24,-2.19 -5.53,-4.19 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1097"
+         points="488.53,440.23 494.56,445.35 500.64,440.23 502.34,440.23 496.11,448.54 493.01,448.54 486.84,440.23 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1099"
+         d="m 497.83,434 v 0.13 l -0.01,0.13 -0.02,0.14 -0.03,0.13 -0.03,0.14 -0.05,0.13 -0.04,0.14 -0.06,0.13 -0.06,0.14 -0.07,0.13 -0.08,0.13 -0.08,0.12 -0.09,0.13 -0.09,0.12 -0.1,0.12 -0.11,0.11 -0.11,0.11 -0.12,0.11 -0.12,0.1 -0.13,0.09 -0.13,0.09 -0.14,0.09 -0.14,0.07 -0.15,0.07 -0.15,0.07 -0.16,0.05 -0.16,0.05 -0.17,0.04 -0.17,0.04 -0.17,0.02 -0.18,0.02 h -0.17 c -1.85,0 -3.29,-1.69 -3.29,-3.09 0,-1.49 1.44,-3.08 3.29,-3.08 1.93,0 3.29,1.59 3.29,3.08 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1101"
+         d="m 495.58,411.39 -0.17,-0.22 -0.17,-0.21 -0.17,-0.21 -0.16,-0.21 -0.16,-0.2 -0.17,-0.19 -0.08,-0.09 -0.08,-0.09 -0.08,-0.08 -0.08,-0.09 -0.08,-0.07 -0.08,-0.08 -0.08,-0.07 -0.08,-0.07 -0.08,-0.06 -0.09,-0.06 -0.08,-0.05 -0.09,-0.05 -0.08,-0.05 -0.09,-0.04 -0.08,-0.03 -0.09,-0.03 -0.09,-0.02 -0.09,-0.02 -0.09,-0.01 h -0.1 c -0.59,0 -1.04,0.59 -1.04,1.25 0,0.89 0.2,1.64 0.39,2.39 l 3.89,16.48 -9.81,-1.68 0.2,-1.16 c 0.8,0.16 1.39,0.16 1.84,0.16 0.75,0 1,-0.35 1,-0.89 0,-0.36 -0.11,-0.71 -0.25,-1.36 l -3.29,-14.19 c -0.14,-0.55 -0.21,-1.05 -0.21,-1.55 0,-1.59 0.8,-2.79 3.35,-2.79 3.48,0 5.98,2.2 7.58,5.03 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /></g>  </g>
+  <g
+     id="g1399"
+     transform="matrix(1.2,0,0,1.2,61.150264,-72.845465)">
+    <g
+       word-spacing="normal"
+       letter-spacing="normal"
+       font-size-adjust="none"
+       font-stretch="normal"
+       font-weight="normal"
+       font-variant="normal"
+       font-style="normal"
+       stroke-miterlimit="10.433"
+       xml:space="preserve"
+       transform="matrix(0.32216287,0,0,-0.32216287,-56.378503,259.76422)"
+       id="g1397"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"><path
+         id="path1389"
+         d="m 468.97,421.5 -0.04,0.33 -0.04,0.33 -0.04,0.31 -0.04,0.3 -0.04,0.29 -0.05,0.28 -0.04,0.26 -0.04,0.26 -0.04,0.24 -0.05,0.24 -0.04,0.22 -0.05,0.22 -0.05,0.21 -0.04,0.2 -0.06,0.2 -0.05,0.19 -0.05,0.18 -0.06,0.18 -0.06,0.17 -0.06,0.17 -0.13,0.32 -0.14,0.31 -0.16,0.31 -0.17,0.3 -0.19,0.3 -0.2,0.3 -7.49,-1.25 0.11,-0.8 c 0.44,0.05 1.23,0.21 1.78,0.21 2.8,0 3.25,-2.99 3.5,-5.24 l 1.89,-15.64 c -1.29,-2 -4.14,-5.08 -4.98,-5.08 -0.8,0 -0.71,1.55 -2.85,1.55 -0.64,0 -1.98,-0.55 -1.98,-2.05 0,-1.2 0.94,-2.75 2.78,-2.75 3.39,0 6.63,4.89 10.27,9.47 2.09,2.64 10.17,14.61 10.17,18.49 0,1.95 -1.25,3.09 -2.85,3.09 -1.45,0 -2.34,-0.89 -2.34,-2 0,-1.89 2.59,-2.39 2.59,-3.44 0,-0.89 -0.4,-1.89 -1.4,-3.73 -1.1,-2.03 -2.83,-5.03 -5.88,-9.16 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1391"
+         points="489.84,440.23 491.53,440.23 497.56,445.35 503.64,440.23 505.34,440.23 499.11,448.54 496.01,448.54 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1393"
+         d="m 500.86,434 v 0.13 l -0.01,0.13 -0.02,0.14 -0.03,0.13 -0.03,0.14 -0.04,0.13 -0.05,0.14 -0.06,0.13 -0.06,0.14 -0.07,0.13 -0.07,0.13 -0.08,0.12 -0.09,0.13 -0.1,0.12 -0.1,0.12 -0.1,0.11 -0.11,0.11 -0.12,0.11 -0.12,0.1 -0.13,0.09 -0.13,0.09 -0.14,0.09 -0.14,0.07 -0.15,0.07 -0.15,0.07 -0.16,0.05 -0.16,0.05 -0.16,0.04 -0.17,0.04 -0.17,0.02 -0.18,0.02 h -0.18 c -1.84,0 -3.29,-1.69 -3.29,-3.09 0,-1.49 1.45,-3.08 3.29,-3.08 1.94,0 3.28,1.59 3.28,3.08 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1395"
+         d="m 499.36,429.21 -9.81,-1.73 0.2,-1.16 c 0.8,0.16 1.39,0.16 1.85,0.16 0.75,0 1,-0.36 1,-0.91 0,-0.25 -0.05,-0.79 -0.16,-1.23 L 488.25,406 c -0.89,-3.94 -2.03,-7.97 -3.62,-7.97 -0.25,0 -0.5,0 -0.5,0.45 0,0.69 1.05,0.55 1.05,2.23 0,1.3 -1.05,2.65 -2.85,2.65 -2.04,0 -2.98,-1.9 -2.98,-3.65 0,-1.89 1.44,-3.82 4.67,-3.82 4.3,0 7.12,3.68 8.47,6.28 0.95,1.89 1.5,3.44 1.8,4.78 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /></g>  </g>
+  <g
+     transform="matrix(1.2,0,0,1.2,127.66957,-25.697287)"
+     id="g1548">
+    <g
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="g1546"
+       transform="matrix(0.32216287,0,0,-0.32216287,-56.378503,259.76422)"
+       xml:space="preserve"
+       stroke-miterlimit="10.433"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="normal"
+       font-stretch="normal"
+       font-size-adjust="none"
+       letter-spacing="normal"
+       word-spacing="normal"><path
+         style="fill:#000000;stroke-width:0"
+         inkscape:connector-curvature="0"
+         d="m 478.79,428.62 h -15.65 l -1.79,-6.83 0.89,-0.2 c 1.15,2.75 2.34,3.05 5.19,3.05 h 6.53 l -16.35,-18.44 0.55,-0.5 c 1.84,0.8 4.08,1.2 6.08,1.2 1.64,0 3.34,-0.25 4.94,-0.7 1.04,-0.25 2.28,-0.7 3.37,-0.7 2.3,0 5.28,1.29 5.28,3.98 0,1.2 -0.73,2.09 -1.98,2.09 -0.96,0 -1.89,-0.93 -1.89,-1.89 0,-1.09 0.59,-1.25 0.59,-1.89 0,-0.79 -0.59,-1.18 -1.34,-1.18 -2.25,0 -2.39,4.28 -6.97,4.28 -1.16,0 -2.41,-0.36 -3.35,-1.05 l -0.15,0.05 16.05,17.93 z"
+         id="path1540" /><polygon
+         style="fill:#000000;stroke-width:0"
+         points="484.92,442.87 486.61,442.87 492.64,447.99 498.72,442.87 500.42,442.87 494.19,451.18 491.09,451.18 "
+         id="polygon1542" /><path
+         style="fill:#000000;stroke-width:0"
+         inkscape:connector-curvature="0"
+         d="m 508.41,428.57 h -11.16 l -0.34,-1.04 h 1.48 c 0.5,0 0.84,-0.25 0.84,-0.61 0,-0.74 -0.84,-1.85 -1.18,-2.14 l -6.17,-5.53 4.82,21.07 -9.62,-1.84 0.25,-1.34 c 1.55,0.34 1.9,0.45 2.2,0.45 0.35,0 0.55,-0.2 0.55,-0.66 0,-0.34 -0.05,-0.64 -0.11,-0.79 l -6.88,-29.94 h 5.79 l 1.95,8.62 1.19,1.1 3.18,-6.19 c 1,-1.89 1.55,-4.08 4.6,-4.08 4.12,0 5.97,6.08 5.97,7.08 h -1.25 c -0.9,-3.09 -1.85,-3.34 -2.54,-3.34 -0.4,0 -1.2,1 -2,2.84 l -3.18,7.42 4.73,4.69 c 1.85,1.78 2.99,2.83 6.58,3.28 z"
+         id="path1544" /></g>  </g>
+  <g
+     id="g1719"
+     transform="matrix(1.2,0,0,1.2,71.329421,-128.64969)">
+    <g
+       word-spacing="normal"
+       letter-spacing="normal"
+       font-size-adjust="none"
+       font-stretch="normal"
+       font-weight="normal"
+       font-variant="normal"
+       font-style="normal"
+       stroke-miterlimit="10.433"
+       xml:space="preserve"
+       transform="matrix(0.32216287,0,0,-0.32216287,-56.378503,259.76422)"
+       id="content"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"><path
+         id="path1686"
+         d="m 468.32,429.46 -9.61,-1.68 0.15,-1.41 c 1.1,0.41 1.53,0.55 2.03,0.55 0.36,0 0.8,-0.14 0.8,-0.74 0,-0.31 -0.09,-0.65 -0.14,-1.04 l -4.39,-18.94 h 5.69 l 0.98,3.98 c 0.31,1.21 4.25,13.91 6.33,13.91 0.8,0 0.41,-1.89 2.45,-1.89 2.78,0 4.03,2.48 4.03,4.28 0,1.3 -1,2.73 -3.09,2.73 -2.69,0 -4.78,-2.09 -6.22,-4.28 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1688"
+         points="493.79,425.43 493.79,422.14 523.13,422.14 523.13,425.43 "
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1690"
+         points="493.79,415.46 493.79,412.18 523.13,412.18 523.13,415.46 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1692"
+         d="m 554.48,420.54 -1,2.75 c -0.61,1.64 -1.55,3.69 -3.74,4.88 l -6.58,-1.64 0.14,-0.89 c 0.5,0.18 1.25,0.29 1.9,0.29 2.75,0 4.04,-2.04 4.89,-4.43 l 1.64,-4.58 -3.24,-5.05 c -1.59,-2.44 -2.89,-2.94 -3.48,-2.94 -1.25,0 -1.05,1 -2.35,1 -1.25,0 -1.89,-1.04 -1.89,-1.84 0,-1.09 0.8,-2.34 2.58,-2.34 2.8,0 4.24,2.14 5.85,4.59 l 3.12,4.87 2,-5.62 c 0.64,-1.8 1.59,-3.84 3.64,-3.84 2.89,0 5.13,4.78 5.72,5.53 l -0.69,0.5 c -1.04,-2.14 -2.25,-2.85 -3.04,-2.85 -2.24,0 -3.4,6.74 -4.88,9.83 l 2.73,4.24 c 0.71,1.09 1.25,1.89 2.75,1.89 0.85,0 1.1,-0.46 2.19,-0.46 1.3,0 1.94,1.14 1.94,2.1 0,1.04 -0.84,1.64 -2.44,1.64 -2.48,0 -4.23,-2.19 -5.53,-4.19 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1694"
+         points="576.77,448.54 570.6,440.23 572.29,440.23 578.32,445.35 584.4,440.23 586.1,440.23 579.87,448.54 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1696"
+         d="m 581.59,434 v 0.13 l -0.01,0.13 -0.02,0.14 -0.03,0.13 -0.03,0.14 -0.04,0.13 -0.05,0.14 -0.06,0.13 -0.06,0.14 -0.07,0.13 -0.08,0.13 -0.08,0.12 -0.09,0.13 -0.09,0.12 -0.1,0.12 -0.11,0.11 -0.11,0.11 -0.12,0.11 -0.12,0.1 -0.13,0.09 -0.13,0.09 -0.14,0.09 -0.14,0.07 -0.15,0.07 -0.15,0.07 -0.16,0.05 -0.16,0.05 -0.17,0.04 -0.16,0.04 -0.18,0.02 -0.17,0.02 h -0.18 c -1.85,0 -3.28,-1.69 -3.28,-3.09 0,-1.49 1.43,-3.08 3.28,-3.08 1.93,0 3.29,1.59 3.29,3.08 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1698"
+         d="m 579.34,411.39 -0.17,-0.22 -0.17,-0.21 -0.17,-0.21 -0.16,-0.21 -0.16,-0.2 -0.17,-0.19 -0.08,-0.09 -0.08,-0.09 -0.08,-0.08 -0.08,-0.09 -0.08,-0.07 -0.08,-0.08 -0.08,-0.07 -0.08,-0.07 -0.08,-0.06 -0.09,-0.06 -0.08,-0.05 -0.08,-0.05 -0.09,-0.05 -0.08,-0.04 -0.09,-0.03 -0.09,-0.03 -0.09,-0.02 -0.09,-0.02 -0.09,-0.01 h -0.09 c -0.6,0 -1.05,0.59 -1.05,1.25 0,0.89 0.2,1.64 0.39,2.39 l 3.89,16.48 -9.81,-1.68 0.2,-1.16 c 0.8,0.16 1.39,0.16 1.84,0.16 0.76,0 1,-0.35 1,-0.89 0,-0.36 -0.1,-0.71 -0.24,-1.36 l -3.3,-14.19 c -0.14,-0.55 -0.2,-1.05 -0.2,-1.55 0,-1.59 0.79,-2.79 3.34,-2.79 3.48,0 5.98,2.2 7.58,5.03 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1700"
+         points="614.25,420.45 614.25,433.45 610.95,433.45 610.95,420.45 597.95,420.45 597.95,417.15 610.95,417.15 610.95,404.15 614.25,404.15 614.25,417.15 627.25,417.15 627.25,420.45 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1702"
+         d="m 654.25,421.5 -0.04,0.33 -0.04,0.33 -0.05,0.31 -0.04,0.3 -0.04,0.29 -0.04,0.28 -0.04,0.26 -0.04,0.26 -0.05,0.24 -0.04,0.24 -0.05,0.22 -0.04,0.22 -0.05,0.21 -0.05,0.2 -0.05,0.2 -0.05,0.19 -0.06,0.18 -0.05,0.18 -0.06,0.17 -0.06,0.17 -0.13,0.32 -0.15,0.31 -0.15,0.31 -0.18,0.3 -0.18,0.3 -0.21,0.3 -7.48,-1.25 0.11,-0.8 c 0.44,0.05 1.23,0.21 1.78,0.21 2.8,0 3.25,-2.99 3.5,-5.24 l 1.89,-15.64 c -1.3,-2 -4.14,-5.08 -4.99,-5.08 -0.79,0 -0.7,1.55 -2.84,1.55 -0.64,0 -1.98,-0.55 -1.98,-2.05 0,-1.2 0.93,-2.75 2.78,-2.75 3.39,0 6.62,4.89 10.26,9.47 2.1,2.64 10.18,14.61 10.18,18.49 0,1.95 -1.25,3.09 -2.85,3.09 -1.45,0 -2.34,-0.89 -2.34,-2 0,-1.89 2.59,-2.39 2.59,-3.44 0,-0.89 -0.4,-1.89 -1.4,-3.73 -1.1,-2.03 -2.83,-5.03 -5.88,-9.16 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1704"
+         points="681.29,448.54 675.12,440.23 676.81,440.23 682.84,445.35 688.92,440.23 690.62,440.23 684.39,448.54 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1706"
+         d="m 686.15,434 -0.01,0.13 -0.01,0.13 -0.02,0.14 -0.03,0.13 -0.03,0.14 -0.04,0.13 -0.05,0.14 -0.06,0.13 -0.06,0.14 -0.07,0.13 -0.07,0.13 -0.08,0.12 -0.09,0.13 -0.09,0.12 -0.1,0.12 -0.11,0.11 -0.11,0.11 -0.12,0.11 -0.12,0.1 -0.13,0.09 -0.13,0.09 -0.14,0.09 -0.14,0.07 -0.15,0.07 -0.15,0.07 -0.15,0.05 -0.16,0.05 -0.17,0.04 -0.17,0.04 -0.17,0.02 -0.18,0.02 h -0.18 c -1.84,0 -3.29,-1.69 -3.29,-3.09 0,-1.49 1.45,-3.08 3.29,-3.08 1.94,0 3.29,1.59 3.29,3.08 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1708"
+         d="m 684.65,429.21 -9.82,-1.73 0.2,-1.16 c 0.8,0.16 1.4,0.16 1.85,0.16 0.75,0 1,-0.36 1,-0.91 0,-0.25 -0.05,-0.79 -0.16,-1.23 L 673.53,406 c -0.88,-3.94 -2.03,-7.97 -3.62,-7.97 -0.25,0 -0.5,0 -0.5,0.45 0,0.69 1.05,0.55 1.05,2.23 0,1.3 -1.05,2.65 -2.85,2.65 -2.04,0 -2.98,-1.9 -2.98,-3.65 0,-1.89 1.44,-3.82 4.67,-3.82 4.3,0 7.13,3.68 8.47,6.28 0.95,1.89 1.5,3.44 1.8,4.78 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1710"
+         points="718.65,420.45 718.65,433.45 715.35,433.45 715.35,420.45 702.35,420.45 702.35,417.15 715.35,417.15 715.35,404.15 718.65,404.15 718.65,417.15 731.65,417.15 731.65,420.45 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1712"
+         d="m 768.46,428.62 h -15.64 l -1.8,-6.83 0.89,-0.2 c 1.16,2.75 2.35,3.05 5.19,3.05 h 6.53 l -16.34,-18.44 0.55,-0.5 c 1.84,0.8 4.07,1.2 6.07,1.2 1.64,0 3.35,-0.25 4.94,-0.7 1.05,-0.25 2.28,-0.7 3.38,-0.7 2.29,0 5.28,1.29 5.28,3.98 0,1.2 -0.74,2.09 -1.99,2.09 -0.95,0 -1.89,-0.93 -1.89,-1.89 0,-1.09 0.6,-1.25 0.6,-1.89 0,-0.79 -0.6,-1.18 -1.35,-1.18 -2.25,0 -2.39,4.28 -6.97,4.28 -1.15,0 -2.4,-0.36 -3.34,-1.05 l -0.16,0.05 16.05,17.93 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /><polygon
+         id="polygon1714"
+         points="780.77,451.18 774.6,442.87 776.29,442.87 782.32,447.99 788.4,442.87 790.1,442.87 783.87,451.18 "
+         style="fill:#000000;stroke-width:0" /><path
+         id="path1716"
+         d="m 798.09,428.57 h -11.16 l -0.34,-1.04 h 1.48 c 0.5,0 0.84,-0.25 0.84,-0.61 0,-0.74 -0.84,-1.85 -1.18,-2.14 l -6.18,-5.53 4.83,21.07 -9.62,-1.84 0.25,-1.34 c 1.54,0.34 1.9,0.45 2.2,0.45 0.34,0 0.55,-0.2 0.55,-0.66 0,-0.34 -0.05,-0.64 -0.11,-0.79 l -6.88,-29.94 h 5.78 l 1.96,8.62 1.19,1.1 3.18,-6.19 c 1,-1.89 1.55,-4.08 4.6,-4.08 4.12,0 5.97,6.08 5.97,7.08 h -1.25 c -0.9,-3.09 -1.85,-3.34 -2.54,-3.34 -0.4,0 -1.2,1 -2,2.84 l -3.18,7.42 4.73,4.69 c 1.84,1.78 2.99,2.83 6.58,3.28 z"
+         inkscape:connector-curvature="0"
+         style="fill:#000000;stroke-width:0" /></g>  </g>
+</svg>
+
+                <div class="svg-caption">Components များဖြင့် ဖော်ပြထားသော Vector တစ်ခု၏ တည်ဆောက်ပုံ</div>
+            </div>
+
+            <h2>2. Basic Operations: Building Blocks of Space</h2>
+            <p>Vector များကို နားလည်ရန် ၎င်းတို့ အချင်းချင်း မည်သို့ ပေါင်းစပ်ရွေ့လျားသည်ကို ရှေးဦးစွာ သိရှိရပါမည်။ ဤလုပ်ငန်းစဉ်များသည် Space အတွင်းရှိ လှုပ်ရှားမှုများကို အက္ခရာသင်္ချာဖြင့် ကိုယ်စားပြုခြင်း ဖြစ်သည်။</p>
+
+            <h3>2.1 Vector Addition (Triangle & Parallelogram Laws)</h3>
+            <p>Vector နှစ်ခုကို ပေါင်းစပ်ခြင်းသည် "အရွေ့များ ဆက်တိုက်ဖြစ်ပေါ်ခြင်း" (Successive displacements) နှင့် တူညီသည်။</p>
+            <ul>
+                <li><strong>Triangle Law:</strong> ပထမ Vector $\displaystyle \mathbf{a}$ ၏ ခေါင်း (head) တွင် ဒုတိယ Vector $\displaystyle \mathbf{b}$ ၏ အမြီး (tail) ကို တပ်ပါ။ $\displaystyle \mathbf{a} + \mathbf{b}$ သည် $\displaystyle \mathbf{a}$ ၏ အမြီးမှ $\displaystyle \mathbf{b}$ ၏ ခေါင်းသို့ ဆွဲထားသော မျဉ်းဖြစ်သည်။</li>
+                <li><strong>Analytical Form:</strong> $\displaystyle \mathbf{a} = \langle a_1, a_2, a_3 \rangle$ နှင့် $\displaystyle \mathbf{b} = \langle b_1, b_2, b_3 \rangle$ ဖြစ်လျှင် $\displaystyle \mathbf{a} + \mathbf{b} = \langle a_1+b_1, a_2+b_2, a_3+b_3 \rangle$ ဖြစ်သည်။</li>
+            </ul>
+
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="0 0 350 200">
+                    <defs>
+                        <marker id="arrowA" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#e53e3e" />
+                        </marker>
+                        <marker id="arrowB" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#3182ce" />
+                        </marker>
+                        <marker id="arrowSum" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#805ad5" />
+                        </marker>
+                    </defs>
+                    <line x1="40" y1="160" x2="160" y2="160" stroke="#e53e3e" stroke-width="3" marker-end="url(#arrowA)" />
+                    <line x1="160" y1="160" x2="280" y2="50" stroke="#3182ce" stroke-width="3" marker-end="url(#arrowB)" />
+                    <line x1="40" y1="160" x2="280" y2="50" stroke="#805ad5" stroke-width="3" marker-end="url(#arrowSum)" />
+                    
+                    <text x="90" y="185" font-weight="bold" fill="#e53e3e" font-size="16">a</text>
+                    <text x="235" y="120" font-weight="bold" fill="#3182ce" font-size="16">b</text>
+                    <text x="135" y="90" font-weight="bold" fill="#805ad5" font-size="18">a + b</text>
+                </svg>
+                <div class="svg-caption">Triangle Law: Vector များ ပေါင်းခြင်း</div>
+            </div>
+
+            <h3>2.2 Scalar Multiplication (Scaling)</h3>
+            <p>Vector တစ်ခုကို ကိန်းဂဏန်းတစ်ခု (Scalar $\displaystyle \lambda$) ဖြင့် မြှောက်လိုက်ပါက၊ ၎င်းသည် မူလဦးတည်ရာအတိုင်း အလျား ရှည်ထွက်လာခြင်း သို့မဟုတ် တိုဝင်သွားခြင်း (Scaling) ဖြစ်ပေါ်စေသည်။ အကယ်၍ $\displaystyle \lambda$ သည် အနှုတ်ကိန်းဖြစ်ပါက ဦးတည်ရာ ပြောင်းပြန်လှည့်သွားမည်ဖြစ်သည်။</p>
+            <div class="math-block">
+                $$\displaystyle \lambda \mathbf{v} = \lambda \langle v_1, v_2, v_3 \rangle = \langle \lambda v_1, \lambda v_2, \lambda v_3 \rangle$$
+            </div>
+            <p>ထို့ကြောင့် Vector နှစ်ခုသည် တစ်ခုနှင့်တစ်ခု Scalar multiple ဆက်သွယ်မှုရှိပါက (ဥပမာ $\displaystyle \mathbf{b} = \lambda \mathbf{a}$)، ၎င်းတို့သည် <strong>Parallel Vectors (မျဉ်းပြိုင်များ)</strong> ဖြစ်ကြသည်။</p>
+
+            <h2>3. Multiplying Vectors: Dot Product and Cross Product</h2>
+            <p>Vectors များကို ပေါင်းရုံဖြင့် မလုံလောက်ပါ။ ၎င်းတို့ကို "မြှောက်" ကြသောအခါ သင်္ချာလောက၏ အလှပဆုံးနှင့် အသုံးအဝင်ဆုံး သဘောတရားများ ပေါ်ထွက်လာသည်။</p>
+
+            <h3>3.1 The Dot Product (Alignment and Orthogonality)</h3>
+            <p>Dot Product ($\cdot$) သည် Vector နှစ်ခု မည်မျှ အပြန်အလှန် "သက်ဆိုင်ညီညွတ်သည်" (Alignment) ကို တိုင်းတာသော တွက်ချက်မှုဖြစ်ပြီး ၎င်း၏ ရလဒ်သည် Scalar (ကိန်းဂဏန်းသက်သက်) ဖြစ်သည်။</p>
+            <div class="concept-box">
+                <div class="math-block">
+                    $$ \begin{aligned} \mathbf{a} \cdot \mathbf{b} &= ||\mathbf{a}|| \cdot ||\mathbf{b}|| \cos \theta \\ &= a_1 b_1 + a_2 b_2 + a_3 b_3 \end{aligned} $$
+                </div>
+                <p><strong>Crucial Property:</strong> အကယ်၍ Vector နှစ်ခုသည် ထောင့်မှန်ကျနေပါက ($\displaystyle \theta = 90^\circ$)၊ ၎င်းတို့ကြားတွင် တူညီသော သက်ရောက်မှု မရှိတော့သဖြင့် $\displaystyle \mathbf{a} \cdot \mathbf{b} = 0$ ဖြစ်သွားမည်။ ဤအချက်သည် အရာဝတ္ထုများ ထောင့်မှန်ကျမှု (Orthogonality) ကို စစ်ဆေးရန် အလွယ်ကူဆုံး Analytical method ဖြစ်သည်။</p>
+            </div>
+
+            <h3>3.2 The Cross Product (Area and Perpendicularity)</h3>
+            <p>Cross Product ($\times$) သည် 3D Space အတွက် သီးသန့်ဖြစ်ပြီး၊ Vector နှစ်ခုကို မြှောက်ရာမှ မူလနှစ်ခုလုံးနှင့် ထောင့်မှန်ကျသော <strong>"Vector အသစ်တစ်ခု"</strong> ကို မွေးဖွားပေးလိုက်ခြင်း ဖြစ်သည်။</p>
+            
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="0 0 350 250" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <marker id="ax" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#e53e3e" />
+        </marker>
+        <marker id="bx" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#3182ce" />
+        </marker>
+        <marker id="cross" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#38a169" />
+        </marker>
+    </defs>
+    
+    <polygon points="50,190 250,190 310,110 110,110" fill="#edf2f7" stroke="#cbd5e0" stroke-width="2"/>
+    
+    <polyline points="135,160 135,145 120,145" fill="none" stroke="#4a5568" stroke-width="1.5" stroke-linejoin="round"/>
+    
+    <polyline points="134,153 134,138 120,145" fill="none" stroke="#4a5568" stroke-width="1.5" stroke-linejoin="round"/>
+    
+    <line x1="120" y1="160" x2="230" y2="160" stroke="#e53e3e" stroke-width="3" marker-end="url(#ax)" />
+    <line x1="120" y1="160" x2="190" y2="125" stroke="#3182ce" stroke-width="3" marker-end="url(#bx)" />
+    <line x1="120" y1="160" x2="120" y2="40" stroke="#38a169" stroke-width="4" marker-end="url(#cross)" />
+    
+    <text x="240" y="165" font-weight="bold" fill="#e53e3e" font-size="16" font-family="sans-serif">a</text>
+    <text x="195" y="120" font-weight="bold" fill="#3182ce" font-size="16" font-family="sans-serif">b</text>
+    <text x="130" y="55" font-weight="bold" fill="#38a169" font-size="16" font-family="sans-serif">a × b</text>
+</svg>
+
+                <div class="svg-caption">Cross Product မှ ရရှိလာသော Vector သည် မူလ Vector နှစ်ခုလုံးအပေါ် ထောင့်မှန်ကျသည်</div>
+            </div>
+
+            <div class="concept-box">
+                <div class="math-block">
+                    $$\displaystyle ||\mathbf{a} \times \mathbf{b}|| = ||\mathbf{a}|| \cdot ||\mathbf{b}|| \sin \theta$$
+                </div>
+                <p><strong>Geometric Interpretation:</strong> Cross product မှ ရရှိလာသော Vector ၏ အလျား (Magnitude) သည် မူလ Vector နှစ်ခုဖြင့် ဖွဲ့စည်းထားသော Parallelogram (အနားပြိုင်စတုဂံ) ၏ ဧရိယာ နှင့် အတိအကျ ညီမျှသည်။ ၎င်း၏ Direction သည် Right-hand rule အရ အမြဲတမ်း ထောင့်မှန်ကျ (Perpendicular) ဖြစ်သည်။</p>
+            </div>
+
+            <h2>4. Normal Vector: The Bridge to Planes</h2>
+            <p>Cross Product ၏ အဓိက စွမ်းပကားမှာ <strong>Normal Vector</strong> ကို ရှာဖွေနိုင်ခြင်းဖြစ်သည်။ ပြင်ညီ (Plane) တစ်ခုပေါ်တွင် တည်ရှိနေသော မည်သည့် Vector နှစ်ခုကိုမဆို Cross Product လုပ်လိုက်ပါက، ထိုပြင်ညီတစ်ခုလုံးနှင့် ထောင့်မှန်ကျနေသော လားရာ (Normal Vector $\displaystyle \mathbf{n}$) ကို ရရှိမည်ဖြစ်သည်။ ဤ Normal Vector သည် ပြင်ညီများ (Planes) ၏ ညီမျှခြင်းကို တည်ဆောက်ရာတွင် အရေးပါဆုံးသော သော့ချက်ဖြစ်သည်။</p>
+
+            <h2>5. Geometry of Space: Lines and Planes</h2>
+            <p>ယခုဆိုလျှင် ကျွန်ုပ်တို့သည် Vector Addition, Scalar Multiplication, Dot Product နှင့် Normal Vector တို့ကို သိရှိပြီးဖြစ်ရာ၊ ၎င်းတို့ကို ပေါင်းစပ်၍ 3D Space အတွင်းရှိ မျဉ်းများနှင့် ပြင်ညီများကို တည်ဆောက်နိုင်ပြီ ဖြစ်သည်။</p>
+
+            <h3>5.1 Vector Equation of a Line (မျဉ်းဖြောင့်)</h3>
+            <p>မျဉ်းတစ်ကြောင်းကို ဖော်ပြရန် <strong>Position vector (Start point)</strong> နှင့် <strong>Direction vector (လားရာ)</strong> နှစ်ခု လိုအပ်သည်။ မျဉ်းသည် အမှတ် $\displaystyle A(\mathbf{a})$ ကို ဖြတ်သန်းသွားပြီး $\displaystyle \mathbf{b}$ နှင့် ပြိုင်နေသည် (Parallel ဖြစ်သည်) ဆိုပါစို့။ မျဉ်းပေါ်ရှိ မည်သည့်အမှတ် $\displaystyle \mathbf{r}$ ကိုမဆို Vector Addition နှင့် Scalar Multiplication ပေါင်းစပ်ခြင်းဖြင့် အောက်ပါအတိုင်း ဖော်ပြနိုင်သည်-</p>
+            
+            <div class="math-block">
+                $$\displaystyle \mathbf{r} = \mathbf{a} + \lambda \mathbf{b}$$
+            </div>
+            <p><strong>Analytical Conversion:</strong> အကယ်၍ $\displaystyle \mathbf{r} = (x,y,z)$, $\displaystyle \mathbf{a} = (x_1, y_1, z_1)$ နှင့် $\displaystyle \mathbf{b} = \langle a, b, c \rangle$ ဖြစ်ပါက، ၎င်းကို <strong>Symmetric Form</strong> သို့ ပြောင်းလဲနိုင်သည်။</p>
+            <div class="math-block">
+                $$\displaystyle \frac{x - x_1}{a} = \frac{y - y_1}{b} = \frac{z - z_1}{c} = \lambda$$
+            </div>
+
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="0 0 400 250">
+                    <defs>
+                        <marker id="arrowB2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#3182ce" />
+                        </marker>
+                        <marker id="arrowR2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#e53e3e" />
+                        </marker>
+                        <marker id="arrowA2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#805ad5" />
+                        </marker>
+                    </defs>
+                    <circle cx="50" cy="200" r="4" fill="#2d3748"/>
+                    <text x="35" y="215" font-weight="bold">O</text>
+                    <line x1="80" y1="180" x2="350" y2="45" stroke="#cbd5e0" stroke-width="3" stroke-dasharray="5,5"/>
+                    <line x1="50" y1="200" x2="160" y2="140" stroke="#805ad5" stroke-width="2.5" marker-end="url(#arrowA2)"/>
+                    <text x="100" y="190" font-weight="bold" fill="#805ad5">a</text>
+                    <line x1="50" y1="200" x2="260" y2="90" stroke="#e53e3e" stroke-width="2.5" marker-end="url(#arrowR2)"/>
+                    <text x="160" y="160" font-weight="bold" fill="#e53e3e">r</text>
+                    <line x1="160" y1="140" x2="260" y2="90" stroke="#3182ce" stroke-width="3" marker-end="url(#arrowB2)"/>
+                    <text x="210" y="135" font-weight="bold" fill="#3182ce">λb</text>
+                </svg>
+                <div class="svg-caption">Vector Equation of a Line: $\mathbf{r} = \mathbf{a} + \lambda \mathbf{b}$</div>
+            </div>
+
+            <h3>5.2 Vector Equation of a Plane (ပြင်ညီ)</h3>
+            <p>ပြင်ညီတစ်ခုကို ဖွဲ့စည်းတည်ဆောက်ရန် အစွမ်းထက်ဆုံးနည်းလမ်းမှာ <strong>Normal Vector</strong> ကို အသုံးပြုခြင်းဖြစ်သည်။ ပြင်ညီပေါ်တွင် အမှတ် $\displaystyle A(\mathbf{a})$ ရှိပြီး၊ ပြင်ညီတစ်ခုလုံးအပေါ် ထောင့်မှန်ကျနေသော Normal vector မှာ $\displaystyle \mathbf{n}$ ဖြစ်သည်ဆိုပါစို့။</p>
+            <p>ပြင်ညီပေါ်ရှိ မည်သည့်အမှတ် $\displaystyle \mathbf{r}$ အတွက်မဆို၊ $\displaystyle (\mathbf{r} - \mathbf{a})$ သည် ပြင်ညီပေါ်ရှိ မျဉ်းတစ်ကြောင်းဖြစ်သွားမည်။ ထိုမျဉ်းသည် Normal $\displaystyle \mathbf{n}$ နှင့် ထောင့်မှန်ကျ (Orthogonal) ဖြစ်ရမည်ဖြစ်ရာ <strong>Dot Product အယူအဆအရ</strong> ၎င်းတို့၏ မြှောက်လဒ်သည် သုညဖြစ်ရမည်-</p>
+            
+            <div class="math-block">
+                $$\displaystyle (\mathbf{r} - \mathbf{a}) \cdot \mathbf{n} = 0 \quad \implies \quad \mathbf{r} \cdot \mathbf{n} = \mathbf{a} \cdot \mathbf{n}$$
+            </div>
+            
+            <p><strong>Analytical Conversion:</strong> $\displaystyle \mathbf{r} = (x,y,z)$ နှင့် $\displaystyle \mathbf{n} = \langle A, B, C \rangle$ ဖြစ်ပါက، $\displaystyle \mathbf{a} \cdot \mathbf{n}$ ကို constant $\displaystyle d$ အဖြစ်ထားလိုက်လျှင် Standard Coordinate Equation ကို ရရှိမည်ဖြစ်သည်။</p>
+            <div class="math-block">
+                $$\displaystyle Ax + By + Cz = d$$
+            </div>
+
+            <div class="svg-container">
+                <svg class="svg-diagram" viewBox="0 0 400 280">
+                    <defs>
+                        <marker id="arrowN" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#e53e3e" />
+                        </marker>
+                        <marker id="arrowV3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#3182ce" />
+                        </marker>
+                    </defs>
+                    <polygon points="50,220 280,220 350,140 120,140" fill="#edf2f7" stroke="#cbd5e0" stroke-width="2"/>
+                    <circle cx="180" cy="180" r="4" fill="#2d3748"/>
+                    <text x="165" y="195" font-weight="bold">a</text>
+                    <circle cx="270" cy="160" r="4" fill="#2d3748"/>
+                    <text x="280" y="170" font-weight="bold">r</text>
+                    <line x1="180" y1="180" x2="270" y2="160" stroke="#3182ce" stroke-width="2.5" marker-end="url(#arrowV3)"/>
+                    <text x="210" y="160" font-weight="bold" fill="#3182ce">r - a</text>
+                    <line x1="180" y1="180" x2="180" y2="60" stroke="#e53e3e" stroke-width="3" marker-end="url(#arrowN)"/>
+                    <text x="190" y="110" font-weight="bold" fill="#e53e3e">n (Normal)</text>
+                    <polyline points="180,165 195,165 195,180" fill="none" stroke="#e53e3e" stroke-width="1.5"/>
+                </svg>
+                <div class="svg-caption">ပြင်ညီနှင့် ၎င်းအပေါ် ထောင့်မှန်ကျနေသော Normal Vector $\mathbf{n}$ ၏ Dot Product ဆက်သွယ်ချက်</div>
+            </div>
+
+            <h2>6. Practical Applications of Vectors in Daily Life</h2>
+            <p>Vector များသည် စာသင်ခန်းထဲရှိ ညီမျှခြင်းများသက်သက် မဟုတ်ပါ။ ကျွန်ုပ်တို့၏ နေ့စဉ်ဘဝတွင် မသိမသာ နေရာယူလျက်ရှိသော အရာများဖြစ်သည်-</p>
+
+            <ul>
+                <li><strong>Navigation and GPS Routing:</strong> သင် Google Maps သို့မဟုတ် GPS ကို အသုံးပြုသောအခါ၊ စနစ်သည် သင့်ကို "ရှေ့သို့ မီတာ ၅၀၀ သွားပါ၊ ထို့နောက် ဘယ်ဘက်သို့ ကွေ့ပါ" ဟု လမ်းညွှန်သည်။ ဤအချက်အလက်များသည် ရှင်းလင်းသော Vectors များဖြစ်သည်။ လမ်းကြောင်းတစ်ခုလုံးသည် Position vectors များကို ဆက်တိုက် ပေါင်းစပ်သွားခြင်း (Vector addition) ပင်ဖြစ်သည်။</li>
+                <li><strong>Sports and Projectiles:</strong> ဘတ်စကတ်ဘော ကစားသမားတစ်ဦးသည် ဘောလုံးကို ပစ်သွင်းသောအခါ ဘောလုံး၏ အမြန်နှုန်း (Magnitude) နှင့် ပစ်လိုက်သော ထောင့် (Direction) ကို အတိအကျ ချိန်ဆရသည်။ ဘိလိယက်ခုံပေါ်ရှိ ဘောလုံးများကို ရိုက်ရာတွင်လည်း ထောင့်နှင့် အင်အားကို Vector resolution ဖြင့် ဦးနှောက်က အလိုအလျောက် တွက်ချက်နေခြင်း ဖြစ်သည်။</li>
+                <li><strong>Aviation and Crosswinds (လေကြောင်းခရီးစဉ်များ):</strong> လေယာဉ်မှူးများသည် လိုရာခရီးသို့ ပျံသန်းရန် ကိုယ်ပိုင်အင်ဂျင်အမြန်နှုန်း (Heading vector) ရှိသော်လည်း၊ ဘေးမှတိုက်ခတ်လာသော လေတိုက်နှုန်း (Wind vector) ကြောင့် လမ်းကြောင်း လွဲချော်သွားတတ်သည်။ သို့ဖြစ်၍ လေယာဉ်မှူးသည် Resultant vector ကို တိကျစွာ တွက်ချက်၍ Heading ကို ကြိုတင် ပြင်ဆင်မောင်းနှင်ရသည်။</li>
+            </ul>
+
+            <h2>7. Importance of Vectors in Modern Technology</h2>
+            <p>နည်းပညာခေတ်တွင် Vectors များသည် Hardware နှင့် Software လောကကြီးတစ်ခုလုံးကို မောင်းနှင်နေသော "DNA" များ ဖြစ်လာကြသည်။</p>
+
+            <div class="tech-box">
+                <h4>Computer Graphics & 3D Animation</h4>
+                <p>ဗီဒီယိုဂိမ်းများနှင့် ရုပ်ရှင် Animation များတွင် တွေ့ရသော 3D objects များအားလုံးသည် အလင်းပြန်ခြင်း (Shading and Lighting) ကို အသက်ဝင်စေရန် <strong>Cross Product</strong> နှင့် <strong>Dot Product</strong> များကို အသုံးပြုရသည်။ Object မျက်နှာပြင်၏ Normal vector ကို Cross product ဖြင့်ရှာပြီး၊ အလင်းတန်း (Light vector) နှင့် Dot product တွက်ချက်ခြင်းဖြင့် မျက်နှာပြင်ပေါ်တွင် အလင်း မည်မျှကျရောက်မည်ကို စက္ကန့်နှင့်အမျှ တွက်ချက်နေခြင်းဖြစ်သည်။</p>
+
+                <h4>Machine Learning & Artificial Intelligence (AI)</h4>
+                <p>ခေတ်သစ် AI များ (ဥပမာ ChatGPT, Word2Vec) သည် စကားလုံးများနှင့် အချက်အလက်များကို High-dimensional Vector Space အတွင်းရှိ <strong>Vector Arrays</strong> များအဖြစ် ပြောင်းလဲမှတ်သားကြသည်။ စကားလုံးနှစ်လုံး၏ အဓိပ္ပါယ် မည်မျှဆင်တူသည် (Similarity) ကို တိုင်းတာရန် ထို Vector နှစ်ခုကြားရှိ Angle ကို Dot Product အသုံးပြု၍ တွက်ချက်ကြသည်။ "Vector" ကို နားလည်ခြင်းသည် ခေတ်သစ် AI ၏ အလုပ်လုပ်ပုံကို နားလည်ခြင်းပင် ဖြစ်သည်။</p>
+
+                <h4>Robotics and Automation (စက်ရုပ်နည်းပညာ)</h4>
+                <p>စက်ရုံများရှိ အလိုအလျောက် စက်ရုပ်လက်တံ (Robotic arms) များသည် ပစ္စည်းတစ်ခုကို လှမ်းယူရန် Inverse Kinematics ကို အသုံးပြုကြရသည်။ ဆစ်ပိုင်းတစ်ခုစီ၏ အရှည်နှင့် လှည့်ရမည့်ထောင့်များကို 3D Space အတွင်း Vector Equations များဖြင့် တိကျစွာ ပုံဖော်တွက်ချက်မှသာ ပစ်မှတ်သို့ အမှားအယွင်းကင်းစွာ ရောက်ရှိနိုင်မည်ဖြစ်သည်။</p>
+            </div>
+
+            <h2>8. Worked Example: Line and Plane Intersection</h2>
+            <p>Vector Line နှင့် ပြင်ညီ (Plane) တို့၏ ပေါင်းစပ် တွက်ချက်မှု (Analytical Method) ပုစ္ဆာတစ်ပုဒ်ကို လေ့လာကြည့်ကြပါစို့။</p>
+
+            <div class="example-box">
+                <h4>Problem:</h4>
+                <p>Find the point of intersection between the line $\displaystyle \mathbf{r} = (1, 2, 3) + \lambda(2, -1, 4)$ and the plane $\displaystyle \mathbf{r} \cdot (1, 1, 2) = 15$.</p>
+
+                <div class="solution-title">Solution:</div>
+                <p>Step 1: Express any point $\displaystyle \mathbf{r}$ on the line in terms of $\displaystyle \lambda$.</p>
+                <div class="math-block">
+                    $$\displaystyle \mathbf{r} = (1 + 2\lambda, 2 - \lambda, 3 + 4\lambda)$$
+                </div>
+
+                <p>Step 2: Since this point lies on the plane, substitute it into the plane's dot product equation.</p>
+                <div class="math-block">
+                    $$\displaystyle \begin{aligned} (1 + 2\lambda, 2 - \lambda, 3 + 4\lambda) \cdot (1, 1, 2) &= 15 \\ (1 + 2\lambda)(1) + (2 - \lambda)(1) + (3 + 4\lambda)(2) &= 15 \\ 1 + 2\lambda + 2 - \lambda + 6 + 8\lambda &= 15 \\ 9 + 9\lambda &= 15 \\ 9\lambda &= 6 \\ \lambda &= \frac{2}{3} \end{aligned}$$
+                </div>
+
+                <p>Step 3: Substitute $\displaystyle \lambda$ back into the line equation to find the intersection point.</p>
+                <div class="math-block">
+                    $$\displaystyle \begin{aligned} \mathbf{r} &= \left( 1 + 2\left(\frac{2}{3}\right), 2 - \frac{2}{3}, 3 + 4\left(\frac{2}{3}\right) \right) \\ &= \left( \frac{7}{3}, \frac{4}{3}, \frac{17}{3} \right) \end{aligned}$$
+                </div>
+                <p>Therefore, the point of intersection is $\displaystyle \left( \frac{7}{3}, \frac{4}{3}, \frac{17}{3} \right)$.</p>
+            </div>
+
+            <h2>9. Conclusion</h2>
+            <p>Vector Algebra သည် သင်္ချာညီမျှခြင်းများသက်သက် မဟုတ်ဘဲ <strong>"Space" (ဟင်းလင်းပြင်) ကို "Numbers" (ဂဏန်းများ) အဖြစ် ဘာသာပြန်ပေးသော အကောင်းဆုံး တံတားတစ်စင်း</strong> ဖြစ်သည်။ Basic Operations များဖြစ်သော Addition နှင့် Scaling မှစတင်ကာ၊ Dot Product နှင့် Cross Product တို့ဖြင့် ပေါင်းစပ်လိုက်သောအခါ Space အတွင်းရှိ Lines များ၊ Planes များ၏ အလှပဆုံးသော ညီမျှခြင်းများကို တည်ဆောက်နိုင်လာသည်။</p>
+            <p>ကျွန်ုပ်တို့၏ နေ့စဉ်ဘဝ လှုပ်ရှားမှုများမှသည် ခေတ်သစ် Artificial Intelligence ၏ အာရုံကြောကွန်ရက်များအထိ Vector များသည် နေရာအနှံ့တွင် အသက်ဝင်နေပါသည်။ ဤဘာသာရပ်ကို ပိုင်နိုင်စွာ နားလည်ထားခြင်းဖြင့် ရုပ်ဝတ္ထုလောကနှင့် ဒေတာကမ္ဘာကြီးကို မြင်တွေ့နိုင်မည့် အမြင်သစ်တစ်ခုကို သေချာပေါက် ရရှိလာမည် ဖြစ်ပါသည်။</p>
+
+            <div class="quote-box">
+                <h4>"Vectors allow mathematics not only to measure 'how much', but to fundamentally describe 'where' and 'how' the universe moves."</h4>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
