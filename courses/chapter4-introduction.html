@@ -6,7 +6,9 @@
     <title>Vector Algebra: From Basic Operations to Spatial Geometry</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Alice&display=swap" rel="stylesheet">
     
-    <script>
+<script>
+        // Recursive Error လုံးဝမဖြစ်စေရန် Native \over ကိုသာ သုံးထားပါသည်
+        // Math Font များ Uniform ဖြစ်စေရန် matchFontHeight: false ကို ထည့်သွင်းထားပါသည်
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -23,6 +25,7 @@
             startup: {
                 pageReady: () => {
                     return MathJax.startup.defaultPageReady().then(() => {
+                        // Display Math များအတွက် Wrapper (Block Level Swipe)
                         document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
                             const wrapper = document.createElement('div');
                             wrapper.className = 'math-display-wrapper';
@@ -30,6 +33,7 @@
                             wrapper.appendChild(node);
                         });
                         
+                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
                         document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
                             const wrapper = document.createElement('span');
                             wrapper.className = 'math-inline-wrapper';
@@ -41,8 +45,7 @@
             }
         };
     </script>
-   <script id="MathJax-script" async src="https://raw.githubusercontent.com/targetmathematics01/g12-math/refs/heads/main/courses/mathjax.js
-"></script>
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
         :root {
