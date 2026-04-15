@@ -5,18 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Target Mathematics Solutions</title>
     <script>
+        // Recursive Error လုံးဝမဖြစ်စေရန် Native \over ကိုသာ သုံးထားပါသည်
+        // Math Font များ Uniform ဖြစ်စေရန် matchFontHeight: false ကို ထည့်သွင်းထားပါသည်
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                tags: 'ams'
+                macros: {
+                    frac: ["{\\displaystyle {#1 \\over #2}}", 2]
+                }
             },
             chtml: {
-                displayAlign: 'left',
-                displayIndent: '0'
+                displayAlign: "center",
+                matchFontHeight: false, 
+                scale: 1
             },
-            svg: {
-                fontCache: 'global'
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        // Display Math များအတွက် Wrapper (Block Level Swipe)
+                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'math-display-wrapper';
+                            node.parentNode.insertBefore(wrapper, node);
+                            wrapper.appendChild(node);
+                        });
+                        
+                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
+                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
+                            const wrapper = document.createElement('span');
+                            wrapper.className = 'math-inline-wrapper';
+                            node.parentNode.insertBefore(wrapper, node);
+                            wrapper.appendChild(node);
+                        });
+                    });
+                }
             }
         };
     </script>
