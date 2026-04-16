@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Algebra Quiz | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+   <script id="MathJax-script" async src="mathjax.js"></script>
+    
+    <style>
+        body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
+        header { background: #0056b3; color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logo { font-size: 28px; font-weight: 600; letter-spacing: 2px; color: #f39c12; }
+        .logo span { color: #f4f6f1; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        .content-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; text-align: left; }
+        .content-box h1 { color: #333; margin-bottom: 10px; text-align: center; font-family: 'Alice', serif; }
+        .content-box p.subtitle { text-align: center; color: #777; margin-bottom: 40px; font-size: 1.1em; }
+        
+        .quiz-header { background-color: #e8f4f8; border-left: 5px solid #0056b3; padding: 20px; border-radius: 4px; margin-bottom: 30px; }
+        .quiz-header p { margin: 0; color: #333; font-weight: 600; }
+
+        .question-card { background: #fafafa; padding: 25px; margin-bottom: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); border: 1px solid #eee; border-left: 5px solid #0056b3; transition: border-left-color 0.3s; }
+        .question-card p { margin-top: 0; font-size: 16px; color: #333; }
+        
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .option-label { display: flex; align-items: center; cursor: pointer; padding: 12px 15px; background-color: #fff; border: 1px solid #ccc; border-radius: 6px; transition: all 0.2s ease; font-size: 15px; }
+        .option-label:hover { background-color: #e8f4f8; border-color: #0056b3; }
+        input[type="radio"] { margin-right: 12px; transform: scale(1.2); cursor: pointer; }
+        
+        .submit-btn { display: block; width: 100%; padding: 18px; background-color: #0056b3; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 35px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .submit-btn:disabled { background-color: #a0bcdc; cursor: not-allowed; box-shadow: none; }
+        .submit-btn:not(:disabled):hover { background-color: #004494; }
+        
+        #result { margin-top: 35px; padding: 30px; background: #ffffff; border-radius: 8px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #28a745; }
+        .wrong-answer { color: #c0392b; margin-bottom: 15px; padding: 15px; background-color: #fcebeb; border-radius: 5px; border-left: 4px solid #c0392b; line-height: 1.6; }
+        .score-display { font-size: 26px; font-weight: bold; color: #0056b3; text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #eee; }
+
+        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
+        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; border: 1px solid #ccc; }
+        .btn-nav:hover { background-color: #e0e0e0; }
+
+        @media (max-width: 768px) {
+            .content-box { padding: 25px 15px; }
+            .options { grid-template-columns: 1fr; }
+            .page-navigation { flex-direction: column; gap: 15px; }
+            .btn-nav { width: 100%; box-sizing: border-box; }
+        }
+
+        .top-nav-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: -25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+        }
+        .nav-link {
+            padding: 12px 30px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #0056b3;
+            background-color: #f4f7f6;
+        }
+        .nav-link.active {
+            color: #0056b3;
+            background-color: #e8f4f8;
+        }
+        @media (max-width: 768px) {
+            .top-nav-box { flex-direction: row; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
+            .nav-link { flex: 1; text-align: center; padding: 12px 10px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+   
+
+    <div class="container">
+       
+        <div class="content-box">
+            <h1>Vector Algebra</h1>
+            <p class="subtitle">Multiple Choice Questions</p>
+
+            <div class="quiz-header">
+                <p>Please answer all 35 questions below. The submit button will be enabled once completed.</p>
+            </div>
+
+            <form id="quizForm">
+                <div id="questionsContainer"></div>
+                <button type="submit" id="submitBtn" class="submit-btn" disabled>Submit Answers</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            { id: 1, text: "If \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) are the vectors forming consecutive sides of a regular hexagon \\( \\displaystyle ABCDEF \\), then the vector representing the side \\( \\displaystyle CD \\) is:", options: { A: "\\( \\displaystyle \\vec{a} + \\vec{b} \\)", B: "\\( \\displaystyle \\vec{a} - \\vec{b} \\)", C: "\\( \\displaystyle \\vec{b} - \\vec{a} \\)", D: "\\( \\displaystyle -(\\vec{a} + \\vec{b}) \\)" }, answer: "C" },
+            { id: 2, text: "The vector \\( \\displaystyle \\cos \\alpha \\cos \\beta \\hat{i} + \\cos \\alpha \\sin \\beta \\hat{j} + \\sin \\alpha \\hat{k} \\) is a :", options: { A: "null vector", B: "unit vector", C: "constant vector", D: "none of these" }, answer: "B" },
+            { id: 3, text: "The vector in the direction of the vector \\( \\displaystyle \\vec{a} = \\hat{i} - 2\\hat{j} + 2\\hat{k} \\) that has a magnitude 9 is:", options: { A: "\\( \\displaystyle \\hat{i} - 2\\hat{j} + 2\\hat{k} \\)", B: "\\( \\displaystyle \\frac{1}{3}(\\hat{i} - 2\\hat{j} + 2\\hat{k}) \\)", C: "\\( \\displaystyle 3(\\hat{i} - 2\\hat{j} + 2\\hat{k}) \\)", D: "\\( \\displaystyle 9(\\hat{i} - 2\\hat{j} + 2\\hat{k}) \\)" }, answer: "C" },
+            { id: 4, text: "The projection of the vector \\( \\displaystyle \\vec{a} = 3\\hat{i} - \\hat{j} - 2\\hat{k} \\) on \\( \\displaystyle \\vec{b} = \\hat{i} + 2\\hat{j} - 3\\hat{k} \\) is:", options: { A: "\\( \\displaystyle \\sqrt{14}/2 \\)", B: "\\( \\displaystyle 14/\\sqrt{2} \\)", C: "\\( \\displaystyle \\sqrt{14} \\)", D: "\\( \\displaystyle 7 \\)" }, answer: "A" },
+            { id: 5, text: "The p.v.'s of the points \\( \\displaystyle A, B, C \\) are \\( \\displaystyle 2\\hat{i} + \\hat{j} - \\hat{k} \\), \\( \\displaystyle 3\\hat{i} - 2\\hat{j} + \\hat{k} \\) and \\( \\displaystyle \\hat{i} + 4\\hat{j} - 3\\hat{k} \\) respectively. These points :", options: { A: "form an isosceles triangle", B: "form a right triangle", C: "are collinear", D: "form a scalene triangle" }, answer: "C" },
+            { id: 6, text: "The p.v.'s of the points \\( \\displaystyle A, B, C \\) are \\( \\displaystyle \\hat{i} + x\\hat{j} + 3\\hat{k} \\), \\( \\displaystyle 3\\hat{i} + 4\\hat{j} + 7\\hat{k} \\) and \\( \\displaystyle y\\hat{i} - 2\\hat{j} - 5\\hat{k} \\) respectively are collinear, then \\( \\displaystyle (x, y) = ? \\)", options: { A: "\\( \\displaystyle (2, -3) \\)", B: "\\( \\displaystyle (-2, 3) \\)", C: "\\( \\displaystyle (-2, -3) \\)", D: "\\( \\displaystyle (2, 3) \\)" }, answer: "A" },
+            { id: 7, text: "If \\( \\displaystyle |\\vec{a}| = 3 \\) and \\( \\displaystyle -1 \\le k \\le 2 \\), then \\( \\displaystyle |k\\vec{a}| \\) lies in the interval:", options: { A: "\\( \\displaystyle [0, 6] \\)", B: "\\( \\displaystyle [-3, 6] \\)", C: "\\( \\displaystyle [3, 6] \\)", D: "\\( \\displaystyle [1, 2] \\)" }, answer: "A" },
+            { id: 8, text: "If \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) be two vectors such that \\( \\displaystyle |\\vec{a}| = |\\vec{b}| = \\sqrt{2} \\) and \\( \\displaystyle \\vec{a} \\cdot \\vec{b} = -1 \\), then the angle between \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) is:", options: { A: "\\( \\displaystyle \\pi/3 \\)", B: "\\( \\displaystyle \\pi/4 \\)", C: "\\( \\displaystyle 2\\pi/3 \\)", D: "none of these" }, answer: "C" },
+            { id: 9, text: "If \\( \\displaystyle \\vec{a} = \\hat{i} + 2\\hat{j} - 3\\hat{k} \\) and \\( \\displaystyle \\vec{b} = 3\\hat{i} - \\hat{j} + 2\\hat{k} \\), then angle between \\( \\displaystyle (\\vec{a} + \\vec{b}) \\) and \\( \\displaystyle (\\vec{a} - \\vec{b}) \\) is:", options: { A: "\\( \\displaystyle \\pi/3 \\)", B: "\\( \\displaystyle \\pi/4 \\)", C: "\\( \\displaystyle \\pi/2 \\)", D: "\\( \\displaystyle 2\\pi/3 \\)" }, answer: "C" },
+            { id: 10, text: "If \\( \\displaystyle |\\vec{a} + \\vec{b}| = |\\vec{a} - \\vec{b}| \\), then:", options: { A: "\\( \\displaystyle |\\vec{a}| = |\\vec{b}| \\)", B: "\\( \\displaystyle \\vec{a} \\perp \\vec{b} \\)", C: "\\( \\displaystyle \\vec{a} \\parallel \\vec{b} \\)", D: "none of these" }, answer: "B" },
+            { id: 11, text: "If \\( \\displaystyle \\hat{a}, \\hat{b}, \\hat{c} \\) are mutually perpendicular unit vectors, then value of \\( \\displaystyle |\\hat{a} + \\hat{b} + \\hat{c}| \\) is:", options: { A: "\\( \\displaystyle 1 \\)", B: "\\( \\displaystyle \\sqrt{2} \\)", C: "\\( \\displaystyle \\sqrt{3} \\)", D: "\\( \\displaystyle 2 \\)" }, answer: "C" },
+            { id: 12, text: "If \\( \\displaystyle \\vec{a} + \\vec{b} + \\vec{c} = 0 \\), \\( \\displaystyle |\\vec{a}| = 3 \\), \\( \\displaystyle |\\vec{b}| = 5 \\), \\( \\displaystyle |\\vec{c}| = 7 \\), then the angle between \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) is:", options: { A: "\\( \\displaystyle \\pi/6 \\)", B: "\\( \\displaystyle 2\\pi/3 \\)", C: "\\( \\displaystyle 5\\pi/3 \\)", D: "\\( \\displaystyle \\pi/3 \\)" }, answer: "D" },
+            { id: 13, text: "Let \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) are two unit vectors and \\( \\displaystyle \\alpha \\) be the angle between them, then \\( \\displaystyle \\vec{a} + \\vec{b} \\) is a unit vector, if:", options: { A: "\\( \\displaystyle \\alpha = \\pi/4 \\)", B: "\\( \\displaystyle \\alpha = \\pi/3 \\)", C: "\\( \\displaystyle \\alpha = 2\\pi/3 \\)", D: "\\( \\displaystyle \\alpha = \\pi/2 \\)" }, answer: "C" },
+            { id: 14, text: "If p.v. of \\( \\displaystyle P \\) and \\( \\displaystyle Q \\) are \\( \\displaystyle \\hat{i} + 3\\hat{j} - 7\\hat{k} \\) and \\( \\displaystyle 5\\hat{i} - 2\\hat{j} + 4\\hat{k} \\) then cosine of the angle between \\( \\displaystyle \\overrightarrow{PQ} \\) and y-axis is:", options: { A: "\\( \\displaystyle \\frac{5}{\\sqrt{162}} \\)", B: "\\( \\displaystyle \\frac{4}{\\sqrt{162}} \\)", C: "\\( \\displaystyle \\frac{11}{\\sqrt{162}} \\)", D: "\\( \\displaystyle -\\frac{5}{\\sqrt{162}} \\)" }, answer: "D" },
+            { id: 15, text: "If \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) are two unit vectors, then which of the following values of \\( \\displaystyle \\vec{a} \\cdot \\vec{b} \\) is not possible?", options: { A: "\\( \\displaystyle \\sqrt{3} \\)", B: "\\( \\displaystyle \\sqrt{3}/2 \\)", C: "\\( \\displaystyle 1/\\sqrt{2} \\)", D: "\\( \\displaystyle -1/2 \\)" }, answer: "A" },
+            { id: 16, text: "If \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\) are two unit vectors inclined at an angle \\( \\displaystyle \\theta \\), then the value of \\( \\displaystyle |\\vec{a} - \\vec{b}| \\) is:", options: { A: "\\( \\displaystyle 2\\sin(\\theta/2) \\)", B: "\\( \\displaystyle 2\\sin\\theta \\)", C: "\\( \\displaystyle 2\\cos(\\theta/2) \\)", D: "\\( \\displaystyle 2\\cos\\theta \\)" }, answer: "A" },
+            { id: 17, text: "If the angle between the vectors \\( \\displaystyle x\\hat{i} + 3\\hat{j} - 7\\hat{k} \\) and \\( \\displaystyle x\\hat{i} - x\\hat{j} + 4\\hat{k} \\) is acute, then \\( \\displaystyle x \\) lies in the interval:", options: { A: "\\( \\displaystyle (-4, 7) \\)", B: "\\( \\displaystyle [-4, 7] \\)", C: "\\( \\displaystyle R - [-4, 7] \\)", D: "\\( \\displaystyle R - (-4, 7) \\)" }, answer: "C" },
+            { id: 18, text: "If \\( \\displaystyle \\vec{a} = 2\\hat{i} + 3\\hat{j} - \\hat{k} \\), \\( \\displaystyle \\vec{b} = -\\hat{i} + 2\\hat{j} - 4\\hat{k} \\) and \\( \\displaystyle \\vec{c} = \\hat{i} + \\hat{j} + \\hat{k} \\), then \\( \\displaystyle (\\vec{a} \\times \\vec{b}) \\cdot (\\vec{a} \\times \\vec{c}) \\) is:", options: { A: "\\( \\displaystyle 74 \\)", B: "\\( \\displaystyle -74 \\)", C: "\\( \\displaystyle 52 \\)", D: "\\( \\displaystyle -52 \\)" }, answer: "B" },
+            { id: 19, text: "The vector \\( \\displaystyle \\vec{b} = 3\\hat{i} + 4\\hat{k} \\) is to be written as the sum of a vector \\( \\displaystyle \\vec{\\alpha} \\) parallel to \\( \\displaystyle \\vec{a} = \\hat{i} + \\hat{j} \\) and a vector \\( \\displaystyle \\vec{\\beta} \\) perpendicular to \\( \\displaystyle \\vec{a} \\). Then \\( \\displaystyle \\vec{\\alpha} \\) is:", options: { A: "\\( \\displaystyle \\frac{3}{2}(\\hat{i} + \\hat{j}) \\)", B: "\\( \\displaystyle \\frac{2}{3}(\\hat{i} + \\hat{j}) \\)", C: "\\( \\displaystyle \\frac{1}{2}(\\hat{i} + \\hat{j}) \\)", D: "\\( \\displaystyle \\frac{1}{3}(\\hat{i} + \\hat{j}) \\)" }, answer: "A" },
+            { id: 20, text: "If \\( \\displaystyle \\vec{a} = \\hat{i} + \\hat{j} - \\hat{k} \\), \\( \\displaystyle \\vec{b} = -\\hat{i} + 2\\hat{j} + 2\\hat{k} \\) and \\( \\displaystyle \\vec{c} = -\\hat{i} + 2\\hat{j} - \\hat{k} \\), then unit vector normal to vectors \\( \\displaystyle \\vec{a} + \\vec{b} \\) and \\( \\displaystyle \\vec{b} - \\vec{c} \\) is:", options: { A: "\\( \\displaystyle \\hat{i} \\)", B: "\\( \\displaystyle \\hat{j} \\)", C: "\\( \\displaystyle \\hat{k} \\)", D: "none of these" }, answer: "A" },
+            { id: 21, text: "If \\( \\displaystyle |\\vec{a} \\times \\vec{b}| = 4 \\), \\( \\displaystyle |\\vec{a} \\cdot \\vec{b}| = 2 \\), then \\( \\displaystyle |\\vec{a}|^2 |\\vec{b}|^2 \\) is:", options: { A: "\\( \\displaystyle 6 \\)", B: "\\( \\displaystyle 2 \\)", C: "\\( \\displaystyle 20 \\)", D: "\\( \\displaystyle 8 \\)" }, answer: "C" },
+            { id: 22, text: "If \\( \\displaystyle \\theta \\) is the angle between any two vectors \\( \\displaystyle \\vec{a} \\) and \\( \\displaystyle \\vec{b} \\), then \\( \\displaystyle |\\vec{a} \\times \\vec{b}| = |\\vec{a} \\cdot \\vec{b}| \\) when \\( \\displaystyle \\theta \\) is:", options: { A: "\\( \\displaystyle 0 \\)", B: "\\( \\displaystyle \\pi/4 \\)", C: "\\( \\displaystyle \\pi/2 \\)", D: "\\( \\displaystyle \\pi \\)" }, answer: "B" },
+            { id: 23, text: "The diagonals of a parallelogram are represented by the vectors \\( \\displaystyle \\vec{d}_1 = 3\\hat{i} + \\hat{j} - 2\\hat{k} \\) and \\( \\displaystyle \\vec{d}_2 = \\hat{i} - 3\\hat{j} + 4\\hat{k} \\). The area of the parallelogram:", options: { A: "\\( \\displaystyle 7\\sqrt{3} \\text{ sq.units} \\)", B: "\\( \\displaystyle 5\\sqrt{3} \\text{ sq.units} \\)", C: "\\( \\displaystyle 3\\sqrt{5} \\text{ sq.units} \\)", D: "none of these" }, answer: "B" },
+            { id: 24, text: "The value of \\( \\displaystyle [\\vec{a} - \\vec{b} \\quad \\vec{b} - \\vec{c} \\quad \\vec{c} - \\vec{a}] \\), where \\( \\displaystyle |\\vec{a}| = 1, |\\vec{b}| = 5, |\\vec{c}| = 3 \\), is:", options: { A: "\\( \\displaystyle 0 \\)", B: "\\( \\displaystyle 1 \\)", C: "\\( \\displaystyle 6 \\)", D: "none of these" }, answer: "A" },
+            { id: 25, text: "If \\( \\displaystyle \\vec{a} = 2\\hat{i} - 3\\hat{j} + 5\\hat{k} \\), \\( \\displaystyle \\vec{b} = 3\\hat{i} - 4\\hat{j} + 5\\hat{k} \\) and \\( \\displaystyle \\vec{c} = 5\\hat{i} - 3\\hat{j} - 2\\hat{k} \\), then the volume of the parallelopiped with coterminus edges \\( \\displaystyle \\vec{a} + \\vec{b} \\), \\( \\displaystyle \\vec{b} + \\vec{c} \\), \\( \\displaystyle \\vec{c} + \\vec{a} \\) is:", options: { A: "\\( \\displaystyle 2 \\)", B: "\\( \\displaystyle 1 \\)", C: "\\( \\displaystyle 4 \\)", D: "\\( \\displaystyle 16 \\)" }, answer: "D" },
+            { id: 26, text: "If the vectors \\( \\displaystyle \\vec{a} = 4\\hat{i} + 11\\hat{j} + x\\hat{k} \\), \\( \\displaystyle \\vec{b} = 7\\hat{i} + 2\\hat{j} + 6\\hat{k} \\) and \\( \\displaystyle \\vec{c} = \\hat{i} + 5\\hat{j} + 4\\hat{k} \\) are coplanar, then value of \\( \\displaystyle x \\) is:", options: { A: "\\( \\displaystyle 0 \\)", B: "\\( \\displaystyle 38 \\)", C: "\\( \\displaystyle 10 \\)", D: "\\( \\displaystyle 20 \\)" }, answer: "C" },
+            { id: 27, text: "If \\( \\displaystyle P \\) is \\( \\displaystyle (-3, 1, 2) \\) and \\( \\displaystyle Q \\) is \\( \\displaystyle (1, -1, 3) \\), the position vector of \\( \\displaystyle Q \\) with respect to \\( \\displaystyle P \\) is", options: { A: "\\( \\displaystyle \\begin{pmatrix} -3 \\\\ 1 \\\\ 2 \\end{pmatrix} \\)", B: "\\( \\displaystyle \\begin{pmatrix} 1 \\\\ -1 \\\\ 3 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\begin{pmatrix} 4 \\\\ -2 \\\\ 1 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\begin{pmatrix} -4 \\\\ 2 \\\\ -1 \\end{pmatrix} \\)" }, answer: "C" },
+            { id: 28, text: "If \\( \\displaystyle \\vec{p} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 4 \\end{pmatrix} \\) and \\( \\displaystyle \\vec{q} = \\begin{pmatrix} -2 \\\\ 0 \\\\ 2 \\end{pmatrix} \\), then the vector \\( \\displaystyle \\vec{p} - \\frac{1}{2}\\vec{q} = \\)", options: { A: "\\( \\displaystyle \\begin{pmatrix} 0 \\\\ -1 \\\\ 5 \\end{pmatrix} \\)", B: "\\( \\displaystyle \\begin{pmatrix} -1 \\\\ -1 \\\\ 6 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\begin{pmatrix} -4 \\\\ 2 \\\\ -1 \\end{pmatrix} \\)" }, answer: "C" },
+            { id: 29, text: "If \\( \\displaystyle P \\) is \\( \\displaystyle (3, 1, -2) \\) and \\( \\displaystyle Q \\) is \\( \\displaystyle (1, -3, 5) \\), then the magnitude of \\( \\displaystyle \\overrightarrow{PQ} \\) is", options: { A: "\\( \\displaystyle 69 \\text{ units} \\)", B: "\\( \\displaystyle \\sqrt{69} \\text{ units} \\)", C: "\\( \\displaystyle 13 \\text{ units} \\)", D: "\\( \\displaystyle 29 \\text{ units} \\)" }, answer: "B" },
+            { id: 30, text: "If \\( \\displaystyle \\vec{a} = \\begin{pmatrix} 5 \\\\ -2 \\\\ -4 \\end{pmatrix} \\), \\( \\displaystyle \\vec{b} = \\begin{pmatrix} 3 \\\\ -6 \\\\ 1 \\end{pmatrix} \\) and \\( \\displaystyle \\vec{c} = \\begin{pmatrix} 0 \\\\ 7 \\\\ -1 \\end{pmatrix} \\), then \\( \\displaystyle 3\\vec{a} - \\vec{b} + \\vec{c} \\) is", options: { A: "\\( \\displaystyle \\begin{pmatrix} 12 \\\\ 7 \\\\ -14 \\end{pmatrix} \\)", B: "\\( \\displaystyle \\begin{pmatrix} 8 \\\\ -1 \\\\ -4 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\begin{pmatrix} 13 \\\\ -5 \\\\ -12 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\begin{pmatrix} 12 \\\\ 7 \\\\ 14 \\end{pmatrix} \\)" }, answer: "A" },
+            { id: 31, text: "If \\( \\displaystyle \\vec{p} = \\begin{pmatrix} 1 \\\\ -2 \\\\ 2 \\end{pmatrix} \\) and \\( \\displaystyle \\vec{q} = \\begin{pmatrix} 6 \\\\ -1 \\\\ 4 \\end{pmatrix} \\), then the value of \\( \\displaystyle |2\\vec{p} - \\vec{q}| \\) is", options: { A: "\\( \\displaystyle \\sqrt{5} \\)", B: "\\( \\displaystyle 5 \\)", C: "\\( \\displaystyle \\pm\\sqrt{5} \\)", D: "\\( \\displaystyle \\pm 5 \\)" }, answer: "B" },
+            { id: 32, text: "A unit vector in the direction of \\( \\displaystyle \\overrightarrow{AB} \\) where \\( \\displaystyle A(1, 2, 3) \\) and \\( \\displaystyle B(4, 5, 6) \\) is", options: { A: "\\( \\displaystyle \\frac{1}{\\sqrt{3}}\\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix} \\)", B: "\\( \\displaystyle \\frac{1}{\\sqrt{3}}\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\pm\\frac{1}{\\sqrt{3}}\\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\begin{pmatrix} 3 \\\\ 3 \\\\ 3 \\end{pmatrix} \\)" }, answer: "A" },
+            { id: 33, text: "If \\( \\displaystyle \\vec{a} = \\begin{pmatrix} 2 \\\\ -5 \\\\ 8 \\end{pmatrix} \\), \\( \\displaystyle \\vec{b} = \\begin{pmatrix} 1 \\\\ -3 \\\\ -7 \\end{pmatrix} \\) and \\( \\displaystyle \\vec{c} = \\begin{pmatrix} -3 \\\\ 2 \\\\ -1 \\end{pmatrix} \\), then the unit vector(s) parallel to \\( \\displaystyle \\vec{a} + \\vec{b} + \\vec{c} \\) is(are)", options: { A: "\\( \\displaystyle 6\\begin{pmatrix} 0 \\\\ -6 \\\\ 0 \\end{pmatrix} \\)", B: "\\( \\displaystyle -6\\begin{pmatrix} 0 \\\\ -6 \\\\ 0 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\pm 6\\begin{pmatrix} 0 \\\\ -6 \\\\ 0 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\pm \\frac{1}{6}\\begin{pmatrix} 0 \\\\ -6 \\\\ 0 \\end{pmatrix} \\)" }, answer: "D" },
+            { id: 34, text: "A unit vector in the direction of the vector \\( \\displaystyle \\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\) is", options: { A: "\\( \\displaystyle 14\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\)", B: "\\( \\displaystyle \\pm 14\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\pm \\frac{1}{\\sqrt{14}}\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\frac{1}{\\sqrt{14}}\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\)" }, answer: "D" },
+            { id: 35, text: "The position vectors of points \\( \\displaystyle A \\) and \\( \\displaystyle B \\) are \\( \\displaystyle \\vec{a} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 2 \\end{pmatrix} \\) and \\( \\displaystyle \\vec{b} = \\begin{pmatrix} 3 \\\\ -1 \\\\ 3 \\end{pmatrix} \\). The position vector of the midpoint of the line \\( \\displaystyle AB \\) is", options: { A: "\\( \\displaystyle \\frac{1}{2}\\begin{pmatrix} 1 \\\\ -1 \\\\ 1 \\end{pmatrix} \\)", B: "\\( \\displaystyle \\frac{1}{2}\\begin{pmatrix} 4 \\\\ -2 \\\\ 5 \\end{pmatrix} \\)", C: "\\( \\displaystyle \\frac{1}{2}\\begin{pmatrix} 3 \\\\ -1 \\\\ 3 \\end{pmatrix} \\)", D: "\\( \\displaystyle \\begin{pmatrix} 4 \\\\ -2 \\\\ 5 \\end{pmatrix} \\)" }, answer: "B" }
+        ];
+
+        const container = document.getElementById('questionsContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const quizForm = document.getElementById('quizForm');
+        let answeredQuestions = new Set();
+
+        // Render Questions
+        questions.forEach((q) => {
+            let optionsHtml = '';
+            for (const [key, value] of Object.entries(q.options)) {
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="q${q.id}" value="${key}" required>
+                        <span style="margin-right: 12px; font-weight: bold;">${key}.</span> ${value}
+                    </label>
+                `;
+            }
+
+            const questionHtml = `
+                <div class="question-card" id="card-q${q.id}">
+                    <p><strong>Q${q.id}. ${q.text}</strong></p>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+            container.innerHTML += questionHtml;
+        });
+
+        // Check if all questions are answered
+        quizForm.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                answeredQuestions.add(e.target.name);
+                if (answeredQuestions.size === questions.length) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Submit Answers";
+                } else {
+                    submitBtn.innerText = `Answered ${answeredQuestions.size} / ${questions.length} Questions`;
+                }
+            }
+        });
+
+        // Handle Submit and Show Mistakes
+        quizForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            let mistakesHtml = "";
+            const formData = new FormData(quizForm);
+            
+            questions.forEach(q => {
+                const userAnswer = formData.get(`q${q.id}`);
+                const card = document.getElementById(`card-q${q.id}`);
+                
+                // Reset card styling
+                card.style.borderLeftColor = "#0056b3"; 
+
+                if (userAnswer === q.answer) {
+                    score++;
+                    card.style.borderLeftColor = "#28a745"; // Green for correct
+                } else {
+                    card.style.borderLeftColor = "#dc3545"; // Red for incorrect
+                    mistakesHtml += `
+                        <div class="wrong-answer">
+                            <strong>Question ${q.id}:</strong> Your answer was <b>${userAnswer || 'None'}</b>. <br>
+                            The correct answer is <span style="font-weight: bold; margin-right: 5px;">${q.answer}.</span> ${q.options[q.answer]}
+                        </div>
+                    `;
+                }
+            });
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            
+            let finalHtml = `<div class="score-display">Your Score: ${score} / ${questions.length}</div>`;
+            
+            if (score === questions.length) {
+                finalHtml += `<p style="text-align:center; color: #28a745; font-weight:bold; font-size: 18px;">Excellent! All answers are correct.</p>`;
+            } else {
+                finalHtml += `<h4 style="color:#d9534f; margin-top: 0;">Review Your Mistakes:</h4>` + mistakesHtml;
+            }
+
+            resultDiv.innerHTML = finalHtml;
+            
+            // Re-render MathJax in case equations are in the result div
+            if (window.MathJax) {
+                MathJax.typesetPromise([resultDiv]);
+            }
+
+            // Scroll to the results
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
