@@ -7,16 +7,25 @@
      <link rel="icon" type="image/ico" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
     
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
-        MathJax = {
+        window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                macros: {
+                    ds: "\\displaystyle"
+                }
+            },
+            chtml: {
+                displayAlign: "left", 
+                matchFontHeight: false, 
+                scale: 1
+            },
+            svg: {
+                fontCache: 'global'
             }
         };
     </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
         body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
