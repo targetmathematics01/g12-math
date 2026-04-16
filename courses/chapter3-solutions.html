@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapter 3: Practice Problems | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            chtml: {
+                displayAlign: "left", 
+                matchFontHeight: false, 
+                scale: 1
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6; 
+            margin: 0; 
+            padding: 15px; 
+            line-height: 1.7;
+            color: #333;
+            overflow-x: hidden; 
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+        
+        .container { 
+            width: 100%;
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: #fff;
+            padding: 25px; 
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+        }
+        
+        h1 { color: #2c3e50; margin-bottom: 5px; text-align: center; font-family: 'Alice', serif; font-size: 1.8rem; }
+        .subtitle { text-align: center; color: #777; margin-bottom: 35px; font-size: 1.1em; }
+        
+        h3.section-title {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 15px; font-size: 1.1rem; }
+        
+        .problem-box { 
+            width: 100%;
+            border: 1px solid #e0e0e0; 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-bottom: 35px; 
+            background: #fafafa; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+            box-sizing: border-box; 
+            word-wrap: break-word;
+            overflow-x: hidden;
+        }
+        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 1.3rem; margin-bottom: 15px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .problem-box p { color: #333; font-size: 16px; line-height: 1.8; margin-bottom: 15px; word-wrap: break-word; }
+
+        /* ==================================================================== */
+        /* THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Left Align & Indent)          */
+        /* ==================================================================== */
+        .math-block {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            background: #fff;
+            padding: 15px;
+            padding-left: 40px; 
+            border-left: 4px solid #2980b9;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            text-align: left; 
+        }
+        .math-block::-webkit-scrollbar {
+            height: 6px;
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none;
+            width: 0;
+        }
+        .math-block::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        mjx-container {
+            text-align: left !important;
+            max-width: 100% !important; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; 
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+        }
+        mjx-container::-webkit-scrollbar {
+            height: 6px; 
+        }
+        mjx-container::-webkit-scrollbar:vertical {
+            display: none; 
+            width: 0;
+        }
+        mjx-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+        /* ==================================================================== */
+
+        /* Equal Spacing Grid For Lists */
+        .flex-container { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 15px;
+        }
+        
+        .flex-item { 
+            width: 100%;
+            box-sizing: border-box; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            text-align: left; 
+        }
+        .flex-item::-webkit-scrollbar { display: none; }
+        .flex-item::-webkit-scrollbar:vertical { display: none; }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .problem-box { padding: 15px; margin-bottom: 25px; }
+            .flex-container { grid-template-columns: 1fr; gap: 15px; }
+            .math-block { padding-left: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chapter 3: Analytical Solid Geometry</h1>
+        <p class="subtitle">Exercise Solutions (3.1 to 3.5)</p>
+
+        <h3 class="section-title">Exercise 3.1</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Find the equation of the plane containing the point $\displaystyle (1,-2,3)$ and parallel to the</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle xy$-plane</div>
+                <div class="flex-item">(b) $\displaystyle yz$-plane</div>
+                <div class="flex-item">(c) $\displaystyle zx$-plane.</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            <p><b>(a)</b> The equation of a plane parallel to the $\displaystyle xy$-plane is of the form $\displaystyle z = c$.<br>
+            Since it passes through $\displaystyle (1, -2, 3)$, the equation is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                z &= 3
+                \end{aligned}$
+            </div>
+            
+            <p><b>(b)</b> The equation of a plane parallel to the $\displaystyle yz$-plane is of the form $\displaystyle x = a$.<br>
+            Since it passes through $\displaystyle (1, -2, 3)$, the equation is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= 1
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> The equation of a plane parallel to the $\displaystyle zx$-plane is of the form $\displaystyle y = b$.<br>
+            Since it passes through $\displaystyle (1, -2, 3)$, the equation is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                y &= -2
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Find the equation of the line through the point $\displaystyle (2,3,-4)$ and perpendicular to</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle xy$-plane</div>
+                <div class="flex-item">(b) $\displaystyle yz$-plane</div>
+                <div class="flex-item">(c) $\displaystyle zx$-plane.</div>
+            </div>
+            <p>Find the point of intersection of the line and plane.</p>
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> The line perpendicular to the $\displaystyle xy$-plane has the same direction as the $\displaystyle z$-axis. Its directed values are $\displaystyle \langle 0, 0, 1 \rangle$.<br>
+            The equation of the line through $\displaystyle (2,3,-4)$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= 2, \quad y = 3, \quad z = t
+                \end{aligned}$
+            </div>
+            <p>The line intersects the $\displaystyle xy$-plane where $\displaystyle z = 0$. The point of intersection is $\displaystyle (2, 3, 0)$.</p>
+
+            <p><b>(b)</b> The line perpendicular to the $\displaystyle yz$-plane has the same direction as the $\displaystyle x$-axis. Its directed values are $\displaystyle \langle 1, 0, 0 \rangle$.<br>
+            The equation of the line through $\displaystyle (2,3,-4)$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= t, \quad y = 3, \quad z = -4
+                \end{aligned}$
+            </div>
+            <p>The line intersects the $\displaystyle yz$-plane where $\displaystyle x = 0$. The point of intersection is $\displaystyle (0, 3, -4)$.</p>
+
+            <p><b>(c)</b> The line perpendicular to the $\displaystyle zx$-plane has the same direction as the $\displaystyle y$-axis. Its directed values are $\displaystyle \langle 0, 1, 0 \rangle$.<br>
+            The equation of the line through $\displaystyle (2,3,-4)$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= 2, \quad y = t, \quad z = -4
+                \end{aligned}$
+            </div>
+            <p>The line intersects the $\displaystyle zx$-plane where $\displaystyle y = 0$. The point of intersection is $\displaystyle (2, 0, -4)$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Find the distance between the points $\displaystyle (2,-3, 5)$ and $\displaystyle (7, 5,-2)$.</p>
+            <div class="solution-title">Solution</div>
+            <p>Let $\displaystyle P(2, -3, 5)$ and $\displaystyle Q(7, 5, -2)$. Using the distance formula:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                PQ &= \sqrt{(7-2)^2 + (5 - (-3))^2 + (-2-5)^2} \\
+                &= \sqrt{5^2 + 8^2 + (-7)^2} \\
+                &= \sqrt{25 + 64 + 49} \\
+                &= \sqrt{138} \text{ units.}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Show that the points $\displaystyle (-1, 2, 5)$, $\displaystyle (1, 1, 6)$ and $\displaystyle (0, 5, 6)$ form a right triangle.</p>
+            <div class="solution-title">Solution</div>
+            <p>Let $\displaystyle A(-1, 2, 5)$, $\displaystyle B(1, 1, 6)$, and $\displaystyle C(0, 5, 6)$. We calculate the square of the distance between each pair of points.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                AB^2 &= (1 - (-1))^2 + (1 - 2)^2 + (6 - 5)^2 \\
+                &= 2^2 + (-1)^2 + 1^2 \\
+                &= 4 + 1 + 1 = 6
+                \end{aligned}$
+            </div>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                BC^2 &= (0 - 1)^2 + (5 - 1)^2 + (6 - 6)^2 \\
+                &= (-1)^2 + 4^2 + 0^2 \\
+                &= 1 + 16 + 0 = 17
+                \end{aligned}$
+            </div>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                AC^2 &= (0 - (-1))^2 + (5 - 2)^2 + (6 - 5)^2 \\
+                &= 1^2 + 3^2 + 1^2 \\
+                &= 1 + 9 + 1 = 11
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle AB^2 + AC^2 = 6 + 11 = 17 = BC^2$, the points satisfy the Pythagorean theorem. Therefore, they form a right triangle with the right angle at $\displaystyle A$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 5</h4>
+            <p>Show that the points $\displaystyle (1,-1,2)$, $\displaystyle (3,-2,3)$ and $\displaystyle (5,-3,4)$ are collinear.</p>
+            <div class="solution-title">Solution</div>
+            <p>Let $\displaystyle A(1, -1, 2)$, $\displaystyle B(3, -2, 3)$, and $\displaystyle C(5, -3, 4)$. We calculate the distances $\displaystyle AB$, $\displaystyle BC$, and $\displaystyle AC$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                AB &= \sqrt{(3-1)^2 + (-2 - (-1))^2 + (3-2)^2} \\
+                &= \sqrt{2^2 + (-1)^2 + 1^2} = \sqrt{4 + 1 + 1} = \sqrt{6}
+                \end{aligned}$
+            </div>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                BC &= \sqrt{(5-3)^2 + (-3 - (-2))^2 + (4-3)^2} \\
+                &= \sqrt{2^2 + (-1)^2 + 1^2} = \sqrt{4 + 1 + 1} = \sqrt{6}
+                \end{aligned}$
+            </div>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                AC &= \sqrt{(5-1)^2 + (-3 - (-1))^2 + (4-2)^2} \\
+                &= \sqrt{4^2 + (-2)^2 + 2^2} = \sqrt{16 + 4 + 4} = \sqrt{24} = 2\sqrt{6}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle AB + BC = \sqrt{6} + \sqrt{6} = 2\sqrt{6} = AC$, the points $\displaystyle A, B,$ and $\displaystyle C$ lie on the same straight line. Hence, they are collinear.</p>
+        </div>
+
+        <h3 class="section-title">Exercise 3.2</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Given $\displaystyle P(3,1,5)$ and $\displaystyle Q(-3,7,-2)$, find the coordinates of the point $\displaystyle R(x,y,z)$ on the line $\displaystyle PQ$ with respect to the point $\displaystyle P$ and the following parameters.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle k=\frac{1}{2}$</div>
+                <div class="flex-item">(b) $\displaystyle k=3$</div>
+                <div class="flex-item">(c) $\displaystyle k=-2$</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            <p>The directed values of $\displaystyle PQ$ are:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle l,m,n \rangle \\
+                &= \langle -3-3, 7-1, -2-5 \rangle \\
+                &= \langle -6, 6, -7 \rangle
+                \end{aligned}$
+            </div>
+            <p>The coordinates of $\displaystyle R$ are given by $\displaystyle (x_1+kl, y_1+km, z_1+kn)$, so $\displaystyle (x,y,z) = (3 - 6k, 1 + 6k, 5 - 7k)$.</p>
+
+            <p><b>(a)</b> For $\displaystyle k=\frac{1}{2}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x,y,z) &= \left(3 - 6\left(\frac{1}{2}\right), 1 + 6\left(\frac{1}{2}\right), 5 - 7\left(\frac{1}{2}\right)\right) \\
+                &= \left(3 - 3, 1 + 3, 5 - \frac{7}{2}\right) \\
+                &= \left(0, 4, \frac{3}{2}\right)
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> For $\displaystyle k=3$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x,y,z) &= (3 - 6(3), 1 + 6(3), 5 - 7(3)) \\
+                &= (3 - 18, 1 + 18, 5 - 21) \\
+                &= (-15, 19, -16)
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> For $\displaystyle k=-2$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x,y,z) &= (3 - 6(-2), 1 + 6(-2), 5 - 7(-2)) \\
+                &= (3 + 12, 1 - 12, 5 + 14) \\
+                &= (15, -11, 19)
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Given $\displaystyle P(-2,1,3)$ and $\displaystyle Q(4,4,-3)$ determine whether or not the following points are on the line $\displaystyle PQ$. If the point is on the line $\displaystyle PQ$, find the corresponding parameter with respect to the point $\displaystyle P$.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle (6,3,-6)$</div>
+                <div class="flex-item">(b) $\displaystyle (6,5,-5)$</div>
+                <div class="flex-item">(c) $\displaystyle (-4,0,5)$</div>
+                <div class="flex-item">(d) $\displaystyle (7,8,-2)$</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            <p>By given $\displaystyle P(-2,1,3)$ and $\displaystyle Q(4,4,-3)$,</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle l,m,n \rangle \\
+                &= \langle 4 - (-2), 4 - 1, -3 - 3 \rangle \\
+                &= \langle 6, 3, -6 \rangle
+                \end{aligned}$
+            </div>
+            <p>Thus, the equation of the line $\displaystyle PQ$ is $\displaystyle \frac{x+2}{6} = \frac{y-1}{3} = \frac{z-3}{-6} = k$.</p>
+
+            <p><b>(a)</b> If $\displaystyle (x,y,z) = (6,3,-6)$, then</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{6+2}{6} = \frac{8}{6} = \frac{4}{3} \\
+                \frac{y-1}{3} &= \frac{3-1}{3} = \frac{2}{3} 
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \frac{4}{3} \ne \frac{2}{3}$, the point $\displaystyle (6,3,-6)$ is not on the line $\displaystyle PQ$.</p>
+
+            <p><b>(b)</b> If $\displaystyle (x,y,z) = (6,5,-5)$, then</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{6+2}{6} = \frac{8}{6} = \frac{4}{3} \\
+                \frac{y-1}{3} &= \frac{5-1}{3} = \frac{4}{3} \\
+                \frac{z-3}{-6} &= \frac{-5-3}{-6} = \frac{-8}{-6} = \frac{4}{3}
+                \end{aligned}$
+            </div>
+            <p>So, the point $\displaystyle (6,5,-5)$ is on the line $\displaystyle PQ$ with corresponding parameter $\displaystyle k = \frac{4}{3}$.</p>
+
+            <p><b>(c)</b> If $\displaystyle (x,y,z) = (-4,0,5)$, then</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{-4+2}{6} = -\frac{1}{3} \\
+                \frac{y-1}{3} &= \frac{0-1}{3} = -\frac{1}{3} \\
+                \frac{z-3}{-6} &= \frac{5-3}{-6} = -\frac{1}{3}
+                \end{aligned}$
+            </div>
+            <p>So, the point $\displaystyle (-4,0,5)$ is on the line $\displaystyle PQ$ with corresponding parameter $\displaystyle k = -\frac{1}{3}$.</p>
+
+            <p><b>(d)</b> If $\displaystyle (x,y,z) = (7,8,-2)$, then</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{7+2}{6} = \frac{9}{6} = \frac{3}{2} \\
+                \frac{y-1}{3} &= \frac{8-1}{3} = \frac{7}{3}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \frac{3}{2} \ne \frac{7}{3}$, the point $\displaystyle (7,8,-2)$ is not on the line $\displaystyle PQ$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Given $\displaystyle P(-2,1,3)$ and $\displaystyle Q(4,4,-3)$, determine whether or not the following points are on the line $\displaystyle PQ$. If the point is on the line $\displaystyle PQ$, find the corresponding real number with respect to point $\displaystyle P$.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle (5, 2, 11)$</div>
+                <div class="flex-item">(b) $\displaystyle (2,2,-7)$</div>
+                <div class="flex-item">(c) $\displaystyle \left(\frac{7}{2},2,2\right)$</div>
+                <div class="flex-item">(d) $\displaystyle (6, 2, 10)$</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            <p>As found above, the directed values are $\displaystyle \langle 6, 3, -6 \rangle$ and the equation is $\displaystyle \frac{x+2}{6} = \frac{y-1}{3} = \frac{z-3}{-6} = k$.</p>
+
+            <p><b>(a)</b> If $\displaystyle (x,y,z) = (5, 2, 11)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{5+2}{6} = \frac{7}{6} \\
+                \frac{y-1}{3} &= \frac{2-1}{3} = \frac{1}{3}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \frac{7}{6} \ne \frac{1}{3}$, the point $\displaystyle (5, 2, 11)$ is not on the line $\displaystyle PQ$.</p>
+
+            <p><b>(b)</b> If $\displaystyle (x,y,z) = (2,2,-7)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{2+2}{6} = \frac{4}{6} = \frac{2}{3} \\
+                \frac{y-1}{3} &= \frac{2-1}{3} = \frac{1}{3}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \frac{2}{3} \ne \frac{1}{3}$, the point $\displaystyle (2,2,-7)$ is not on the line $\displaystyle PQ$.</p>
+
+            <p><b>(c)</b> If $\displaystyle (x,y,z) = \left(\frac{7}{2},2,2\right)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{\frac{7}{2}+2}{6} = \frac{11}{12} \\
+                \frac{y-1}{3} &= \frac{2-1}{3} = \frac{1}{3}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \frac{11}{12} \ne \frac{1}{3}$, the point $\displaystyle \left(\frac{7}{2},2,2\right)$ is not on the line $\displaystyle PQ$.</p>
+
+            <p><b>(d)</b> If $\displaystyle (x,y,z) = (6,2,10)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x+2}{6} &= \frac{6+2}{6} = \frac{8}{6} = \frac{4}{3} \\
+                \frac{y-1}{3} &= \frac{2-1}{3} = \frac{1}{3}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \frac{4}{3} \ne \frac{1}{3}$, the point $\displaystyle (6,2,10)$ is not on the line $\displaystyle PQ$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Find the points of intersection of the line joining the two points $\displaystyle (2, 4, 5)$ and $\displaystyle (3, 5, -4)$ with the following planes.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle xy$-plane</div>
+                <div class="flex-item">(b) $\displaystyle yz$-plane</div>
+                <div class="flex-item">(c) $\displaystyle zx$-plane</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            <p>Let $\displaystyle P(2, 4, 5)$ and $\displaystyle Q(3, 5, -4)$. The directed values are:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle 3-2, 5-4, -4-5 \rangle \\
+                &= \langle 1, 1, -9 \rangle
+                \end{aligned}$
+            </div>
+            <p>The coordinates of any point on the line are given by $\displaystyle (x, y, z) = (2+k, 4+k, 5-9k)$.</p>
+
+            <p><b>(a)</b> $\displaystyle xy$-plane ($\displaystyle z = 0$):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                5 - 9k &= 0 \implies k = \frac{5}{9} \\
+                x &= 2 + \frac{5}{9} = \frac{23}{9}, \quad y = 4 + \frac{5}{9} = \frac{41}{9}
+                \end{aligned}$
+            </div>
+            <p>The point of intersection is $\displaystyle \left( \frac{23}{9}, \frac{41}{9}, 0 \right)$.</p>
+
+            <p><b>(b)</b> $\displaystyle yz$-plane ($\displaystyle x = 0$):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2 + k &= 0 \implies k = -2 \\
+                y &= 4 + (-2) = 2, \quad z = 5 - 9(-2) = 23
+                \end{aligned}$
+            </div>
+            <p>The point of intersection is $\displaystyle (0, 2, 23)$.</p>
+
+            <p><b>(c)</b> $\displaystyle zx$-plane ($\displaystyle y = 0$):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                4 + k &= 0 \implies k = -4 \\
+                x &= 2 + (-4) = -2, \quad z = 5 - 9(-4) = 41
+                \end{aligned}$
+            </div>
+            <p>The point of intersection is $\displaystyle (-2, 0, 41)$.</p>
+        </div>
+
+        <h3 class="section-title">Exercise 3.3</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Find $\displaystyle \cos \angle PAQ$ for the followings.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle P(1,2,-1)$, $\displaystyle A(-2,1,5)$, $\displaystyle Q(2,-1,0)$</div>
+                <div class="flex-item">(b) $\displaystyle P(0,2,-3)$, $\displaystyle A(2,-1,5)$, $\displaystyle Q(-2,3,-1)$</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> For $\displaystyle P(1,2,-1)$, $\displaystyle A(-2,1,5)$, $\displaystyle Q(2,-1,0)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } AP &= \langle 1 - (-2), 2 - 1, -1 - 5 \rangle = \langle 3, 1, -6 \rangle \\
+                \text{directed values of } AQ &= \langle 2 - (-2), -1 - 1, 0 - 5 \rangle = \langle 4, -2, -5 \rangle
+                \end{aligned}$
+            </div>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \cos \angle PAQ &= \frac{l_1 l_2 + m_1 m_2 + n_1 n_2}{\sqrt{l_1^2+m_1^2+n_1^2}\sqrt{l_2^2+m_2^2+n_2^2}} \\
+                &= \frac{(3)(4) + (1)(-2) + (-6)(-5)}{\sqrt{3^2 + 1^2 + (-6)^2}\sqrt{4^2 + (-2)^2 + (-5)^2}} \\
+                &= \frac{12 - 2 + 30}{\sqrt{9 + 1 + 36}\sqrt{16 + 4 + 25}} \\
+                &= \frac{40}{\sqrt{46}\sqrt{45}} = \frac{40}{\sqrt{2070}}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> For $\displaystyle P(0,2,-3)$, $\displaystyle A(2,-1,5)$, $\displaystyle Q(-2,3,-1)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } AP &= \langle 0 - 2, 2 - (-1), -3 - 5 \rangle = \langle -2, 3, -8 \rangle \\
+                \text{directed values of } AQ &= \langle -2 - 2, 3 - (-1), -1 - 5 \rangle = \langle -4, 4, -6 \rangle
+                \end{aligned}$
+            </div>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \cos \angle PAQ &= \frac{(-2)(-4) + (3)(4) + (-8)(-6)}{\sqrt{(-2)^2 + 3^2 + (-8)^2}\sqrt{(-4)^2 + 4^2 + (-6)^2}} \\
+                &= \frac{8 + 12 + 48}{\sqrt{4 + 9 + 64}\sqrt{16 + 16 + 36}} \\
+                &= \frac{68}{\sqrt{77}\sqrt{68}} = \sqrt{\frac{68}{77}}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Determine whether the lines $\displaystyle PQ$ and $\displaystyle RS$ are parallel or skew or intersect. If $\displaystyle PQ$ and $\displaystyle RS$ intersect, are they perpendicular?</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle P(1,2,3)$, $\displaystyle Q(4,5,6)$, $\displaystyle R(-2,3,5)$, $\displaystyle S(4, 9, 11)$</div>
+                <div class="flex-item">(b) $\displaystyle P(3,-1,-3)$, $\displaystyle Q(2,-3,1)$, $\displaystyle R(3,-2,5)$, $\displaystyle S(-1,-2,1)$</div>
+            </div>
+            <div class="flex-container">
+                <div class="flex-item">(c) $\displaystyle P(4,-2,5)$, $\displaystyle Q(-2,6,1)$, $\displaystyle R(-1,1,4)$, $\displaystyle S(3,3,2)$</div>
+                <div class="flex-item">(d) $\displaystyle P(-3,-1,6)$, $\displaystyle Q(-1,3,0)$, $\displaystyle R(0, 6, 7)$, $\displaystyle S(-4,-4,-1)$</div>
+            </div>
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b></p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle 3, 3, 3 \rangle \\
+                \text{directed values of } RS &= \langle 6, 6, 6 \rangle
+                \end{aligned}$
+            </div>
+            <p>Since their directed values are proportional, the lines $\displaystyle PQ$ and $\displaystyle RS$ are parallel or coincident.<br>
+            To check if they are coincident, check if point $\displaystyle P(1,2,3)$ lies on line $\displaystyle RS$. The equation of $\displaystyle RS$ is $\displaystyle \frac{x+2}{6} = \frac{y-3}{6} = \frac{z-5}{6}$.<br>
+            For $\displaystyle P(1,2,3)$, $\displaystyle \frac{1+2}{6} \ne \frac{2-3}{6}$, so $\displaystyle P$ is not on $\displaystyle RS$. Thus, the lines are strictly <b>parallel</b>.</p>
+
+            <p><b>(b)</b></p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle -1, -2, 4 \rangle \\
+                \text{directed values of } RS &= \langle -4, 0, -4 \rangle
+                \end{aligned}$
+            </div>
+            <p>Directed values are not proportional, so they are not parallel. If they intersect, the equations are:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                3 - t &= 3 - 4s \implies 4s - t = 0 \quad \text{--- (1)} \\
+                -1 - 2t &= -2 \implies 2t = 1 \implies t = \frac{1}{2} \\
+                -3 + 4t &= 5 - 4s \quad \text{--- (2)}
+                \end{aligned}$
+            </div>
+            <p>From (1), if $\displaystyle t = \frac{1}{2}$, then $\displaystyle 4s = \frac{1}{2} \implies s = \frac{1}{8}$. Substitute into (2):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                -3 + 4\left(\frac{1}{2}\right) &= -3 + 2 = -1 \\
+                5 - 4\left(\frac{1}{8}\right) &= 5 - \frac{1}{2} = \frac{9}{2}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle -1 \ne \frac{9}{2}$, they do not intersect. The lines are <b>skew</b>.</p>
+
+            <p><b>(c)</b></p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle -6, 8, -4 \rangle \\
+                \text{directed values of } RS &= \langle 4, 2, -2 \rangle
+                \end{aligned}$
+            </div>
+            <p>Not proportional, so not parallel. If they intersect:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                4 - 6t &= -1 + 4s \implies -6t - 4s = -5 \quad \text{--- (1)} \\
+                -2 + 8t &= 1 + 2s \implies 8t - 2s = 3 \quad \text{--- (2)} \\
+                5 - 4t &= 4 - 2s \implies -4t + 2s = -1 \quad \text{--- (3)}
+                \end{aligned}$
+            </div>
+            <p>Adding (2) and (3): $\displaystyle 4t = 2 \implies t = \frac{1}{2}$. Then from (2), $\displaystyle 8(1/2) - 2s = 3 \implies 4 - 2s = 3 \implies 2s = 1 \implies s = \frac{1}{2}$.<br>
+            Check in (1): $\displaystyle -6(1/2) - 4(1/2) = -3 - 2 = -5$.<br>
+            They satisfy all equations. The lines <b>intersect</b>.<br>
+            Check for perpendicularity using their directed values $\displaystyle \langle -6, 8, -4 \rangle$ and $\displaystyle \langle 4, 2, -2 \rangle$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                l_1 l_2 + m_1 m_2 + n_1 n_2 &= (-6)(4) + (8)(2) + (-4)(-2) \\
+                &= -24 + 16 + 8 = 0
+                \end{aligned}$
+            </div>
+            <p>Since the sum is $\displaystyle 0$, the intersecting lines are <b>perpendicular</b>.</p>
+
+            <p><b>(d)</b></p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PQ &= \langle 2, 4, -6 \rangle \\
+                \text{directed values of } RS &= \langle -4, -10, -8 \rangle
+                \end{aligned}$
+            </div>
+            <p>Not proportional, so not parallel. If they intersect:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                -3 + 2t &= -4s \implies 2t + 4s = 3 \quad \text{--- (1)} \\
+                -1 + 4t &= 6 - 10s \implies 4t + 10s = 7 \quad \text{--- (2)} \\
+                6 - 6t &= 7 - 8s \implies -6t + 8s = 1 \quad \text{--- (3)}
+                \end{aligned}$
+            </div>
+            <p>Multiply (1) by 2: $\displaystyle 4t + 8s = 6$. Subtract from (2): $\displaystyle 2s = 1 \implies s = \frac{1}{2}$.<br>
+            Substitute $s=1/2$ into (1): $\displaystyle 2t + 2 = 3 \implies 2t = 1 \implies t = \frac{1}{2}$.<br>
+            Check in (3): $\displaystyle -6(1/2) + 8(1/2) = -3 + 4 = 1$.<br>
+            They satisfy all equations. The lines <b>intersect</b>.<br>
+            Check for perpendicularity:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                l_1 l_2 + m_1 m_2 + n_1 n_2 &= (2)(-4) + (4)(-10) + (-6)(-8) \\
+                &= -8 - 40 + 48 = 0
+                \end{aligned}$
+            </div>
+            <p>Since the sum is $\displaystyle 0$, the intersecting lines are <b>perpendicular</b>.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Find the equation of the line passing through the point $\displaystyle (8,-1,-10)$ and perpendicular to the line $\displaystyle (x,y,z)=(1+2k, 2-k, 3-7k)$. Find also the point of intersection of two lines.</p>
+            <div class="solution-title">Solution</div>
+            <p>Let $\displaystyle P$ be $\displaystyle (8, -1, -10)$. The given line has directed values $\displaystyle \langle 2, -1, -7 \rangle$.<br>
+            Let $\displaystyle F(1+2k, 2-k, 3-7k)$ be the point of intersection on the given line. The directed values of $\displaystyle PF$ are:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } PF &= \langle (1+2k) - 8, (2-k) - (-1), (3-7k) - (-10) \rangle \\
+                &= \langle 2k - 7, 3 - k, 13 - 7k \rangle
+                \end{aligned}$
+            </div>
+            <p>Since the lines are perpendicular, the sum of products of their directed values is zero:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                l_1l_2 + m_1m_2 + n_1n_2 &= 0 \\
+                2(2k - 7) - 1(3 - k) - 7(13 - 7k) &= 0 \\
+                4k - 14 - 3 + k - 91 + 49k &= 0 \\
+                54k - 108 &= 0 \\
+                k &= 2
+                \end{aligned}$
+            </div>
+            <p>The point of intersection $\displaystyle F$ is $\displaystyle (1+2(2), 2-2, 3-7(2)) = (5, 0, -11)$.<br>
+            The directed values of $\displaystyle PF$ become $\displaystyle \langle 2(2) - 7, 3 - 2, 13 - 7(2) \rangle = \langle -3, 1, -1 \rangle$.<br>
+            The equation of the required line passing through $\displaystyle (8, -1, -10)$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x - 8}{-3} &= \frac{y + 1}{1} = \frac{z + 10}{-1}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <h3 class="section-title">Exercise 3.4</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Find the equation of the plane containing</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle A(2,-5,4)$, $\displaystyle B(-5,2,4)$ and $\displaystyle C(-2,3,-1)$</div>
+                <div class="flex-item">(b) $\displaystyle A(4,2,-3)$, $\displaystyle B(1,-2,4)$ and $\displaystyle C(-1,0,3)$.</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> $\displaystyle A(2,-5,4)$, $\displaystyle B(-5,2,4)$, $\displaystyle C(-2,3,-1)$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } AB &= \langle l_1, m_1, n_1 \rangle = \langle -7, 7, 0 \rangle \\
+                \text{directed values of } AC &= \langle l_2, m_2, n_2 \rangle = \langle -4, 8, -5 \rangle
+                \end{aligned}$
+            </div>
+            <p>Let the directed values of the normal to the plane be $\displaystyle \langle a,b,c \rangle$. Since $\displaystyle AB$ and $\displaystyle AC$ lie on the plane, the normal is perpendicular to both. Using analytical geometry formulas:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                a &= m_1n_2 - m_2n_1 = (7)(-5) - (8)(0) = -35 \\
+                b &= n_1l_2 - n_2l_1 = (0)(-4) - (-5)(-7) = -35 \\
+                c &= l_1m_2 - l_2m_1 = (-7)(8) - (-4)(7) = -56 + 28 = -28
+                \end{aligned}$
+            </div>
+            <p>Dividing by $\displaystyle -7$, we get $\displaystyle a = 5$, $\displaystyle b = 5$, and $\displaystyle c = 4$. The directed values of the normal are $\displaystyle \langle 5, 5, 4 \rangle$.<br>
+            The equation of the plane passing through $\displaystyle A(2, -5, 4)$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                ax + by + cz &= ax_1 + by_1 + cz_1 \\
+                5x + 5y + 4z &= 5(2) + 5(-5) + 4(4) \\
+                5x + 5y + 4z &= 10 - 25 + 16 \\
+                5x + 5y + 4z &= 1
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> $\displaystyle A(4,2,-3)$, $\displaystyle B(1,-2,4)$, $\displaystyle C(-1,0,3)$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } AB &= \langle l_1, m_1, n_1 \rangle = \langle -3, -4, 7 \rangle \\
+                \text{directed values of } AC &= \langle l_2, m_2, n_2 \rangle = \langle -5, -2, 6 \rangle
+                \end{aligned}$
+            </div>
+            <p>Using analytical geometry formulas for the normal $\displaystyle \langle a,b,c \rangle$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                a &= m_1n_2 - m_2n_1 = (-4)(6) - (-2)(7) = -24 + 14 = -10 \\
+                b &= n_1l_2 - n_2l_1 = (7)(-5) - (6)(-3) = -35 + 18 = -17 \\
+                c &= l_1m_2 - l_2m_1 = (-3)(-2) - (-5)(-4) = 6 - 20 = -14
+                \end{aligned}$
+            </div>
+            <p>Multiplying by $\displaystyle -1$, we get $\displaystyle a=10, b=17, c=14$. The directed values of the normal are $\displaystyle \langle 10, 17, 14 \rangle$.<br>
+            The equation of the plane passing through $\displaystyle A(4, 2, -3)$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                10x + 17y + 14z &= 10(4) + 17(2) + 14(-3) \\
+                10x + 17y + 14z &= 40 + 34 - 42 \\
+                10x + 17y + 14z &= 32
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Find the equation of the line passing through the point $\displaystyle (3,-2,-2)$ and perpendicular to the plane $\displaystyle -2x+3y-z=4$. Find the point of intersection of the line and the plane.</p>
+            <div class="solution-title">Solution</div>
+            <p>The directed values of the normal to the plane $\displaystyle -2x+3y-z=4$ are $\displaystyle \langle -2, 3, -1 \rangle$.<br>
+            Since the line is perpendicular to the plane, its directed values are also $\displaystyle \langle -2, 3, -1 \rangle$.<br>
+            The coordinate equations of the line through $\displaystyle (3, -2, -2)$ are:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= 3 - 2t \\
+                y &= -2 + 3t \\
+                z &= -2 - t
+                \end{aligned}$
+            </div>
+            <p>To find the point of intersection, substitute these into the plane equation:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                -2(3 - 2t) + 3(-2 + 3t) - (-2 - t) &= 4 \\
+                -6 + 4t - 6 + 9t + 2 + t &= 4 \\
+                14t - 10 &= 4 \\
+                14t &= 14 \\
+                t &= 1
+                \end{aligned}$
+            </div>
+            <p>Substitute $\displaystyle t = 1$ back to find the coordinates:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= 3 - 2(1) = 1 \\
+                y &= -2 + 3(1) = 1 \\
+                z &= -2 - (1) = -3
+                \end{aligned}$
+            </div>
+            <p>The point of intersection is $\displaystyle (1, 1, -3)$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Find the equation of the plane containing the point $\displaystyle (2, 3, -1)$ and parallel to the plane $\displaystyle -2x+y+3z=6$.</p>
+            <div class="solution-title">Solution</div>
+            <p>Since the required plane is parallel to $\displaystyle -2x+y+3z=6$, its normal has proportional directed values: $\displaystyle \langle -2, 1, 3 \rangle$.<br>
+            The equation is of the form $\displaystyle -2x + y + 3z = d$.<br>
+            Since it passes through $\displaystyle (2, 3, -1)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                d &= -2(2) + 1(3) + 3(-1) \\
+                d &= -4 + 3 - 3 = -4
+                \end{aligned}$
+            </div>
+            <p>The equation of the plane is $\displaystyle -2x + y + 3z = -4$, or equivalently:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2x - y - 3z &= 4
+                \end{aligned}$
+            </div>
+        </div>
+
+        <h3 class="section-title">Exercise 3.5</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Find the equation of the sphere with center $\displaystyle C$ and radius $\displaystyle r$.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle C(1,-2, 4)$, $\displaystyle r = 3$</div>
+                <div class="flex-item">(b) $\displaystyle C(2, 6, -3)$, $\displaystyle r = 2$</div>
+                <div class="flex-item">(c) $\displaystyle C(2, 3, 5)$, $\displaystyle r = 5$</div>
+            </div>
+            <div class="solution-title">Solution</div>
+            <p>The equation of a sphere is $\displaystyle (x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2 = r^2$.</p>
+            
+            <p><b>(a)</b> Center $\displaystyle (1, -2, 4)$, $\displaystyle r = 3$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x - 1)^2 + (y + 2)^2 + (z - 4)^2 &= 9
+                \end{aligned}$
+            </div>
+            
+            <p><b>(b)</b> Center $\displaystyle (2, 6, -3)$, $\displaystyle r = 2$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x - 2)^2 + (y - 6)^2 + (z + 3)^2 &= 4
+                \end{aligned}$
+            </div>
+            
+            <p><b>(c)</b> Center $\displaystyle (2, 3, 5)$, $\displaystyle r = 5$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x - 2)^2 + (y - 3)^2 + (z - 5)^2 &= 25
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Check whether the given point $\displaystyle P$ lies inside, outside or on a sphere.</p>
+            <ol style="list-style-type: lower-alpha;">
+                <li>Center $\displaystyle C(0, 0, 0)$, radius $\displaystyle r = 3$ and point $\displaystyle P(1, 1, 1)$.</li>
+                <li>Center $\displaystyle C(0, 0, 0)$, radius $\displaystyle r = 3$ and point $\displaystyle P(2, 1, 2)$.</li>
+                <li>Center $\displaystyle C(0, 0, 0)$, radius $\displaystyle r = 3$ and point $\displaystyle P(10, 10, 10)$.</li>
+            </ol>
+            <div class="solution-title">Solution</div>
+            <p>We calculate the squared distance $\displaystyle CP^2$ and compare it with $\displaystyle r^2 = 9$.</p>
+
+            <p><b>(a)</b> $\displaystyle P(1, 1, 1)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                CP^2 &= (1-0)^2 + (1-0)^2 + (1-0)^2 = 1 + 1 + 1 = 3
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle 3 < 9$, point $\displaystyle P$ lies <b>inside</b> the sphere.</p>
+
+            <p><b>(b)</b> $\displaystyle P(2, 1, 2)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                CP^2 &= (2-0)^2 + (1-0)^2 + (2-0)^2 = 4 + 1 + 4 = 9
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle 9 = 9$, point $\displaystyle P$ lies <b>on</b> the sphere.</p>
+
+            <p><b>(c)</b> $\displaystyle P(10, 10, 10)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                CP^2 &= (10-0)^2 + (10-0)^2 + (10-0)^2 = 100 + 100 + 100 = 300
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle 300 > 9$, point $\displaystyle P$ lies <b>outside</b> the sphere.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Find the equation of the sphere on the join of $\displaystyle (1, -1, 1)$ and $\displaystyle (-3, 4, 5)$ as diameter.</p>
+            <div class="solution-title">Solution</div>
+            <p>The center of the sphere is the midpoint of the diameter.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                C &= \left(\frac{1 - 3}{2}, \frac{-1 + 4}{2}, \frac{1 + 5}{2}\right) = \left(-1, \frac{3}{2}, 3\right)
+                \end{aligned}$
+            </div>
+            <p>The radius squared $\displaystyle r^2$ is the squared distance from the center to $\displaystyle (1, -1, 1)$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                r^2 &= (1 - (-1))^2 + \left(-1 - \frac{3}{2}\right)^2 + (1 - 3)^2 \\
+                &= 2^2 + \left(-\frac{5}{2}\right)^2 + (-2)^2 \\
+                &= 4 + \frac{25}{4} + 4 = 8 + \frac{25}{4} = \frac{57}{4}
+                \end{aligned}$
+            </div>
+            <p>The equation of the sphere is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x + 1)^2 + \left(y - \frac{3}{2}\right)^2 + (z - 3)^2 &= \frac{57}{4}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Find the equation of the plane tangent to the sphere $\displaystyle (x + 2)^2 + (y - 1)^2 + (z + 3)^2 = 27$ at the point $\displaystyle (3, 2, -2)$.</p>
+            <div class="solution-title">Solution</div>
+            <p>The center of the sphere is $\displaystyle C(-2, 1, -3)$. The tangent point is $\displaystyle P(3, 2, -2)$.<br>
+            The directed values of the normal to the tangent plane are along $\displaystyle CP$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{directed values of } CP &= \langle 3 - (-2), 2 - 1, -2 - (-3) \rangle = \langle 5, 1, 1 \rangle
+                \end{aligned}$
+            </div>
+            <p>The equation of the tangent plane is $\displaystyle 5x + y + z = d$.<br>
+            Since it passes through $\displaystyle P(3, 2, -2)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                d &= 5(3) + 1(2) + 1(-2) \\
+                &= 15 + 2 - 2 = 15
+                \end{aligned}$
+            </div>
+            <p>The equation of the tangent plane is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                5x + y + z &= 15
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 5</h4>
+            <p>Find the equation of the sphere with center $\displaystyle (6, -7, -3)$ and touching the plane $\displaystyle 4x - 2y - z = 17$.</p>
+            <div class="solution-title">Solution</div>
+            <p>The radius $\displaystyle r$ is the perpendicular distance from the center $\displaystyle C(6, -7, -3)$ to the plane $\displaystyle 4x - 2y - z - 17 = 0$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                r &= \frac{|4(6) - 2(-7) - 1(-3) - 17|}{\sqrt{4^2 + (-2)^2 + (-1)^2}} \\
+                &= \frac{|24 + 14 + 3 - 17|}{\sqrt{16 + 4 + 1}} \\
+                &= \frac{24}{\sqrt{21}}
+                \end{aligned}$
+            </div>
+            <p>Thus, $\displaystyle r^2 = \frac{576}{21} = \frac{192}{7}$.<br>
+            The equation of the sphere is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x - 6)^2 + (y + 7)^2 + (z + 3)^2 &= \frac{192}{7}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 6</h4>
+            <p>What is the equation of the sphere which passes through the points $\displaystyle (3, 0, 2)$, $\displaystyle (-1, 1, 1)$ and $\displaystyle (2, -5, 4)$ and whose center lies on the plane $\displaystyle 2x + 3y + 4z = 6$?</p>
+            <div class="solution-title">Solution</div>
+            <p>Let the center be $\displaystyle C(a, b, c)$. The distance from $\displaystyle C$ to each point is the radius $\displaystyle r$, so their squares are equal.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                r^2 &= (3-a)^2 + (0-b)^2 + (2-c)^2 = a^2+b^2+c^2 - 6a - 4c + 13 \quad \text{--- (1)} \\
+                r^2 &= (-1-a)^2 + (1-b)^2 + (1-c)^2 = a^2+b^2+c^2 + 2a - 2b - 2c + 3 \quad \text{--- (2)} \\
+                r^2 &= (2-a)^2 + (-5-b)^2 + (4-c)^2 = a^2+b^2+c^2 - 4a + 10b - 8c + 45 \quad \text{--- (3)}
+                \end{aligned}$
+            </div>
+            <p>Equating (1) and (2):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                -6a - 4c + 13 &= 2a - 2b - 2c + 3 \\
+                8a - 2b + 2c &= 10 \\
+                4a - b + c &= 5 \quad \text{--- (4)}
+                \end{aligned}$
+            </div>
+            <p>Equating (2) and (3):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2a - 2b - 2c + 3 &= -4a + 10b - 8c + 45 \\
+                6a - 12b + 6c &= 42 \\
+                a - 2b + c &= 7 \quad \text{--- (5)}
+                \end{aligned}$
+            </div>
+            <p>Subtracting (5) from (4):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                3a + b &= -2 \implies b = -3a - 2
+                \end{aligned}$
+            </div>
+            <p>Substitute $\displaystyle b$ into (5):</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                a - 2(-3a - 2) + c &= 7 \\
+                a + 6a + 4 + c &= 7 \\
+                7a + c &= 3 \implies c = 3 - 7a
+                \end{aligned}$
+            </div>
+            <p>The center lies on $\displaystyle 2x + 3y + 4z = 6$, so $\displaystyle 2a + 3b + 4c = 6$. Substitute $\displaystyle b$ and $\displaystyle c$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2a + 3(-3a - 2) + 4(3 - 7a) &= 6 \\
+                2a - 9a - 6 + 12 - 28a &= 6 \\
+                -35a + 6 &= 6 \\
+                -35a &= 0 \implies a = 0
+                \end{aligned}$
+            </div>
+            <p>Then $\displaystyle b = -3(0) - 2 = -2$ and $\displaystyle c = 3 - 7(0) = 3$. The center is $\displaystyle (0, -2, 3)$.<br>
+            Substitute the center into (1) to find $\displaystyle r^2$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                r^2 &= (3 - 0)^2 + (0 - (-2))^2 + (2 - 3)^2 \\
+                &= 9 + 4 + 1 = 14
+                \end{aligned}$
+            </div>
+            <p>The equation of the sphere is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x^2 + (y + 2)^2 + (z - 3)^2 &= 14
+                \end{aligned}$
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

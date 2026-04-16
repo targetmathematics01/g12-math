@@ -2,730 +2,754 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chapter 2: Practice Problems | Target Mathematics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    
     <script>
-        // Recursive Error လုံးဝမဖြစ်စေရန် Native \over ကိုသာ သုံးထားပါသည်
-        // Math Font များ Uniform ဖြစ်စေရန် matchFontHeight: false ကို ထည့်သွင်းထားပါသည်
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                macros: {
-                    frac: ["{\\displaystyle {#1 \\over #2}}", 2]
-                }
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
             },
             chtml: {
-                displayAlign: "center",
-                matchFontHeight: false, 
-                scale: 1
+                displayAlign: 'left',
+                displayIndent: '0'
             },
-            startup: {
-                pageReady: () => {
-                    return MathJax.startup.defaultPageReady().then(() => {
-                        // Display Math များအတွက် Wrapper (Block Level Swipe)
-                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'math-display-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                        
-                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
-                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
-                            const wrapper = document.createElement('span');
-                            wrapper.className = 'math-inline-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                    });
-                }
+            svg: {
+                fontCache: 'global'
             }
         };
     </script>
-   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        /* Prevent full-page horizontal scroll */
-        body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; overflow-x: hidden; }
-        header { background: #0056b3; color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .logo { font-size: 28px; font-weight: 600; letter-spacing: 2px; color: #f39c12; }
-        .logo span { color: #f4f6f1; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
-        .content-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; text-align: left; }
-        .content-box h1 { color: #333; margin-bottom: 10px; text-align: center; font-family: 'Alice', serif; }
-        .content-box p.subtitle { text-align: center; color: #777; margin-bottom: 40px; font-size: 1.1em; }
-        
-        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 10px; }
-        
-        /* Removed overflow-x: auto to eliminate sliders. Added word-wrap for responsiveness */
-        .problem-box { 
-            border: 1px solid #e0e0e0; 
-            padding: 35px; 
-            border-radius: 10px; 
-            margin-bottom: 40px; 
-            background: #fafafa; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
-            max-width: 100%; 
-            box-sizing: border-box; 
-            word-wrap: break-word;
-        }
-        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 22px; margin-bottom: 20px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
-        .problem-box p { color: #333; font-size: 16px; line-height: 1.8; margin-bottom: 15px; word-wrap: break-word; }
-
-        /* Ensure math blocks fit inside the container without sliders */
-        mjx-container { 
-            max-width: 100%; 
-            box-sizing: border-box;
-            display: flex !important;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        /* Specific override for inline math to prevent block-like centering */
-        p mjx-container {
-            display: inline-block !important;
-            margin: 0 !important;
-        }
-
-        mjx-container[display="true"] {
-            margin: 1em 0 !important;
-        }
-
-        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
-        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; }
-        .btn-nav:hover { background-color: #004494; }
-
-        .top-nav-box {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background-color: #fff;
-            border-radius: 12px;
-            padding: 10px;
-            margin-top: -25px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 15px;
-            z-index: 100;
-        }
-        .nav-link {
-            padding: 12px 30px;
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            font-size: 15px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #0056b3;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 15px;
             background-color: #f4f7f6;
+            color: #333;
+            overflow-x: hidden; 
+            max-width: 100vw;
+            box-sizing: border-box;
         }
-        .nav-link.active {
-            color: #0056b3;
-            background-color: #e8f4f8;
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+            margin: 0 auto;
+            overflow-x: hidden; 
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 35px;
+            font-size: 1.1em;
+        }
+        .problem-box {
+            width: 100%; 
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+            background: #fafafa;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            box-sizing: border-box;
+            overflow-x: hidden; 
+        }
+        .problem-box h4 {
+            margin-top: 0;
+            color: #d9534f;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 10px;
+        }
+        .problem-box p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            word-wrap: break-word;
+            max-width: 100%; 
+            overflow-x: auto; 
+            overflow-y: hidden !important; /* Forced no vertical scroll */
+            -webkit-overflow-scrolling: touch; 
+        }
+        .problem-box p::-webkit-scrollbar {
+            height: 4px; /* Horizontal scrollbar height */
+        }
+        .problem-box p::-webkit-scrollbar:vertical {
+            display: none; /* Hide vertical scrollbar completely */
+            width: 0;
+        }
+        .problem-box p::-webkit-scrollbar-thumb {
+            background-color: #e2e8f0;
+            border-radius: 2px;
+        }
+        .solution-title {
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        /* Mobile Swipeable Math Block - Fixed Width, Inner Scroll */
+        .math-block {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            background: #fff;
+            padding: 15px;
+            border-left: 4px solid #2980b9;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; /* Forced no vertical scroll */
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            text-align: left;
+        }
+        .math-block::-webkit-scrollbar {
+            height: 6px; /* Horizontal scrollbar height */
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none; /* Hide vertical scrollbar completely */
+            width: 0;
+        }
+        .math-block::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+        
+        /* MathJax Specific Constraint */
+        mjx-container {
+            text-align: left !important;
+            max-width: 100% !important; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; /* Forced no vertical scroll */
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+        }
+        mjx-container::-webkit-scrollbar {
+            height: 6px; /* Horizontal scrollbar height */
+        }
+        mjx-container::-webkit-scrollbar:vertical {
+            display: none; /* Hide vertical scrollbar completely */
+            width: 0;
+        }
+        mjx-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
         }
 
-        /* Fully Responsive Media Queries */
         @media (max-width: 768px) {
-            .content-box { padding: 25px 15px; }
-            .problem-box { padding: 20px; margin-bottom: 25px; }
-            .problem-box h4 { font-size: 18px; }
-            .problem-box p { font-size: 14px; }
-            .page-navigation { flex-direction: column; gap: 15px; }
-            .btn-nav { width: 100%; box-sizing: border-box; }
-            .top-nav-box { flex-direction: row; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
-            .nav-link { flex: 1; text-align: center; padding: 12px 10px; font-size: 14px; }
-            
-            /* Scale down Math equations on tablets to prevent overflow */
-            mjx-container[display="true"] { font-size: 85% !important; }
-        }
-
-        @media (max-width: 480px) {
-            /* Scale down further for small mobile screens */
-            mjx-container[display="true"] { font-size: 65% !important; }
-            .problem-box { padding: 15px; }
+            .container {
+                padding: 15px;
+            }
+            .problem-box {
+                padding: 15px;
+                margin-bottom: 25px;
+            }
         }
     </style>
 </head>
 <body>
 
-   
-       
-        
-        <div class="content-box">
-            <h1>Chapter 2: Mathematical Induction</h1>
-            <p class="subtitle">Practice Problems & Solutions</p>
+<div class="container">
+    <h1>Chapter 2: Mathematical Induction</h1>
+    <p class="subtitle">Practice Problems & Solutions</p>
 
-            <div class="problem-box">
-                <h4>Problem 1</h4>
-                <p>Prove that $1 \cdot 3 + 2 \cdot 4 + 3 \cdot 5 + \cdots + (n - 1)(n + 1) = \frac{1}{6}(n - 1)n(2n + 5)$ for all natural numbers $n \ge 2$ by using principle of mathematical induction.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $1 \cdot 3 + 2 \cdot 4 + 3 \cdot 5 + \cdots + (n - 1)(n + 1) = \frac{1}{6}(n - 1)n(2n + 5)$.</p>
-                <p>(1) For $n = 2$, $\text{LHS} = (2 - 1)(2 + 1) = 3$ and $\text{RHS} = \frac{1}{6}(2 - 1)(2)(2(2) + 5) = \frac{1}{6}(1)(2)(9) = 3$.<br>
-                Since $\text{LHS} = \text{RHS}$, $P(2)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 2$, that is<br>
-                $1 \cdot 3 + 2 \cdot 4 + 3 \cdot 5 + \cdots + (k - 1)(k + 1) = \frac{1}{6}(k - 1)k(2k + 5).$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $1 \cdot 3 + 2 \cdot 4 + 3 \cdot 5 + \cdots + k(k + 2) = \frac{1}{6}k(k + 1)(2k + 7).$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 1 \cdot 3 + 2 \cdot 4 + \cdots + (k - 1)(k + 1) + k(k + 2) \\
-                    &=  \frac{1}{6}(k - 1)k(2k + 5) + k(k + 2) \\
-                    &=  \frac{k}{6} \left[ (k - 1)(2k + 5) + 6(k + 2) \right] \\
-                    &=  \frac{k}{6} \left[ 2k^2 + 3k - 5 + 6k + 12 \right] \\
-                    &=  \frac{k}{6} \left( 2k^2 + 9k + 7 \right) \\
-                    &=  \frac{1}{6}k(k + 1)(2k + 7)
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 2$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 1</h4>
+        <p>Prove that $\displaystyle 1 \cdot 3 + 2 \cdot 4 + 3 \cdot 5 + \cdots + (n - 1)(n + 1) = \frac{1}{6}(n - 1)n(2n + 5)$ for all natural numbers $\displaystyle n \ge 2$ by using principle of mathematical induction.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 \cdot 3 + 2 \cdot 4 + 3 \cdot 5 + \cdots + (n - 1)(n + 1) = \frac{1}{6}(n - 1)n(2n + 5)$.</p>
+        <p>(1) For $\displaystyle n = 2$,<br>
+        $\displaystyle \text{LHS} = (2 - 1)(2 + 1) = 3$ and $\displaystyle \text{RHS} = \frac{1}{6}(2 - 1)(2)(2(2) + 5) = \frac{1}{6}(1)(2)(9) = 3$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(2)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 2$, that is<br>
+        $\displaystyle 1 \cdot 3 + 2 \cdot 4 + \cdots + (k - 1)(k + 1) = \frac{1}{6}(k - 1)k(2k + 5).$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 \cdot 3 + 2 \cdot 4 + \cdots + k(k + 2) = \frac{1}{6}k(k + 1)(2k + 7).$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 \cdot 3 + 2 \cdot 4 + \cdots + (k - 1)(k + 1) + k(k + 2) \\
+            & = \frac{1}{6}(k - 1)k(2k + 5) + k(k + 2) \\
+            & = \frac{k}{6} \left[ (k - 1)(2k + 5) + 6(k + 2) \right] \\
+            & = \frac{k}{6} \left[ 2k^2 + 3k - 5 + 6k + 12 \right] \\
+            & = \frac{k}{6} \left( 2k^2 + 9k + 7 \right) \\
+            & = \frac{1}{6}k(k + 1)(2k + 7)
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 2$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 2</h4>
-                <p>Prove that $1 \cdot 2 \cdot 3 + 2 \cdot 3 \cdot 4 + 3 \cdot 4 \cdot 5 + \cdots + n(n + 1)(n + 2) = \frac{1}{4}n(n + 1)(n + 2)(n + 3)$ for all natural numbers $n$ by using principle of mathematical induction.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $1 \cdot 2 \cdot 3 + 2 \cdot 3 \cdot 4 + 3 \cdot 4 \cdot 5 + \cdots + n(n + 1)(n + 2) = \frac{1}{4}n(n + 1)(n + 2)(n + 3)$.</p>
-                <p>(1) For $n = 1$, $\text{LHS} = 1(1 + 1)(1 + 2) = 6$ and $\text{RHS} = \frac{1}{4}(1)(1 + 1)(1 + 2)(1 + 3) = 6$.<br>
-                Since $\text{LHS} = \text{RHS}$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $1 \cdot 2 \cdot 3 + 2 \cdot 3 \cdot 4 + \cdots + k(k + 1)(k + 2) = \frac{1}{4}k(k + 1)(k + 2)(k + 3).$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $1 \cdot 2 \cdot 3 + \cdots + (k + 1)(k + 2)(k + 3) = \frac{1}{4}(k + 1)(k + 2)(k + 3)(k + 4).$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 1 \cdot 2 \cdot 3 + \cdots + k(k + 1)(k + 2) + (k + 1)(k + 2)(k + 3) \\
-                    &=  \frac{1}{4}k(k + 1)(k + 2)(k + 3) + (k + 1)(k + 2)(k + 3) \\
-                    &=  (k + 1)(k + 2)(k + 3) \left( \frac{k}{4} + 1 \right) \\
-                    &=  \frac{1}{4}(k + 1)(k + 2)(k + 3)(k + 4)
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Prove that $\displaystyle 1 \cdot 2 \cdot 3 + 2 \cdot 3 \cdot 4 + 3 \cdot 4 \cdot 5 + \cdots + n(n + 1)(n + 2) = \frac{1}{4}n(n + 1)(n + 2)(n + 3)$ for all natural numbers $\displaystyle n$ by using principle of mathematical induction.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 \cdot 2 \cdot 3 + 2 \cdot 3 \cdot 4 + \cdots + n(n + 1)(n + 2) = \frac{1}{4}n(n + 1)(n + 2)(n + 3)$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1(1 + 1)(1 + 2) = 6$ and $\displaystyle \text{RHS} = \frac{1}{4}(1)(1 + 1)(1 + 2)(1 + 3) = 6$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1 \cdot 2 \cdot 3 + 2 \cdot 3 \cdot 4 + \cdots + k(k + 1)(k + 2) = \frac{1}{4}k(k + 1)(k + 2)(k + 3).$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 \cdot 2 \cdot 3 + \cdots + (k + 1)(k + 2)(k + 3) = \frac{1}{4}(k + 1)(k + 2)(k + 3)(k + 4).$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 \cdot 2 \cdot 3 + \cdots + k(k + 1)(k + 2) + (k + 1)(k + 2)(k + 3) \\
+            & = \frac{1}{4}k(k + 1)(k + 2)(k + 3) + (k + 1)(k + 2)(k + 3) \\
+            & = (k + 1)(k + 2)(k + 3) \left( \frac{k}{4} + 1 \right) \\
+            & = \frac{1}{4}(k + 1)(k + 2)(k + 3)(k + 4)
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 3</h4>
-                <p>Prove that $1 \cdot 2 + 2 \cdot 2^2 + 3 \cdot 2^3 + \cdots + n \cdot 2^n = (n - 1)2^{n + 1} + 2$ for all natural numbers $n$ by using principle of mathematical induction.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $1 \cdot 2 + 2 \cdot 2^2 + 3 \cdot 2^3 + \cdots + n \cdot 2^n = (n - 1)2^{n + 1} + 2$.</p>
-                <p>(1) For $n = 1$, $\text{LHS} = 1 \cdot 2^1 = 2$ and $\text{RHS} = (1 - 1)2^{1 + 1} + 2 = 0 + 2 = 2$.<br>
-                Since $\text{LHS} = \text{RHS}$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $1 \cdot 2 + 2 \cdot 2^2 + \cdots + k \cdot 2^k = (k - 1)2^{k + 1} + 2.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $1 \cdot 2 + 2 \cdot 2^2 + \cdots + (k + 1) \cdot 2^{k + 1} = k 2^{k + 2} + 2.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 1 \cdot 2 + 2 \cdot 2^2 + \cdots + k \cdot 2^k + (k + 1) \cdot 2^{k + 1} \\
-                    &=  (k - 1)2^{k + 1} + 2 + (k + 1)2^{k + 1} \\
-                    &=  2^{k + 1} (k - 1 + k + 1) + 2 \\
-                    &=  2^{k + 1} (2k) + 2 \\
-                    &=  k 2^{k + 2} + 2
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 3</h4>
+        <p>Prove that $\displaystyle 1 \cdot 2 + 2 \cdot 2^2 + 3 \cdot 2^3 + \cdots + n \cdot 2^n = (n - 1)2^{n + 1} + 2$ for all natural numbers $\displaystyle n$ by using principle of mathematical induction.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 \cdot 2 + 2 \cdot 2^2 + \cdots + n \cdot 2^n = (n - 1)2^{n + 1} + 2$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1 \cdot 2^1 = 2$ and $\displaystyle \text{RHS} = (1 - 1)2^{1 + 1} + 2 = 0 + 2 = 2$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1 \cdot 2 + 2 \cdot 2^2 + \cdots + k \cdot 2^k = (k - 1)2^{k + 1} + 2.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 \cdot 2 + 2 \cdot 2^2 + \cdots + (k + 1) \cdot 2^{k + 1} = k 2^{k + 2} + 2.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 \cdot 2 + 2 \cdot 2^2 + \cdots + k \cdot 2^k + (k + 1) \cdot 2^{k + 1} \\
+            & = (k - 1)2^{k + 1} + 2 + (k + 1)2^{k + 1} \\
+            & = 2^{k + 1} (k - 1 + k + 1) + 2 \\
+            & = 2^{k + 1} (2k) + 2 \\
+            & = k 2^{k + 2} + 2
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 4</h4>
-                <p>Prove, by mathematical induction, that for all natural numbers $n$,<br>
-                $\sum_{r=1}^{n} r^2 = \frac{n(n + 1)(2n + 1)}{6}$<br>
-                for all natural numbers $n$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $\sum_{r=1}^{n} r^2 = \frac{n(n + 1)(2n + 1)}{6}$.</p>
-                <p>(1) For $n = 1$, $\text{LHS} = 1^2 = 1$ and $\text{RHS} = \frac{1(1 + 1)(2(1) + 1)}{6} = \frac{6}{6} = 1$.<br>
-                Since $\text{LHS} = \text{RHS}$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $\sum_{r=1}^{k} r^2 = \frac{k(k + 1)(2k + 1)}{6}.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $\sum_{r=1}^{k+1} r^2 = \frac{(k + 1)(k + 2)(2k + 3)}{6}.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & \sum_{r=1}^{k+1} r^2 \\
-                    &=  \sum_{r=1}^{k} r^2 + (k + 1)^2 \\
-                    &=  \frac{k(k + 1)(2k + 1)}{6} + (k + 1)^2 \\
-                    &=  \frac{k + 1}{6} \left[ k(2k + 1) + 6(k + 1) \right] \\
-                    &=  \frac{k + 1}{6} \left( 2k^2 + 7k + 6 \right) \\
-                    &=  \frac{1}{6}(k + 1)(k + 2)(2k + 3)
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 4</h4>
+        <p>Prove, by mathematical induction, that for all natural numbers $\displaystyle n$,<br>
+        $\displaystyle \sum_{r=1}^{n} r^2 = \frac{n(n + 1)(2n + 1)}{6}$</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle \sum_{r=1}^{n} r^2 = \frac{n(n + 1)(2n + 1)}{6}$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1^2 = 1$ and $\displaystyle \text{RHS} = \frac{1(1 + 1)(2(1) + 1)}{6} = \frac{6}{6} = 1$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle \sum_{r=1}^{k} r^2 = \frac{k(k + 1)(2k + 1)}{6}.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle \sum_{r=1}^{k+1} r^2 = \frac{(k + 1)(k + 2)(2k + 3)}{6}.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \sum_{r=1}^{k+1} r^2 \\
+            & = \sum_{r=1}^{k} r^2 + (k + 1)^2 \\
+            & = \frac{k(k + 1)(2k + 1)}{6} + (k + 1)^2 \\
+            & = \frac{k + 1}{6} \left[ k(2k + 1) + 6(k + 1) \right] \\
+            & = \frac{k + 1}{6} \left( 2k^2 + 7k + 6 \right) \\
+            & = \frac{1}{6}(k + 1)(k + 2)(2k + 3)
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 5</h4>
-                <p>Prove that $1^3 + 3^3 + 5^3 + \cdots + (2n - 1)^3 = n^2(2n^2 - 1)$ for all natural numbers $n$ by the use of the mathematical induction principle.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $1^3 + 3^3 + 5^3 + \cdots + (2n - 1)^3 = n^2(2n^2 - 1)$.</p>
-                <p>(1) For $n = 1$, $\text{LHS} = 1^3 = 1$ and $\text{RHS} = 1^2(2(1)^2 - 1) = 1(1) = 1$.<br>
-                Since $\text{LHS} = \text{RHS}$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $1^3 + 3^3 + 5^3 + \cdots + (2k - 1)^3 = k^2(2k^2 - 1).$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $1^3 + 3^3 + 5^3 + \cdots + (2k + 1)^3 = (k + 1)^2(2(k + 1)^2 - 1).$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 1^3 + 3^3 + \cdots + (2k - 1)^3 + (2k + 1)^3 \\
-                    &=  k^2(2k^2 - 1) + (2k + 1)^3 \\
-                    &=  2k^4 - k^2 + 8k^3 + 12k^2 + 6k + 1 \\
-                    &=  2k^4 + 8k^3 + 11k^2 + 6k + 1 \\
-                    &=  (k^2 + 2k + 1)(2k^2 + 4k + 1) \\
-                    &=  (k + 1)^2 \left[ 2(k^2 + 2k + 1) - 1 \right] \\
-                    &=  (k + 1)^2(2(k + 1)^2 - 1)
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 5</h4>
+        <p>Prove that $\displaystyle 1^3 + 3^3 + 5^3 + \cdots + (2n - 1)^3 = n^2(2n^2 - 1)$ for all natural numbers $\displaystyle n$ by the use of the mathematical induction principle.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1^3 + 3^3 + \cdots + (2n - 1)^3 = n^2(2n^2 - 1)$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1^3 = 1$ and $\displaystyle \text{RHS} = 1^2(2(1)^2 - 1) = 1(1) = 1$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1^3 + 3^3 + \cdots + (2k - 1)^3 = k^2(2k^2 - 1).$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1^3 + 3^3 + \cdots + (2k + 1)^3 = (k + 1)^2(2(k + 1)^2 - 1).$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1^3 + 3^3 + \cdots + (2k - 1)^3 + (2k + 1)^3 \\
+            & = k^2(2k^2 - 1) + (2k + 1)^3 \\
+            & = 2k^4 - k^2 + 8k^3 + 12k^2 + 6k + 1 \\
+            & = 2k^4 + 8k^3 + 11k^2 + 6k + 1 \\
+            & = (k^2 + 2k + 1)(2k^2 + 4k + 1) \\
+            & = (k + 1)^2 \left[ 2(k^2 + 2k + 1) - 1 \right] \\
+            & = (k + 1)^2(2(k + 1)^2 - 1)
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 6</h4>
-                <p>Show by the principle of mathematical induction that $2^{2n - 1} + 5^{2n - 1} \text{ is divisible by } 7$ for all natural numbers $n$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $2^{2n - 1} + 5^{2n - 1} \text{ is divisible by } 7$.</p>
-                <p>(1) For $n = 1$, $2^{2(1) - 1} + 5^{2(1) - 1} = 2^1 + 5^1 = 7$ which is divisible by $7$.<br>
-                $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $2^{2k - 1} + 5^{2k - 1} \text{ is divisible by } 7.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $2^{2(k + 1) - 1} + 5^{2(k + 1) - 1} \text{ is divisible by } 7.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 2^{2k + 1} + 5^{2k + 1} \\
-                    &=  2^2 \cdot 2^{2k - 1} + 5^2 \cdot 5^{2k - 1} \\
-                    &=  4 \cdot 2^{2k - 1} + 25 \cdot 5^{2k - 1} \\
-                    &=  4(2^{2k - 1} + 5^{2k - 1}) + 21 \cdot 5^{2k - 1}
-                \end{aligned}
-                $$
-                <p>$4(2^{2k - 1} + 5^{2k - 1})$ and $21(5^{2k - 1})$ are divisible by $7$.<br>
-                Then $4(2^{2k - 1} + 5^{2k - 1}) + 21 \cdot 5^{2k - 1} = 2^{2(k + 1) - 1} + 5^{2(k + 1) - 1}$ is also divisible by $7$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 6</h4>
+        <p>Show by the principle of mathematical induction that $\displaystyle 2^{2n - 1} + 5^{2n - 1} \text{ is divisible by } 7$ for all natural numbers $\displaystyle n$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 2^{2n - 1} + 5^{2n - 1} \text{ is divisible by } 7$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle 2^{2(1) - 1} + 5^{2(1) - 1} = 2^1 + 5^1 = 7$ which is divisible by $\displaystyle 7$.<br>
+        $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 2^{2k - 1} + 5^{2k - 1} \text{ is divisible by } 7.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2^{2(k + 1) - 1} + 5^{2(k + 1) - 1} \text{ is divisible by } 7.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2^{2(k + 1) - 1} + 5^{2(k + 1) - 1} \\
+            & = 2^{2k + 1} + 5^{2k + 1} \\
+            & = 2^2 \cdot 2^{2k - 1} + 5^2 \cdot 5^{2k - 1} \\
+            & = 4 \cdot 2^{2k - 1} + 25 \cdot 5^{2k - 1} \\
+            & = 4(2^{2k - 1} + 5^{2k - 1}) + 21 \cdot 5^{2k - 1}
+            \end{aligned}$
+        </div>
+        <p>$\displaystyle 4(2^{2k - 1} + 5^{2k - 1})$ and $\displaystyle 21(5^{2k - 1})$ are divisible by $\displaystyle 7$.<br>
+        Then $\displaystyle 4(2^{2k - 1} + 5^{2k - 1}) + 21 \cdot 5^{2k - 1} = 2^{2(k + 1) - 1} + 5^{2(k + 1) - 1}$ is also divisible by $\displaystyle 7$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 7</h4>
-                <p>Prove that $3^{2n} - 1 \text{ is divisible by } 8$ for all natural numbers $n \ge 1$ by using principle of mathematical induction.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $3^{2n} - 1 \text{ is divisible by } 8$.</p>
-                <p>(1) For $n = 1$, $3^{2(1)} - 1 = 9 - 1 = 8$ which is divisible by $8$.<br>
-                $\therefore \quad P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 1$, that is<br>
-                $3^{2k} - 1 \text{ is divisible by } 8.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $3^{2(k + 1)} - 1 \text{ is divisible by } 8.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 3^{2(k + 1)} - 1 \\
-                    &=  3^{2k + 2} - 1 \\
-                    &=  9 \cdot 3^{2k} - 1 \\
-                    &=  9(3^{2k} - 1) + 8
-                \end{aligned}
-                $$
-                <p>$9(3^{2k} - 1)$ and $8$ are divisible by $8$.<br>
-                Then $9(3^{2k} - 1) + 8 = 3^{2(k + 1)} - 1$ is also divisible by $8$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 1$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 7</h4>
+        <p>Prove that $\displaystyle 3^{2n} - 1 \text{ is divisible by } 8$ for all natural numbers $\displaystyle n \ge 1$ by using principle of mathematical induction.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 3^{2n} - 1 \text{ is divisible by } 8$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle 3^{2(1)} - 1 = 9 - 1 = 8$ which is divisible by $\displaystyle 8$.<br>
+        $\displaystyle \therefore \quad P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 1$, that is<br>
+        $\displaystyle 3^{2k} - 1 \text{ is divisible by } 8.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 3^{2(k + 1)} - 1 \text{ is divisible by } 8.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 3^{2(k + 1)} - 1 \\
+            & = 3^{2k + 2} - 1 \\
+            & = 9 \cdot 3^{2k} - 1 \\
+            & = 9(3^{2k} - 1) + 8
+            \end{aligned}$
+        </div>
+        <p>$\displaystyle 9(3^{2k} - 1)$ and $\displaystyle 8$ are divisible by $\displaystyle 8$.<br>
+        Then $\displaystyle 9(3^{2k} - 1) + 8 = 3^{2(k + 1)} - 1$ is also divisible by $\displaystyle 8$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 1$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 8</h4>
-                <p>Prove that $2n < 2^n$ for all natural numbers $n \ge 3$ by using the mathematical induction.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $2n < 2^n$.</p>
-                <p>(1) For $n = 3$, $\text{LHS} = 2(3) = 6$ and $\text{RHS} = 2^3 = 8$.<br>
-                Since $6 < 8$, $P(3)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 3$, that is<br>
-                $2k < 2^k.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $2(k + 1) < 2^{k + 1}.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 2(k + 1) \\
-                    &=  2k + 2 \\
-                    &<  2^k + 2 \quad (\text{since } 2k < 2^k) \\
-                    &<  2^k + 2^k \quad (\text{since } 2 < 2^k \text{ for } k \ge 3) \\
-                    &=  2 \cdot 2^k \\
-                    &=  2^{k + 1}
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 3$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 8</h4>
+        <p>Prove that $\displaystyle 2n < 2^n$ for all natural numbers $\displaystyle n \ge 3$ by using the mathematical induction.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 2n < 2^n$.</p>
+        <p>(1) For $\displaystyle n = 3$,<br>
+        $\displaystyle \text{LHS} = 2(3) = 6$ and $\displaystyle \text{RHS} = 2^3 = 8$.<br>
+        Since $\displaystyle 6 < 8$, $\displaystyle P(3)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 3$, that is<br>
+        $\displaystyle 2k < 2^k.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2(k + 1) < 2^{k + 1}.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2(k + 1) \\
+            & = 2k + 2 \\
+            & < 2^k + 2 \quad (\text{since } 2k < 2^k) \\
+            & < 2^k + 2^k \quad (\text{since } 2 < 2^k \text{ for } k \ge 3) \\
+            & = 2 \cdot 2^k \\
+            & = 2^{k + 1}
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 3$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 9</h4>
-                <p>Use the mathematical induction principle to prove that $2n + 1 < n^2$ for all natural numbers $n \ge 3$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $2n + 1 < n^2$.</p>
-                <p>(1) For $n = 3$, $\text{LHS} = 2(3) + 1 = 7$ and $\text{RHS} = 3^2 = 9$.<br>
-                Since $7 < 9$, $P(3)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 3$, that is<br>
-                $2k + 1 < k^2.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $2(k + 1) + 1 < (k + 1)^2.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 2(k + 1) + 1 \\
-                    &=  (2k + 1) + 2 \\
-                    &<  k^2 + 2 \quad (\text{since } 2k + 1 < k^2) \\
-                    &<  k^2 + 2k + 1 \quad (\text{since } 2 < 2k + 1 \text{ for } k \ge 3) \\
-                    &=  (k + 1)^2
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 3$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 9</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle 2n + 1 < n^2$ for all natural numbers $\displaystyle n \ge 3$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 2n + 1 < n^2$.</p>
+        <p>(1) For $\displaystyle n = 3$,<br>
+        $\displaystyle \text{LHS} = 2(3) + 1 = 7$ and $\displaystyle \text{RHS} = 3^2 = 9$.<br>
+        Since $\displaystyle 7 < 9$, $\displaystyle P(3)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 3$, that is<br>
+        $\displaystyle 2k + 1 < k^2.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2(k + 1) + 1 < (k + 1)^2.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2(k + 1) + 1 \\
+            & = (2k + 1) + 2 \\
+            & < k^2 + 2 \quad (\text{since } 2k + 1 < k^2) \\
+            & < k^2 + 2k + 1 \quad (\text{since } 2 < 2k + 1 \text{ for } k \ge 3) \\
+            & = (k + 1)^2
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 3$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 10</h4>
-                <p>Use the mathematical induction principle to prove that $1 + 5 + 9 + \cdots + (4n - 3) = 2n^2 - n$ for all natural numbers $n$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $1 + 5 + 9 + \cdots + (4n - 3) = 2n^2 - n$.</p>
-                <p>(1) For $n = 1$, $\text{LHS} = 1$ and $\text{RHS} = 2(1)^2 - 1 = 1$.<br>
-                Since $\text{LHS} = \text{RHS}$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $1 + 5 + 9 + \cdots + (4k - 3) = 2k^2 - k.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $1 + 5 + 9 + \cdots + (4k + 1) = 2(k + 1)^2 - (k + 1).$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 1 + 5 + 9 + \cdots + (4k - 3) + (4k + 1) \\
-                    &=  2k^2 - k + 4k + 1 \\
-                    &=  2k^2 + 3k + 1 \\
-                    &=  2(k^2 + 2k + 1) - k - 1 \\
-                    &=  2(k + 1)^2 - (k + 1)
-                \end{aligned}
-                $$
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 10</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle 1 + 5 + 9 + \cdots + (4n - 3) = 2n^2 - n$ for all natural numbers $\displaystyle n$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 + 5 + 9 + \cdots + (4n - 3) = 2n^2 - n$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1$ and $\displaystyle \text{RHS} = 2(1)^2 - 1 = 1$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1 + 5 + 9 + \cdots + (4k - 3) = 2k^2 - k.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 + 5 + 9 + \cdots + (4k + 1) = 2(k + 1)^2 - (k + 1).$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 + 5 + 9 + \cdots + (4k - 3) + (4k + 1) \\
+            & = 2k^2 - k + 4k + 1 \\
+            & = 2k^2 + 3k + 1 \\
+            & = 2(k^2 + 2k + 1) - k - 1 \\
+            & = 2(k + 1)^2 - (k + 1)
+            \end{aligned}$
+        </div>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 11</h4>
-                <p>Prove that $n^3 + 2n \text{ is divisible by } 3$ for all natural numbers $n$ by using the mathematical induction.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $n^3 + 2n$ is divisible by $3$.</p>
-                <p>(1) For $n = 1$, $1^3 + 2(1) = 3$ which is divisible by $3$.<br>
-                $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $k^3 + 2k \text{ is divisible by } 3.$<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $(k + 1)^3 + 2(k + 1) \text{ is divisible by } 3.$</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & (k + 1)^3 + 2(k + 1) \\
-                    &=  k^3 + 3k^2 + 3k + 1 + 2k + 2 \\
-                    &=  k^3 + 2k + 3k^2 + 3k + 3 \\
-                    &=  (k^3 + 2k) + 3(k^2 + k + 1)
-                \end{aligned}
-                $$
-                <p>$(k^3 + 2k)$ and $3(k^2 + k + 1)$ are divisible by $3$.<br>
-                Then $(k^3 + 2k) + 3(k^2 + k + 1) = (k + 1)^3 + 2(k + 1)$ is also divisible by $3$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 11</h4>
+        <p>Prove that $\displaystyle n^3 + 2n \text{ is divisible by } 3$ for all natural numbers $\displaystyle n$ by using the mathematical induction.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle n^3 + 2n \text{ is divisible by } 3$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle 1^3 + 2(1) = 3$ which is divisible by $\displaystyle 3$.<br>
+        $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle k^3 + 2k \text{ is divisible by } 3.$<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle (k + 1)^3 + 2(k + 1) \text{ is divisible by } 3.$</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (k + 1)^3 + 2(k + 1) \\
+            & = k^3 + 3k^2 + 3k + 1 + 2k + 2 \\
+            & = k^3 + 2k + 3k^2 + 3k + 3 \\
+            & = (k^3 + 2k) + 3(k^2 + k + 1)
+            \end{aligned}$
+        </div>
+        <p>$\displaystyle (k^3 + 2k)$ and $\displaystyle 3(k^2 + k + 1)$ are divisible by $\displaystyle 3$.<br>
+        Then $\displaystyle (k^3 + 2k) + 3(k^2 + k + 1) = (k + 1)^3 + 2(k + 1)$ is also divisible by $\displaystyle 3$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 12</h4>
-                <p>Use the mathematical induction principle to prove that $n! > 2^n$ for all natural numbers $n \ge 4$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $n! > 2^n$.</p>
-                <p>(1) For $n = 4$, $\text{LHS} = 4! = 24$ and $\text{RHS} = 2^4 = 16$.<br>
-                Since $24 > 16$, $P(4)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 4$, that is<br>
-                $k! > 2^k$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $(k + 1)! > 2^{k + 1}$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & (k + 1)! \\
-                    &=  (k + 1) \cdot k! \\
-                    &>  (k + 1) \cdot 2^k \quad (\text{since } k! > 2^k)
-                \end{aligned}
-                $$
-                <p>Since $k \ge 4$, we have $k + 1 \ge 5 > 2$.</p>
-                <p>Therefore,</p>
-                $$
-                \begin{aligned}
-                    & (k + 1) \cdot 2^k \\
-                    &>  2 \cdot 2^k \\
-                    &=  2^{k + 1}
-                \end{aligned}
-                $$
-                <p>Thus, $(k + 1)! > 2^{k + 1}$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 4$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 12</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle n! > 2^n$ for all natural numbers $\displaystyle n \ge 4$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle n! > 2^n$.</p>
+        <p>(1) For $\displaystyle n = 4$,<br>
+        $\displaystyle \text{LHS} = 4! = 24$ and $\displaystyle \text{RHS} = 2^4 = 16$.<br>
+        Since $\displaystyle 24 > 16$, $\displaystyle P(4)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 4$, that is<br>
+        $\displaystyle k! > 2^k$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle (k + 1)! > 2^{k + 1}$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (k + 1)! \\
+            & = (k + 1) \cdot k! \\
+            & > (k + 1) \cdot 2^k \quad (\text{since } k! > 2^k)
+            \end{aligned}$
+        </div>
+        <p>Since $\displaystyle k \ge 4$, we have $\displaystyle k + 1 \ge 5 > 2$.</p>
+        <p>Therefore,</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (k + 1) \cdot 2^k \\
+            & > 2 \cdot 2^k \\
+            & = 2^{k + 1}
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle (k + 1)! > 2^{k + 1}$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 4$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 13</h4>
-                <p>Use the mathematical induction principle to prove that $2^n > n^2$ for all natural numbers $n \ge 5$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $2^n > n^2$.</p>
-                <p>(1) For $n = 5$, $\text{LHS} = 2^5 = 32$ and $\text{RHS} = 5^2 = 25$.<br>
-                Since $32 > 25$, $P(5)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 5$, that is<br>
-                $2^k > k^2$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $2^{k + 1} > (k + 1)^2$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 2^{k + 1} \\
-                    &=  2 \cdot 2^k \\
-                    &>  2 \cdot k^2 \quad (\text{since } 2^k > k^2) \\
-                    &=  k^2 + k^2
-                \end{aligned}
-                $$
-                <p>Since $k \ge 5$, we have $k^2 \ge 5k = 2k + 3k > 2k + 1$.</p>
-                <p>Therefore,</p>
-                $$
-                \begin{aligned}
-                    & k^2 + k^2 \\
-                    &>  k^2 + 2k + 1 \\
-                    &=  (k + 1)^2
-                \end{aligned}
-                $$
-                <p>Thus, $2^{k + 1} > (k + 1)^2$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 5$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 13</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle 2^n > n^2$ for all natural numbers $\displaystyle n \ge 5$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 2^n > n^2$.</p>
+        <p>(1) For $\displaystyle n = 5$,<br>
+        $\displaystyle \text{LHS} = 2^5 = 32$ and $\displaystyle \text{RHS} = 5^2 = 25$.<br>
+        Since $\displaystyle 32 > 25$, $\displaystyle P(5)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 5$, that is<br>
+        $\displaystyle 2^k > k^2$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2^{k + 1} > (k + 1)^2$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2^{k + 1} \\
+            & = 2 \cdot 2^k \\
+            & > 2 \cdot k^2 \quad (\text{since } 2^k > k^2) \\
+            & = k^2 + k^2
+            \end{aligned}$
+        </div>
+        <p>Since $\displaystyle k \ge 5$, we have $\displaystyle k^2 \ge 5k = 2k + 3k > 2k + 1$.</p>
+        <p>Therefore,</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & k^2 + k^2 \\
+            & > k^2 + 2k + 1 \\
+            & = (k + 1)^2
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle 2^{k + 1} > (k + 1)^2$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 5$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 14</h4>
-                <p>Use the mathematical induction principle to prove that $(1 + x)^n \ge 1 + nx$ for all $n \in \mathbb{N}$ and $x > -1$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $(1 + x)^n \ge 1 + nx$.</p>
-                <p>(1) For $n = 1$, $\text{LHS} = (1 + x)^1 = 1 + x$ and $\text{RHS} = 1 + 1 \cdot x = 1 + x$.<br>
-                Since $1 + x \ge 1 + x$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $(1 + x)^k \ge 1 + kx$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $(1 + x)^{k + 1} \ge 1 + (k + 1)x$.</p>
-                <p>The proof is as follows:</p>
-                <p>Since $x > -1$, we have $1 + x > 0$. Multiplying both sides of the assumption by $(1 + x)$:</p>
-                $$
-                \begin{aligned}
-                    & (1 + x)^{k + 1} \\
-                    &=  (1 + x)^k (1 + x) \\
-                    &\ge  (1 + kx)(1 + x) \\
-                    &=  1 + x + kx + kx^2 \\
-                    &=  1 + (k + 1)x + kx^2
-                \end{aligned}
-                $$
-                <p>Since $k \ge 1$ and $x^2 \ge 0$, we have $kx^2 \ge 0$.</p>
-                <p>$1 + (k + 1)x + kx^2 \ge 1 + (k + 1)x$.</p>
-                <p>Thus, $(1 + x)^{k + 1} \ge 1 + (k + 1)x$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 14</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle (1 + x)^n \ge 1 + nx$ for all $\displaystyle n \in \mathbb{N}$ and $\displaystyle x > -1$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle (1 + x)^n \ge 1 + nx$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = (1 + x)^1 = 1 + x$ and $\displaystyle \text{RHS} = 1 + 1 \cdot x = 1 + x$.<br>
+        Since $\displaystyle 1 + x \ge 1 + x$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle (1 + x)^k \ge 1 + kx$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle (1 + x)^{k + 1} \ge 1 + (k + 1)x$.</p>
+        <p>The proof is as follows:</p>
+        <p>Since $\displaystyle x > -1$, we have $\displaystyle 1 + x > 0$. Multiplying both sides of the assumption by $\displaystyle (1 + x)$:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (1 + x)^{k + 1} \\
+            & = (1 + x)^k (1 + x) \\
+            & \ge (1 + kx)(1 + x) \quad (\text{since } (1+x)^k \ge 1+kx \text{ and } 1+x > 0) \\
+            & = 1 + x + kx + kx^2 \\
+            & = 1 + (k + 1)x + kx^2
+            \end{aligned}$
+        </div>
+        <p>Since $\displaystyle k \ge 1$ and $\displaystyle x^2 \ge 0$, we have $\displaystyle kx^2 \ge 0$.</p>
+        <p>$\displaystyle 1 + (k + 1)x + kx^2 \ge 1 + (k + 1)x$.</p>
+        <p>Thus, $\displaystyle (1 + x)^{k + 1} \ge 1 + (k + 1)x$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 15</h4>
-                <p>Given that the sequence of real numbers defined by the relations $x_1 = \sqrt{2}$ and $x_{n+1} = \sqrt{2 + x_n}$ for $n \ge 1$. Prove by mathematical induction that $x_n < 2$ for all $n \ge 1$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $x_n < 2$.</p>
-                <p>(1) For $n = 1$, $x_1 = \sqrt{2} \approx 1.414$.<br>
-                Since $\sqrt{2} < 2$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $x_k < 2$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $x_{k + 1} < 2$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & x_{k + 1} \\
-                    &=  \sqrt{2 + x_k} \\
-                    &<  \sqrt{2 + 2} \quad (\text{since } x_k < 2) \\
-                    &=  \sqrt{4} \\
-                    &=  2
-                \end{aligned}
-                $$
-                <p>Thus, $x_{k + 1} < 2$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 1$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 15</h4>
+        <p>Given that the sequence of real numbers defined by the relations $\displaystyle x_1 = \sqrt{2}$ and $\displaystyle x_{n+1} = \sqrt{2 + x_n}$ for $\displaystyle n \ge 1$. Prove by mathematical induction that $\displaystyle x_n < 2$ for all $\displaystyle n \ge 1$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle x_n < 2$.</p>
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle x_1 = \sqrt{2} \approx 1.414$.<br>
+        Since $\displaystyle \sqrt{2} < 2$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle x_k < 2$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle x_{k + 1} < 2$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & x_{k + 1} \\
+            & = \sqrt{2 + x_k} \\
+            & < \sqrt{2 + 2} \quad (\text{since } x_k < 2) \\
+            & = \sqrt{4} \\
+            & = 2
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle x_{k + 1} < 2$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 1$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 16</h4>
-                <p>Given that the sequence of real numbers defined by the relations $x_1 = 1$ and $x_{n+1} = \sqrt{6 + x_n}$ for $n \ge 1$. Prove by mathematical induction that $x_n < 3$ for all $n \ge 1$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $x_n < 3$.</p>
-                <p>(1) For $n = 1$, $x_1 = 1$.<br>
-                Since $1 < 3$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $x_k < 3$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $x_{k + 1} < 3$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & x_{k + 1} \\
-                    &=  \sqrt{6 + x_k} \\
-                    &<  \sqrt{6 + 3} \quad (\text{since } x_k < 3) \\
-                    &=  \sqrt{9} \\
-                    &=  3
-                \end{aligned}
-                $$
-                <p>Thus, $x_{k + 1} < 3$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 1$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 16</h4>
+        <p>Given that the sequence of real numbers defined by the relations $\displaystyle x_1 = 1$ and $\displaystyle x_{n+1} = \sqrt{6 + x_n}$ for $\displaystyle n \ge 1$. Prove by mathematical induction that $\displaystyle x_n < 3$ for all $\displaystyle n \ge 1$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle x_n < 3$.</p>
+        <p>(1) For $\displaystyle n = 1$, $\displaystyle x_1 = 1$.<br>
+        Since $\displaystyle 1 < 3$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle x_k < 3$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle x_{k + 1} < 3$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & x_{k + 1} \\
+            & = \sqrt{6 + x_k} \\
+            & < \sqrt{6 + 3} \quad (\text{since } x_k < 3) \\
+            & = \sqrt{9} \\
+            & = 3
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle x_{k + 1} < 3$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 1$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 17</h4>
-                <p>Given that the sequence of real numbers defined by the relations $x_1 = 2$ and $x_{n+1} = \sqrt{3x_n + 4}$ for $n \ge 1$. Prove by mathematical induction that $x_n < 4$ for all $n \ge 1$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $x_n < 4$.</p>
-                <p>(1) For $n = 1$, $x_1 = 2$.<br>
-                Since $2 < 4$, $P(1)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}$, that is<br>
-                $x_k < 4$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $x_{k + 1} < 4$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & x_{k + 1} \\
-                    &=  \sqrt{3x_k + 4} \\
-                    &<  \sqrt{3(4) + 4} \quad (\text{since } x_k < 4) \\
-                    &=  \sqrt{12 + 4} \\
-                    &=  \sqrt{16} \\
-                    &=  4
-                \end{aligned}
-                $$
-                <p>Thus, $x_{k + 1} < 4$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 1$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 17</h4>
+        <p>Given that the sequence of real numbers defined by the relations $\displaystyle x_1 = 2$ and $\displaystyle x_{n+1} = \sqrt{3x_n + 4}$ for $\displaystyle n \ge 1$. Prove by mathematical induction that $\displaystyle x_n < 4$ for all $\displaystyle n \ge 1$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle x_n < 4$.</p>
+        <p>(1) For $\displaystyle n = 1$, $\displaystyle x_1 = 2$.<br>
+        Since $\displaystyle 2 < 4$, $\displaystyle P(1)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle x_k < 4$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle x_{k + 1} < 4$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & x_{k + 1} \\
+            & = \sqrt{3x_k + 4} \\
+            & < \sqrt{3(4) + 4} \quad (\text{since } x_k < 4) \\
+            & = \sqrt{12 + 4} \\
+            & = \sqrt{16} \\
+            & = 4
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle x_{k + 1} < 4$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 1$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 18</h4>
-                <p>Use the mathematical induction principle to prove that $3n < 3^n - 2$ for all natural numbers $n \ge 2$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $3n < 3^n - 2$.</p>
-                <p>(1) For $n = 2$, $\text{LHS} = 3(2) = 6$ and $\text{RHS} = 3^2 - 2 = 9 - 2 = 7$.<br>
-                Since $6 < 7$, $P(2)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 2$, that is<br>
-                $3k < 3^k - 2$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $3(k + 1) < 3^{k + 1} - 2$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 3(k + 1) \\
-                    &=  3k + 3 \\
-                    &<  (3^k - 2) + 3 \quad (\text{since } 3k < 3^k - 2) \\
-                    &=  3^k + 1
-                \end{aligned}
-                $$
-                <p>We need to show that $3^k + 1 \le 3^{k + 1} - 2$.</p>
-                $$
-                \begin{aligned}
-                    & 3^{k + 1} - 2 \\
-                    &=  3 \cdot 3^k - 2 \\
-                    &=  3^k + 2 \cdot 3^k - 2
-                \end{aligned}
-                $$
-                <p>Since $k \ge 2$, $2 \cdot 3^k \ge 2 \cdot 3^2 = 18$.</p>
-                <p>So, $3^{k + 1} - 2 \ge 3^k + 18 - 2 = 3^k + 16 > 3^k + 1$.</p>
-                <p>$3(k + 1) < 3^k + 1 < 3^{k + 1} - 2$.</p>
-                <p>Thus, $3(k + 1) < 3^{k + 1} - 2$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 2$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 18</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle 3n < 3^n - 2$ for all natural numbers $\displaystyle n \ge 2$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 3n < 3^n - 2$.</p>
+        <p>(1) For $\displaystyle n = 2$,<br>
+        $\displaystyle \text{LHS} = 3(2) = 6$ and $\displaystyle \text{RHS} = 3^2 - 2 = 9 - 2 = 7$.<br>
+        Since $\displaystyle 6 < 7$, $\displaystyle P(2)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 2$, that is<br>
+        $\displaystyle 3k < 3^k - 2$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 3(k + 1) < 3^{k + 1} - 2$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 3(k + 1) \\
+            & = 3k + 3 \\
+            & < (3^k - 2) + 3 \quad (\text{since } 3k < 3^k - 2) \\
+            & = 3^k + 1
+            \end{aligned}$
+        </div>
+        <p>We need to show that $\displaystyle 3^k + 1 \le 3^{k + 1} - 2$.</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 3^{k + 1} - 2 \\
+            & = 3 \cdot 3^k - 2 \\
+            & = 3^k + 2 \cdot 3^k - 2 \\
+            & \ge 3^k + 18 - 2 \quad (\text{since } 2 \cdot 3^k \ge 18 \text{ for } k \ge 2) \\
+            & = 3^k + 16 \\
+            & > 3^k + 1
+            \end{aligned}$
+        </div>
+        <p>$\displaystyle 3(k + 1) < 3^k + 1 < 3^{k + 1} - 2$.</p>
+        <p>Thus, $\displaystyle 3(k + 1) < 3^{k + 1} - 2$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 2$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 19</h4>
-                <p>Use the mathematical induction principle to prove that $2n + 1 < 2^n$ for all natural numbers $n \ge 3$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $2n + 1 < 2^n$.</p>
-                <p>(1) For $n = 3$, $\text{LHS} = 2(3) + 1 = 7$ and $\text{RHS} = 2^3 = 8$.<br>
-                Since $7 < 8$, $P(3)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 3$, that is<br>
-                $2k + 1 < 2^k$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $2(k + 1) + 1 < 2^{k + 1}$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 2(k + 1) + 1 \\
-                    &=  (2k + 1) + 2 \\
-                    &<  2^k + 2 \quad (\text{since } 2k + 1 < 2^k)
-                \end{aligned}
-                $$
-                <p>Since $k \ge 3$, we have $2 < 2^3 = 8 \le 2^k$.</p>
-                <p>Therefore,</p>
-                $$
-                \begin{aligned}
-                    & 2^k + 2 \\
-                    &<  2^k + 2^k \\
-                    &=  2 \cdot 2^k \\
-                    &=  2^{k + 1}
-                \end{aligned}
-                $$
-                <p>Thus, $2(k + 1) + 1 < 2^{k + 1}$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 3$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 19</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle 2n + 1 < 2^n$ for all natural numbers $\displaystyle n \ge 3$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 2n + 1 < 2^n$.</p>
+        <p>(1) For $\displaystyle n = 3$,<br>
+        $\displaystyle \text{LHS} = 2(3) + 1 = 7$ and $\displaystyle \text{RHS} = 2^3 = 8$.<br>
+        Since $\displaystyle 7 < 8$, $\displaystyle P(3)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 3$, that is<br>
+        $\displaystyle 2k + 1 < 2^k$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2(k + 1) + 1 < 2^{k + 1}$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2(k + 1) + 1 \\
+            & = (2k + 1) + 2 \\
+            & < 2^k + 2 \quad (\text{since } 2k + 1 < 2^k)
+            \end{aligned}$
+        </div>
+        <p>Since $\displaystyle k \ge 3$, we have $\displaystyle 2 < 2^3 = 8 \le 2^k$.</p>
+        <p>Therefore,</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2^k + 2 \\
+            & < 2^k + 2^k \quad (\text{since } 2 < 2^k \text{ for } k \ge 3) \\
+            & = 2 \cdot 2^k \\
+            & = 2^{k + 1}
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle 2(k + 1) + 1 < 2^{k + 1}$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 3$.</p>
+    </div>
 
-            <div class="problem-box">
-                <h4>Problem 20</h4>
-                <p>Use the mathematical induction principle to prove that $4n < 2^n$ for all natural numbers $n \ge 5$.</p>
-                <div class="solution-title">Solution</div>
-                <p>Let $P(n)$ denote the statement $4n < 2^n$.</p>
-                <p>(1) For $n = 5$, $\text{LHS} = 4(5) = 20$ and $\text{RHS} = 2^5 = 32$.<br>
-                Since $20 < 32$, $P(5)$ is true.</p>
-                <p>(2) Assume $P(k)$ is true for some $k \in \mathbb{N}, k \ge 5$, that is<br>
-                $4k < 2^k$.<br>
-                We will show that $P(k + 1)$ is true, that is:<br>
-                $4(k + 1) < 2^{k + 1}$.</p>
-                <p>The proof is as follows:</p>
-                $$
-                \begin{aligned}
-                    & 4(k + 1) \\
-                    &=  4k + 4 \\
-                    &<  2^k + 4 \quad (\text{since } 4k < 2^k)
-                \end{aligned}
-                $$
-                <p>Since $k \ge 5$, we have $4 < 2^5 = 32 \le 2^k$.</p>
-                <p>Therefore,</p>
-                $$
-                \begin{aligned}
-                    & 2^k + 4 \\
-                    &<  2^k + 2^k \\
-                    &=  2 \cdot 2^k \\
-                    &=  2^{k + 1}
-                \end{aligned}
-                $$
-                <p>Thus, $4(k + 1) < 2^{k + 1}$.</p>
-                <p>Therefore, $P(k + 1)$ is true.</p>
-                <p>(3) Hence, by principle of mathematical induction, the statement $P(n)$ is true for all natural numbers $n \ge 5$.</p>
-            </div>
+    <div class="problem-box">
+        <h4>Problem 20</h4>
+        <p>Use the mathematical induction principle to prove that $\displaystyle 4n < 2^n$ for all natural numbers $\displaystyle n \ge 5$.</p>
+        <div class="solution-title">Solution</div>
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 4n < 2^n$.</p>
+        <p>(1) For $\displaystyle n = 5$,<br>
+        $\displaystyle \text{LHS} = 4(5) = 20$ and $\displaystyle \text{RHS} = 2^5 = 32$.<br>
+        Since $\displaystyle 20 < 32$, $\displaystyle P(5)$ is true.</p>
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 5$, that is<br>
+        $\displaystyle 4k < 2^k$.<br>
+        We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 4(k + 1) < 2^{k + 1}$.</p>
+        <p>The proof is as follows:</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 4(k + 1) \\
+            & = 4k + 4 \\
+            & < 2^k + 4 \quad (\text{since } 4k < 2^k)
+            \end{aligned}$
+        </div>
+        <p>Since $\displaystyle k \ge 5$, we have $\displaystyle 4 < 2^5 = 32 \le 2^k$.</p>
+        <p>Therefore,</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2^k + 4 \\
+            & < 2^k + 2^k \quad (\text{since } 4 < 2^k \text{ for } k \ge 5) \\
+            & = 2 \cdot 2^k \\
+            & = 2^{k + 1}
+            \end{aligned}$
+        </div>
+        <p>Thus, $\displaystyle 4(k + 1) < 2^{k + 1}$.</p>
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n \ge 5$.</p>
+    </div>
 
-            
+</div>
 
 </body>
 </html>

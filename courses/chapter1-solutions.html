@@ -3,933 +3,931 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Target Mathematics Solutions</title>
+    <title>Chapter 1: Solutions | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
     <script>
-        // Recursive Error လုံးဝမဖြစ်စေရန် Native \over ကိုသာ သုံးထားပါသည်
-        // Math Font များ Uniform ဖြစ်စေရန် matchFontHeight: false ကို ထည့်သွင်းထားပါသည်
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                macros: {
-                    frac: ["{\\displaystyle {#1 \\over #2}}", 2]
-                }
+                tags: 'ams'
             },
             chtml: {
-                displayAlign: "center",
+                displayAlign: "left", 
                 matchFontHeight: false, 
                 scale: 1
             },
-            startup: {
-                pageReady: () => {
-                    return MathJax.startup.defaultPageReady().then(() => {
-                        // Display Math များအတွက် Wrapper (Block Level Swipe)
-                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'math-display-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                        
-                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
-                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
-                            const wrapper = document.createElement('span');
-                            wrapper.className = 'math-inline-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                    });
-                }
+            svg: {
+                fontCache: 'global'
             }
         };
     </script>
-   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
-        body {
+        body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 15px;
-            background-color: #f4f7f6;
+            background-color: #f4f7f6; 
+            margin: 0; 
+            padding: 15px; 
+            line-height: 1.7;
             color: #333;
+            overflow-x: hidden; 
+            max-width: 100vw;
+            box-sizing: border-box;
         }
-        .container {
+        
+        .container { 
+            width: 100%;
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: #fff;
+            padding: 25px; 
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+        }
+        
+        h1 { color: #2c3e50; margin-bottom: 5px; text-align: center; font-family: 'Alice', serif; font-size: 1.8rem; }
+        .subtitle { text-align: center; color: #777; margin-bottom: 35px; font-size: 1.1em; }
+        
+        h3.section-title {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 15px; font-size: 1.1rem; }
+        
+        .problem-box { 
+            width: 100%;
+            border: 1px solid #e0e0e0; 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-bottom: 35px; 
+            background: #fafafa; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+            box-sizing: border-box; 
+            word-wrap: break-word;
+            overflow-x: hidden;
+        }
+        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 1.3rem; margin-bottom: 15px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .problem-box p { color: #333; font-size: 16px; line-height: 1.8; margin-bottom: 15px; word-wrap: break-word; }
+
+        /* ==================================================================== */
+        /* THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Left Align & Indent)          */
+        /* ==================================================================== */
+        .math-block {
+            display: block;
             width: 100%;
             max-width: 100%;
             background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            box-sizing: border-box;
-        }
-        h2 {
-            color: #d35400;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 8px;
-            font-size: 1.4rem;
-            margin-top: 30px;
-        }
-        h2:first-child {
-            margin-top: 0;
-        }
-        .question-text {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        .math-block {
-            background: #fafafa;
-            padding: 15px 15px 20px 15px;
+            padding: 15px;
+            padding-left: 40px; 
             border-left: 4px solid #2980b9;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            line-height: 1.8;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            text-align: left; 
         }
         .math-block::-webkit-scrollbar {
             height: 6px;
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none;
+            width: 0;
         }
         .math-block::-webkit-scrollbar-thumb {
             background-color: #cbd5e0;
             border-radius: 3px;
         }
-        .sub-question {
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #e74c3c;
+
+        mjx-container {
+            text-align: left !important;
+            max-width: 100% !important; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; 
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+        }
+        mjx-container::-webkit-scrollbar {
+            height: 6px; 
+        }
+        mjx-container::-webkit-scrollbar:vertical {
+            display: none; 
+            width: 0;
+        }
+        mjx-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+        /* ==================================================================== */
+
+        /* Equal Spacing Grid For Lists */
+        .flex-container { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 15px;
+        }
+        
+        .flex-item { 
+            width: 100%;
+            box-sizing: border-box; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            text-align: left; 
+        }
+        .flex-item::-webkit-scrollbar { display: none; }
+        .flex-item::-webkit-scrollbar:vertical { display: none; }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .problem-box { padding: 15px; margin-bottom: 25px; }
+            .flex-container { grid-template-columns: 1fr; gap: 15px; }
+            .math-block { padding-left: 15px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <h1>Chapter 1: Complex Numbers</h1>
+    <p class="subtitle">Exercise Solutions (1.1 to 1.5)</p>
 
-    <h2>Exercise 1.1</h2>
+    <h3 class="section-title">Exercise 1.1</h3>
     
-    <div class="question-text">1. Solve the following equations.</div>
+    <div class="problem-box">
+        <h4>Problem 1</h4>
+        <p>Solve the following equations.</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & x^2 - 6x + 10 = 0 \\
+            & x^2 - 6x = -10 \\
+            & x^2 - 6x + 9 = -1 \\
+            & (x - 3)^2 = -1 \\
+            & x - 3 = \pm i \\
+            & x = 3 \pm i
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & -2x^2 + 4x - 3 = 0 \\
+            & x^2 - 2x = -\frac{3}{2} \\
+            & x^2 - 2x + 1 = 1 - \frac{3}{2} \\
+            & (x - 1)^2 = -\frac{1}{2} \\
+            & x - 1 = \pm \frac{1}{\sqrt{2}}i \\
+            & x = 1 \pm \frac{\sqrt{2}}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 5x^2 - 2x + 1 = 0 \\
+            & x^2 - \frac{2}{5}x = -\frac{1}{5} \\
+            & x^2 - \frac{2}{5}x + \frac{1}{25} = \frac{1}{25} - \frac{5}{25} \\
+            & \left(x - \frac{1}{5}\right)^2 = -\frac{4}{25} \\
+            & x - \frac{1}{5} = \pm \frac{2}{5}i \\
+            & x = \frac{1}{5} \pm \frac{2}{5}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 3x^2 + 7x + 5 = 0 \\
+            & x^2 + \frac{7}{3}x = -\frac{5}{3} \\
+            & x^2 + \frac{7}{3}x + \frac{49}{36} = \frac{49}{36} - \frac{60}{36} \\
+            & \left(x + \frac{7}{6}\right)^2 = -\frac{11}{36} \\
+            & x + \frac{7}{6} = \pm \frac{\sqrt{11}}{6}i \\
+            & x = -\frac{7}{6} \pm \frac{\sqrt{11}}{6}i
+            \end{aligned}$
+        </div>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Solve the following equations and check your answers.</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & x^2 - 2x + 4 = 0 \\
+            & x^2 - 2x + 1 = -3 \\
+            & (x - 1)^2 = -3 \\
+            & x - 1 = \pm \sqrt{3}i \\
+            & x = 1 \pm \sqrt{3}i
+            \end{aligned}$
+        </div>
+        <p><strong>Check:</strong></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \text{For } x = 1 + \sqrt{3}i: \\
+            & (1+\sqrt{3}i)^2 - 2(1+\sqrt{3}i) + 4 = (1 + 2\sqrt{3}i - 3) - 2 - 2\sqrt{3}i + 4 \\
+            & \phantom{(1+\sqrt{3}i)^2 - 2(1+\sqrt{3}i) + 4} = -2 + 2\sqrt{3}i - 2 - 2\sqrt{3}i + 4 \\
+            & \phantom{(1+\sqrt{3}i)^2 - 2(1+\sqrt{3}i) + 4} = 0
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & x^2 - 4x + 5 = 0 \\
+            & x^2 - 4x + 4 = -1 \\
+            & (x - 2)^2 = -1 \\
+            & x - 2 = \pm i \\
+            & x = 2 \pm i
+            \end{aligned}$
+        </div>
+        <p><strong>Check:</strong></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \text{For } x = 2 + i: \\
+            & (2+i)^2 - 4(2+i) + 5 = (4 + 4i - 1) - 8 - 4i + 5 \\
+            & \phantom{(2+i)^2 - 4(2+i) + 5} = 3 + 4i - 8 - 4i + 5 \\
+            & \phantom{(2+i)^2 - 4(2+i) + 5} = 0
+            \end{aligned}$
+        </div>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 3</h4>
+        <p>Find the value of $\displaystyle i^n$ for every positive integer n.</p>
+        <div class="solution-title">Solution</div>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \text{Let } k \text{ be a positive integer or } 0. \\
+            & i^{4k} = 1 \\
+            & i^{4k+1} = i \\
+            & i^{4k+2} = -1 \\
+            & i^{4k+3} = -i
+            \end{aligned}$
+        </div>
+    </div>
+
+    <h3 class="section-title">Exercise 1.2</h3>
     
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& x^2 - 6x + 10 = 0 \\
-& x^2 - 6x = -10 \\
-& x^2 - 6x + 9 = -1 \\
-& (x - 3)^2 = -1 \\
-& x - 3 = \pm i \\
-& x = 3 \pm i
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 1</h4>
+        <p>Compute:</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (2, 0)(3, 5) + (3, -2)(0, 1) = 2(3+5i) + (3-2i)(i) \\
+            & \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} = 6 + 10i + 3i - 2i^2 \\
+            & \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} = 6 + 13i + 2 \\
+            & \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} = 8 + 13i \\
+            & \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} \equiv (8, 13)
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (2, -5)(-1, 0) + (1, 0)(5, 1) = (2-5i)(-1) + (1)(5+i) \\
+            & \phantom{(2, -5)(-1, 0) + (1, 0)(5, 1)} = -2 + 5i + 5 + i \\
+            & \phantom{(2, -5)(-1, 0) + (1, 0)(5, 1)} = 3 + 6i \\
+            & \phantom{(2, -5)(-1, 0) + (1, 0)(5, 1)} \equiv (3, 6)
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (-3, -2)(-2, -3) + (-2, -3)(-3, -2) = 2[(-3-2i)(-2-3i)] \\
+            & \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} = 2(6 + 9i + 4i + 6i^2) \\
+            & \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} = 2(6 + 13i - 6) \\
+            & \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} = 26i \\
+            & \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} \equiv (0, 26)
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (1, 0)(0, 1) + (0, 1)(1, 0) = (1)(i) + (i)(1) \\
+            & \phantom{(1, 0)(0, 1) + (0, 1)(1, 0)} = 2i \\
+            & \phantom{(1, 0)(0, 1) + (0, 1)(1, 0)} \equiv (0, 2)
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& -2x^2 + 4x - 3 = 0 \\
-& x^2 - 2x = -\frac{3}{2} \\
-& x^2 - 2x + 1 = 1 - \frac{3}{2} \\
-& (x - 1)^2 = -\frac{1}{2} \\
-& x - 1 = \pm \frac{1}{\sqrt{2}}i \\
-& x = 1 \pm \frac{\sqrt{2}}{2}i
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Compute:</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (3+2i)(3-2i) + (-5+7i)(-1-i) = (9 - 4i^2) + (5 + 5i - 7i - 7i^2) \\
+            & \phantom{(3+2i)(3-2i) + (-5+7i)(-1-i)} = (9 + 4) + (5 - 2i + 7) \\
+            & \phantom{(3+2i)(3-2i) + (-5+7i)(-1-i)} = 13 + 12 - 2i \\
+            & \phantom{(3+2i)(3-2i) + (-5+7i)(-1-i)} = 25 - 2i
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (-1+i)(1-i) + (2+3i) = (-1 + i + i - i^2) + 2 + 3i \\
+            & \phantom{(-1+i)(1-i) + (2+3i)} = (-1 + 2i + 1) + 2 + 3i \\
+            & \phantom{(-1+i)(1-i) + (2+3i)} = 2i + 2 + 3i \\
+            & \phantom{(-1+i)(1-i) + (2+3i)} = 2 + 5i
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (1+i)(1-i) + (-2+i)(-2+i) = (1 - i^2) + (4 - 2i - 2i + i^2) \\
+            & \phantom{(1+i)(1-i) + (-2+i)(-2+i)} = 2 + (4 - 4i - 1) \\
+            & \phantom{(1+i)(1-i) + (-2+i)(-2+i)} = 2 + 3 - 4i \\
+            & \phantom{(1+i)(1-i) + (-2+i)(-2+i)} = 5 - 4i
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & (3+2i) + (7-i)(-3+3i) = 3+2i + (-21 + 21i + 3i - 3i^2) \\
+            & \phantom{(3+2i) + (7-i)(-3+3i)} = 3+2i - 21 + 24i + 3 \\
+            & \phantom{(3+2i) + (7-i)(-3+3i)} = -15 + 26i
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& 5x^2 - 2x + 1 = 0 \\
-& x^2 - \frac{2}{5}x = -\frac{1}{5} \\
-& x^2 - \frac{2}{5}x + \frac{1}{25} = \frac{1}{25} - \frac{5}{25} \\
-& \left(x - \frac{1}{5}\right)^2 = -\frac{4}{25} \\
-& x - \frac{1}{5} = \pm \frac{2}{5}i \\
-& x = \frac{1}{5} \pm \frac{2}{5}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& 3x^2 + 7x + 5 = 0 \\
-& x^2 + \frac{7}{3}x = -\frac{5}{3} \\
-& x^2 + \frac{7}{3}x + \frac{49}{36} = \frac{49}{36} - \frac{60}{36} \\
-& \left(x + \frac{7}{6}\right)^2 = -\frac{11}{36} \\
-& x + \frac{7}{6} = \pm \frac{\sqrt{11}}{6}i \\
-& x = -\frac{7}{6} \pm \frac{\sqrt{11}}{6}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">2. Solve the following equations and check your answers.</div>
+    <h3 class="section-title">Exercise 1.3</h3>
     
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& x^2 - 2x + 4 = 0 \\
-& x^2 - 2x + 1 = -3 \\
-& (x - 1)^2 = -3 \\
-& x - 1 = \pm \sqrt{3}i \\
-& x = 1 \pm \sqrt{3}i
-\end{aligned}
-$$
-        <strong>Check:</strong>
-$$ \displaystyle
-\begin{aligned}
-& \text{For } x = 1 + \sqrt{3}i: \\
-& (1+\sqrt{3}i)^2 - 2(1+\sqrt{3}i) + 4 = (1 + 2\sqrt{3}i - 3) - 2 - 2\sqrt{3}i + 4 \\
-& \phantom{(1+\sqrt{3}i)^2 - 2(1+\sqrt{3}i) + 4} = -2 + 2\sqrt{3}i - 2 - 2\sqrt{3}i + 4 \\
-& \phantom{(1+\sqrt{3}i)^2 - 2(1+\sqrt{3}i) + 4} = 0
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 1</h4>
+        <p>Let $\displaystyle z_1 = -2+3i, z_2 = 5+2i$. Compute:</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b> $\displaystyle z_1^2 - 2z_1 + 1$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z_1^2 - 2z_1 + 1 = (-2+3i)^2 - 2(-2+3i) + 1 \\
+            & \phantom{z_1^2 - 2z_1 + 1} = (4 - 12i - 9) + 4 - 6i + 1 \\
+            & \phantom{z_1^2 - 2z_1 + 1} = -5 - 12i + 5 - 6i \\
+            & \phantom{z_1^2 - 2z_1 + 1} = -18i
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b> $\displaystyle 3z_2^2 + 2z_2 - 1$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 3z_2^2 + 2z_2 - 1 = 3(5+2i)^2 + 2(5+2i) - 1 \\
+            & \phantom{3z_2^2 + 2z_2 - 1} = 3(25 + 20i - 4) + 10 + 4i - 1 \\
+            & \phantom{3z_2^2 + 2z_2 - 1} = 3(21 + 20i) + 9 + 4i \\
+            & \phantom{3z_2^2 + 2z_2 - 1} = 63 + 60i + 9 + 4i \\
+            & \phantom{3z_2^2 + 2z_2 - 1} = 72 + 64i
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b> $\displaystyle z_1\overline{z_2} + z_2\overline{z_1}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z_1\overline{z_2} + z_2\overline{z_1} = (-2+3i)(5-2i) + (5+2i)(-2-3i) \\
+            & \phantom{z_1\overline{z_2} + z_2\overline{z_1}} = (-10 + 4i + 15i + 6) + (-10 - 15i - 4i + 6) \\
+            & \phantom{z_1\overline{z_2} + z_2\overline{z_1}} = (-4 + 19i) + (-4 - 19i) \\
+            & \phantom{z_1\overline{z_2} + z_2\overline{z_1}} = -8
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b> $\displaystyle \frac{1}{z_1}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{1}{z_1} = \frac{1}{-2+3i} \\
+            & \phantom{\frac{1}{z_1}} = \frac{-2-3i}{(-2+3i)(-2-3i)} \\
+            & \phantom{\frac{1}{z_1}} = \frac{-2-3i}{4+9} \\
+            & \phantom{\frac{1}{z_1}} = -\frac{2}{13} - \frac{3}{13}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(e)</b> $\displaystyle \frac{1}{z_2}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{1}{z_2} = \frac{1}{5+2i} \\
+            & \phantom{\frac{1}{z_2}} = \frac{5-2i}{(5+2i)(5-2i)} \\
+            & \phantom{\frac{1}{z_2}} = \frac{5-2i}{25+4} \\
+            & \phantom{\frac{1}{z_2}} = \frac{5}{29} - \frac{2}{29}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(f)</b> $\displaystyle \frac{\overline{z_1}}{z_2}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{\overline{z_1}}{z_2} = \frac{-2-3i}{5+2i} \\
+            & \phantom{\frac{\overline{z_1}}{z_2}} = \frac{(-2-3i)(5-2i)}{29} \\
+            & \phantom{\frac{\overline{z_1}}{z_2}} = \frac{-10 + 4i - 15i - 6}{29} \\
+            & \phantom{\frac{\overline{z_1}}{z_2}} = -\frac{16}{29} - \frac{11}{29}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(g)</b> $\displaystyle \frac{z_1}{z_2}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{z_1}{z_2} = \frac{-2+3i}{5+2i} \\
+            & \phantom{\frac{z_1}{z_2}} = \frac{(-2+3i)(5-2i)}{29} \\
+            & \phantom{\frac{z_1}{z_2}} = \frac{-10 + 4i + 15i + 6}{29} \\
+            & \phantom{\frac{z_1}{z_2}} = -\frac{4}{29} + \frac{19}{29}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(h)</b> $\displaystyle \frac{1}{z_1z_2}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{1}{z_1z_2} = \frac{1}{(-2+3i)(5+2i)} \\
+            & \phantom{\frac{1}{z_1z_2}} = \frac{1}{-10 - 4i + 15i - 6} \\
+            & \phantom{\frac{1}{z_1z_2}} = \frac{1}{-16 + 11i} \\
+            & \phantom{\frac{1}{z_1z_2}} = \frac{-16 - 11i}{(-16)^2 + 11^2} \\
+            & \phantom{\frac{1}{z_1z_2}} = -\frac{16}{377} - \frac{11}{377}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(i)</b> $\displaystyle \frac{z_2}{z_1}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{z_2}{z_1} = \frac{5+2i}{-2+3i} \\
+            & \phantom{\frac{z_2}{z_1}} = \frac{(5+2i)(-2-3i)}{13} \\
+            & \phantom{\frac{z_2}{z_1}} = \frac{-10 - 15i - 4i + 6}{13} \\
+            & \phantom{\frac{z_2}{z_1}} = -\frac{4}{13} - \frac{19}{13}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(k)</b> $\displaystyle \frac{\overline{z_1}z_2}{z_1\overline{z_2}}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{\overline{z_1}z_2}{z_1\overline{z_2}} = \frac{(-2-3i)(5+2i)}{(-2+3i)(5-2i)} \\
+            & \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{-10 - 4i - 15i + 6}{-10 + 4i + 15i + 6} \\
+            & \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{-4 - 19i}{-4 + 19i} \\
+            & \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{(-4 - 19i)^2}{(-4)^2 + 19^2} \\
+            & \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{16 + 152i + 361i^2}{16 + 361} \\
+            & \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{16 + 152i - 361}{377} \\
+            & \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = -\frac{345}{377} + \frac{152}{377}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(l)</b> $\displaystyle \frac{z_2}{z_1} + \frac{z_1}{z_2}$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{z_2}{z_1} + \frac{z_1}{z_2} = \left(-\frac{4}{13} - \frac{19}{13}i\right) + \left(-\frac{4}{29} + \frac{19}{29}i\right) \\
+            & \phantom{\frac{z_2}{z_1} + \frac{z_1}{z_2}} = \frac{29(-4 - 19i) + 13(-4 + 19i)}{377} \\
+            & \phantom{\frac{z_2}{z_1} + \frac{z_1}{z_2}} = \frac{-116 - 551i - 52 + 247i}{377} \\
+            & \phantom{\frac{z_2}{z_1} + \frac{z_1}{z_2}} = -\frac{168}{377} - \frac{304}{377}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(m)</b> $\displaystyle \left(\frac{z_2}{z_1}\right)^2$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \left(\frac{z_2}{z_1}\right)^2 = \left(\frac{-4-19i}{13}\right)^2 \\
+            & \phantom{\left(\frac{z_2}{z_1}\right)^2} = \frac{16 + 152i - 361}{169} \\
+            & \phantom{\left(\frac{z_2}{z_1}\right)^2} = -\frac{345}{169} + \frac{152}{169}i
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& x^2 - 4x + 5 = 0 \\
-& x^2 - 4x + 4 = -1 \\
-& (x - 2)^2 = -1 \\
-& x - 2 = \pm i \\
-& x = 2 \pm i
-\end{aligned}
-$$
-        <strong>Check:</strong>
-$$ \displaystyle
-\begin{aligned}
-& \text{For } x = 2 + i: \\
-& (2+i)^2 - 4(2+i) + 5 = (4 + 4i - 1) - 8 - 4i + 5 \\
-& \phantom{(2+i)^2 - 4(2+i) + 5} = 3 + 4i - 8 - 4i + 5 \\
-& \phantom{(2+i)^2 - 4(2+i) + 5} = 0
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Let $\displaystyle z_1 = 3-2i, z_2 = 1+4i$. Show that:</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \text{LHS} = \overline{(3-2i + 1+4i)} \\
+            & \phantom{\text{LHS}} = \overline{4+2i} \\
+            & \phantom{\text{LHS}} = 4-2i \\
+            & \text{RHS} = (3+2i) + (1-4i) \\
+            & \phantom{\text{RHS}} = 4-2i \\
+            & \therefore \text{LHS} = \text{RHS}
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \text{LHS} = \overline{(3-2i)(1+4i)} \\
+            & \phantom{\text{LHS}}= \overline{3 + 12i - 2i + 8} \\
+            & \phantom{\text{LHS}}= \overline{11+10i} \\
+            & \phantom{\text{LHS}}= 11-10i \\
+            & \text{RHS} = (3+2i)(1-4i) \\
+            & \phantom{\text{RHS}}= 3 - 12i + 2i + 8 \\
+            & \phantom{\text{RHS}}= 11-10i \\
+            & \therefore \text{LHS} = \text{RHS}
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \text{LHS}= \overline{\left(\frac{3-2i}{1+4i}\right)} \\
+            & \phantom{\text{LHS}}= \overline{\left(\frac{(3-2i)(1-4i)}{17}\right)} \\
+            & \phantom{\text{LHS}}= \overline{\left(\frac{3 - 12i - 2i - 8}{17}\right)} \\
+            & \phantom{\text{LHS}}= \overline{\left(\frac{-5-14i}{17}\right)} \\
+            & \phantom{\text{LHS}}= -\frac{5}{17} + \frac{14}{17}i \\
+            & \text{RHS} = \frac{3+2i}{1-4i} \\
+            & \phantom{\text{RHS}}= \frac{(3+2i)(1+4i)}{17} \\
+            & \phantom{\text{RHS}}= \frac{3 + 12i + 2i - 8}{17} \\
+            & \phantom{\text{RHS}}= -\frac{5}{17} + \frac{14}{17}i \\
+            & \therefore \text{LHS} = \text{RHS}
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="question-text">3. Find the value of $i^n$ for every positive integer n.</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \text{Let } k \text{ be a positive integer or } 0. \\
-& i^{4k} = 1 \\
-& i^{4k+1} = i \\
-& i^{4k+2} = -1 \\
-& i^{4k+3} = -i
-\end{aligned}
-$$
-    </div>
-
-    <h2>Exercise 1.2</h2>
+    <h3 class="section-title">Exercise 1.4</h3>
     
-    <div class="question-text">1. Compute:</div>
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (2, 0)(3, 5) + (3, -2)(0, 1) = 2(3+5i) + (3-2i)(i) \\
-& \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} = 6 + 10i + 3i - 2i^2 \\
-& \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} = 6 + 13i + 2 \\
-& \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} = 8 + 13i \\
-& \phantom{(2, 0)(3, 5) + (3, -2)(0, 1)} \equiv (8, 13)
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 1</h4>
+        <p>Find the trigonometric form with $\displaystyle -\pi < \theta \le \pi$.</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = 1 - \sqrt{3}i \\
+            & r = \sqrt{1^2 + (-\sqrt{3})^2} = 2 \\
+            & \tan\theta = -\sqrt{3} \quad (\text{4th Quadrant}) \implies \theta = -\frac{\pi}{3} \\
+            & z = 2\left(\cos\left(-\frac{\pi}{3}\right) + i\sin\left(-\frac{\pi}{3}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = -\sqrt{2} + \sqrt{2}i \\
+            & r = \sqrt{2 + 2} = 2 \\
+            & \tan\theta = -1 \quad (\text{2nd Quadrant}) \implies \theta = \frac{3\pi}{4} \\
+            & z = 2\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = -2 - 2i \\
+            & r = \sqrt{4 + 4} = 2\sqrt{2} \\
+            & \tan\theta = 1 \quad (\text{3rd Quadrant}) \implies \theta = -\frac{3\pi}{4} \\
+            & z = 2\sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i\sin\left(-\frac{3\pi}{4}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \sqrt{3} - i \\
+            & r = \sqrt{3 + 1} = 2 \\
+            & \tan\theta = -\frac{1}{\sqrt{3}} \quad (\text{4th Quadrant}) \implies \theta = -\frac{\pi}{6} \\
+            & z = 2\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(e)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = i \\
+            & r = 1, \quad \theta = \frac{\pi}{2} \\
+            & z = 1\left(\cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(f)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = -3i \\
+            & r = 3, \quad \theta = -\frac{\pi}{2} \\
+            & z = 3\left(\cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right)\right)
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (2, -5)(-1, 0) + (1, 0)(5, 1) = (2-5i)(-1) + (1)(5+i) \\
-& \phantom{(2, -5)(-1, 0) + (1, 0)(5, 1)} = -2 + 5i + 5 + i \\
-& \phantom{(2, -5)(-1, 0) + (1, 0)(5, 1)} = 3 + 6i \\
-& \phantom{(2, -5)(-1, 0) + (1, 0)(5, 1)} \equiv (3, 6)
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Given that $\displaystyle z_1 = 2 - 2\sqrt{3}i, z_2 = -1 - i$, find the following complex numbers by using trigonometric forms. Check your answer by direct calculation.</p>
+        <div class="solution-title">Solution</div>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z_1 = 4\left(\cos\left(-\frac{\pi}{3}\right) + i\sin\left(-\frac{\pi}{3}\right)\right), \quad z_2 = \sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i\sin\left(-\frac{3\pi}{4}\right)\right)
+            \end{aligned}$
+        </div>
+        
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z_1 z_2 = (4)(\sqrt{2})\left(\cos\left(-\frac{\pi}{3} - \frac{3\pi}{4}\right) + i\sin\left(-\frac{\pi}{3} - \frac{3\pi}{4}\right)\right) \\
+            & \phantom{z_1 z_2} = 4\sqrt{2}\left(\cos\left(-\frac{13\pi}{12}\right) + i\sin\left(-\frac{13\pi}{12}\right)\right) \\
+            & \text{Adding } 2\pi \text{ to find the principal argument: } -\frac{13\pi}{12} + 2\pi = \frac{11\pi}{12} \\
+            & \phantom{z_1 z_2} = 4\sqrt{2}\left(\cos\left(\frac{11\pi}{12}\right) + i\sin\left(\frac{11\pi}{12}\right)\right) \\
+            & \text{Direct Check:} \\
+            & z_1 z_2 = (2 - 2\sqrt{3}i)(-1 - i) \\
+            & \phantom{z_1 z_2} = -2 - 2i + 2\sqrt{3}i - 2\sqrt{3} \\
+            & \phantom{z_1 z_2} = (-2 - 2\sqrt{3}) + (2\sqrt{3} - 2)i
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z_1^{-1} = \frac{1}{4}\left(\cos\left(\frac{\pi}{3}\right) + i\sin\left(\frac{\pi}{3}\right)\right) \\
+            & \text{Direct Check:} \\
+            & \frac{1}{2 - 2\sqrt{3}i} = \frac{2 + 2\sqrt{3}i}{4 + 12} = \frac{2 + 2\sqrt{3}i}{16} = \frac{1}{8} + \frac{\sqrt{3}}{8}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z_2^{-1} = \frac{1}{\sqrt{2}}\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) \\
+            & \text{Direct Check:} \\
+            & \frac{1}{-1 - i} = \frac{-1 + i}{1 + 1} = -\frac{1}{2} + \frac{1}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{z_1}{z_2} = \frac{4}{\sqrt{2}}\left(\cos\left(-\frac{\pi}{3} - \left(-\frac{3\pi}{4}\right)\right) + i\sin\left(-\frac{\pi}{3} - \left(-\frac{3\pi}{4}\right)\right)\right) \\
+            & \phantom{\frac{z_1}{z_2}} = 2\sqrt{2}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right) \\
+            & \text{Direct Check:} \\
+            & \frac{2 - 2\sqrt{3}i}{-1 - i} = \frac{(2 - 2\sqrt{3}i)(-1 + i)}{(-1 - i)(-1 + i)} \\
+            & \phantom{\frac{2 - 2\sqrt{3}i}{-1 - i}} = \frac{-2 + 2i + 2\sqrt{3}i + 2\sqrt{3}}{2} \\
+            & \phantom{\frac{2 - 2\sqrt{3}i}{-1 - i}} = (\sqrt{3} - 1) + (\sqrt{3} + 1)i \\
+            & \text{Verification of direct result: } z = (\sqrt{3} - 1) + (\sqrt{3} + 1)i \\
+            & \text{Magnitude: } |z| = \sqrt{(\sqrt{3}-1)^2 + (\sqrt{3}+1)^2} \\
+            & \phantom{\text{Magnitude: } |z|} = \sqrt{(3 - 2\sqrt{3} + 1) + (3 + 2\sqrt{3} + 1)} = \sqrt{8} = 2\sqrt{2} \\
+            & \text{Angle (1st Quadrant): } \theta = \tan^{-1}\left(\frac{\sqrt{3}+1}{\sqrt{3}-1}\right) = \frac{5\pi}{12}
+            \end{aligned}$
+        </div>
+
+        <p><b>(e)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{z_2}{z_1} = \frac{\sqrt{2}}{4}\left(\cos\left(-\frac{3\pi}{4} - \left(-\frac{\pi}{3}\right)\right) + i\sin\left(-\frac{3\pi}{4} - \left(-\frac{\pi}{3}\right)\right)\right) \\
+            & \phantom{\frac{z_2}{z_1}} = \frac{\sqrt{2}}{4}\left(\cos\left(-\frac{5\pi}{12}\right) + i\sin\left(-\frac{5\pi}{12}\right)\right) \\
+            & \text{Direct Check:} \\
+            & \frac{-1 - i}{2 - 2\sqrt{3}i} = \frac{(-1 - i)(2 + 2\sqrt{3}i)}{16} \\
+            & \phantom{\frac{-1 - i}{2 - 2\sqrt{3}i}} = \frac{-2 - 2\sqrt{3}i - 2i + 2\sqrt{3}}{16} \\
+            & \phantom{\frac{-1 - i}{2 - 2\sqrt{3}i}} = \frac{\sqrt{3} - 1}{8} - \frac{\sqrt{3} + 1}{8}i
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (-3, -2)(-2, -3) + (-2, -3)(-3, -2) = 2[(-3-2i)(-2-3i)] \\
-& \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} = 2(6 + 9i + 4i + 6i^2) \\
-& \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} = 2(6 + 13i - 6) \\
-& \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} = 26i \\
-& \phantom{(-3, -2)(-2, -3) + (-2, -3)(-3, -2)} \equiv (0, 26)
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 3</h4>
+        <p>Given that $\displaystyle z = -2\sqrt{3} - 2i$, find (a) $\displaystyle z^5$ (b) $\displaystyle z^{-5}$.</p>
+        <div class="solution-title">Solution</div>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = 4\left(\cos\left(-\frac{5\pi}{6}\right) + i\sin\left(-\frac{5\pi}{6}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(a)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z^5 = 4^5\left(\cos\left(5 \times -\frac{5\pi}{6}\right) + i\sin\left(5 \times -\frac{5\pi}{6}\right)\right) \\
+            & \phantom{z^5} = 1024\left(\cos\left(-\frac{25\pi}{6}\right) + i\sin\left(-\frac{25\pi}{6}\right)\right) \\
+            & \text{Adding } 4\pi \text{ to find the principal argument: } -\frac{25\pi}{6} + \frac{24\pi}{6} = -\frac{\pi}{6} \\
+            & \phantom{z^5} = 1024\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right) \\
+            & \phantom{z^5} = 1024\left(\frac{\sqrt{3}}{2} - \frac{1}{2}i\right) \\
+            & \phantom{z^5} = 512\sqrt{3} - 512i
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b></p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z^{-5} = 4^{-5}\left(\cos\left(-5 \times -\frac{5\pi}{6}\right) + i\sin\left(-5 \times -\frac{5\pi}{6}\right)\right) \\
+            & \phantom{z^{-5}} = \frac{1}{1024}\left(\cos\left(\frac{25\pi}{6}\right) + i\sin\left(\frac{25\pi}{6}\right)\right) \\
+            & \text{Subtracting } 4\pi \text{ to find the principal argument: } \frac{25\pi}{6} - \frac{24\pi}{6} = \frac{\pi}{6} \\
+            & \phantom{z^{-5}} = \frac{1}{1024}\left(\cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right)\right) \\
+            & \phantom{z^{-5}} = \frac{1}{1024}\left(\frac{\sqrt{3}}{2} + \frac{1}{2}i\right) \\
+            & \phantom{z^{-5}} = \frac{\sqrt{3}}{2048} + \frac{1}{2048}i
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(d)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (1, 0)(0, 1) + (0, 1)(1, 0) = (1)(i) + (i)(1) \\
-& \phantom{(1, 0)(0, 1) + (0, 1)(1, 0)} = 2i \\
-& \phantom{(1, 0)(0, 1) + (0, 1)(1, 0)} \equiv (0, 2)
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">2. Compute:</div>
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (3+2i)(3-2i) + (-5+7i)(-1-i) = (9 - 4i^2) + (5 + 5i - 7i - 7i^2) \\
-& \phantom{(3+2i)(3-2i) + (-5+7i)(-1-i)} = (9 + 4) + (5 - 2i + 7) \\
-& \phantom{(3+2i)(3-2i) + (-5+7i)(-1-i)} = 13 + 12 - 2i \\
-& \phantom{(3+2i)(3-2i) + (-5+7i)(-1-i)} = 25 - 2i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (-1+i)(1-i) + (2+3i) = (-1 + i + i - i^2) + 2 + 3i \\
-& \phantom{(-1+i)(1-i) + (2+3i)} = (-1 + 2i + 1) + 2 + 3i \\
-& \phantom{(-1+i)(1-i) + (2+3i)} = 2i + 2 + 3i \\
-& \phantom{(-1+i)(1-i) + (2+3i)} = 2 + 5i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (1+i)(1-i) + (-2+i)(-2+i) = (1 - i^2) + (4 - 2i - 2i + i^2) \\
-& \phantom{(1+i)(1-i) + (-2+i)(-2+i)} = 2 + (4 - 4i - 1) \\
-& \phantom{(1+i)(1-i) + (-2+i)(-2+i)} = 2 + 3 - 4i \\
-& \phantom{(1+i)(1-i) + (-2+i)(-2+i)} = 5 - 4i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& (3+2i) + (7-i)(-3+3i) = 3+2i + (-21 + 21i + 3i - 3i^2) \\
-& \phantom{(3+2i) + (7-i)(-3+3i)} = 3+2i - 21 + 24i + 3 \\
-& \phantom{(3+2i) + (7-i)(-3+3i)} = -15 + 26i
-\end{aligned}
-$$
-    </div>
-
-    <h2>Exercise 1.3</h2>
-    <div class="question-text">1. Let $z_1 = -2+3i, z_2 = 5+2i$. Compute:</div>
+    <h3 class="section-title">Exercise 1.5</h3>
     
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z_1^2 - 2z_1 + 1 = (-2+3i)^2 - 2(-2+3i) + 1 \\
-& \phantom{z_1^2 - 2z_1 + 1} = (4 - 12i - 9) + 4 - 6i + 1 \\
-& \phantom{z_1^2 - 2z_1 + 1} = -5 - 12i + 5 - 6i \\
-& \phantom{z_1^2 - 2z_1 + 1} = -18i
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 1</h4>
+        <p>Find the square roots of the following:</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b> $\displaystyle 1 + \sqrt{3}i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = 2\left(\cos\left(\frac{\pi}{3}\right) + i\sin\left(\frac{\pi}{3}\right)\right) \\
+            & \text{Note: } r^{\frac{1}{2}} = \sqrt{2} \\
+            & w_k = \sqrt{2}\left(\cos\left(\frac{\frac{\pi}{3} + 2k\pi}{2}\right) + i\sin\left(\frac{\frac{\pi}{3} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
+            & w_0 = \sqrt{2}\left(\cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right)\right) = \frac{\sqrt{6}}{2} + \frac{\sqrt{2}}{2}i \\
+            & w_1 = \sqrt{2}\left(\cos\left(\frac{7\pi}{6}\right) + i\sin\left(\frac{7\pi}{6}\right)\right) = -\frac{\sqrt{6}}{2} - \frac{\sqrt{2}}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b> $\displaystyle i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) \\
+            & w_k = \cos\left(\frac{\frac{\pi}{2} + 2k\pi}{2}\right) + i\sin\left(\frac{\frac{\pi}{2} + 2k\pi}{2}\right), \quad k = 0, 1 \\
+            & w_0 = \cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i \\
+            & w_1 = \cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right) = -\frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b> $\displaystyle -\sqrt{3} + i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = 2\left(\cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right)\right) \\
+            & w_k = \sqrt{2}\left(\cos\left(\frac{\frac{5\pi}{6} + 2k\pi}{2}\right) + i\sin\left(\frac{\frac{5\pi}{6} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
+            & w_0 = \sqrt{2}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right) \\
+            & w_1 = \sqrt{2}\left(\cos\left(\frac{17\pi}{12}\right) + i\sin\left(\frac{17\pi}{12}\right)\right) = -\sqrt{2}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b> $\displaystyle -1 - \sqrt{3}i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = 2\left(\cos\left(-\frac{2\pi}{3}\right) + i\sin\left(-\frac{2\pi}{3}\right)\right) \\
+            & w_k = \sqrt{2}\left(\cos\left(\frac{-\frac{2\pi}{3} + 2k\pi}{2}\right) + i\sin\left(\frac{-\frac{2\pi}{3} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
+            & w_0 = \sqrt{2}\left(\cos\left(-\frac{\pi}{3}\right) + i\sin\left(-\frac{\pi}{3}\right)\right) = \frac{\sqrt{2}}{2} - \frac{\sqrt{6}}{2}i \\
+            & w_1 = \sqrt{2}\left(\cos\left(\frac{2\pi}{3}\right) + i\sin\left(\frac{2\pi}{3}\right)\right) = -\frac{\sqrt{2}}{2} + \frac{\sqrt{6}}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(e)</b> $\displaystyle -i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right) \\
+            & w_k = \cos\left(\frac{-\frac{\pi}{2} + 2k\pi}{2}\right) + i\sin\left(\frac{-\frac{\pi}{2} + 2k\pi}{2}\right), \quad k = 0, 1 \\
+            & w_0 = \cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i \\
+            & w_1 = \cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right) = -\frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(f)</b> $\displaystyle \sqrt{3} - i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = 2\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right) \\
+            & w_k = \sqrt{2}\left(\cos\left(\frac{-\frac{\pi}{6} + 2k\pi}{2}\right) + i\sin\left(\frac{-\frac{\pi}{6} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
+            & w_0 = \sqrt{2}\left(\cos\left(-\frac{\pi}{12}\right) + i\sin\left(-\frac{\pi}{12}\right)\right) \\
+            & w_1 = \sqrt{2}\left(\cos\left(\frac{11\pi}{12}\right) + i\sin\left(\frac{11\pi}{12}\right)\right) = -\sqrt{2}\left(\cos\left(-\frac{\pi}{12}\right) + i\sin\left(-\frac{\pi}{12}\right)\right)
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& 3z_2^2 + 2z_2 - 1 = 3(5+2i)^2 + 2(5+2i) - 1 \\
-& \phantom{3z_2^2 + 2z_2 - 1} = 3(25 + 20i - 4) + 10 + 4i - 1 \\
-& \phantom{3z_2^2 + 2z_2 - 1} = 3(21 + 20i) + 9 + 4i \\
-& \phantom{3z_2^2 + 2z_2 - 1} = 63 + 60i + 9 + 4i \\
-& \phantom{3z_2^2 + 2z_2 - 1} = 72 + 64i
-\end{aligned}
-$$
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Find the cube roots of the following complex numbers.</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b> $\displaystyle 1 + i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \sqrt{2}\left(\cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)\right) \\
+            & \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
+            & w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{\frac{\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{\frac{\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
+            & w_0 = 2^{\frac{1}{6}}\left(\cos\left(\frac{\pi}{12}\right) + i\sin\left(\frac{\pi}{12}\right)\right) \\
+            & w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) \\
+            & w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{17\pi}{12}\right) + i\sin\left(\frac{17\pi}{12}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(b)</b> $\displaystyle i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) \\
+            & w_k = \cos\left(\frac{\frac{\pi}{2} + 2k\pi}{3}\right) + i\sin\left(\frac{\frac{\pi}{2} + 2k\pi}{3}\right), \quad k = 0, 1, 2 \\
+            & w_0 = \cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right) = \frac{\sqrt{3}}{2} + \frac{1}{2}i \\
+            & w_1 = \cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right) = -\frac{\sqrt{3}}{2} + \frac{1}{2}i \\
+            & w_2 = \cos\left(\frac{3\pi}{2}\right) + i\sin\left(\frac{3\pi}{2}\right) = -i
+            \end{aligned}$
+        </div>
+
+        <p><b>(c)</b> $\displaystyle -1 + i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \sqrt{2}\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) \\
+            & \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
+            & w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{\frac{3\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{\frac{3\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
+            & w_0 = 2^{\frac{1}{6}}\left(\cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)\right) \\
+            & w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{11\pi}{12}\right) + i\sin\left(\frac{11\pi}{12}\right)\right) \\
+            & w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{19\pi}{12}\right) + i\sin\left(\frac{19\pi}{12}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(d)</b> $\displaystyle -1 - i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i\sin\left(-\frac{3\pi}{4}\right)\right) \\
+            & \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
+            & w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{-\frac{3\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{-\frac{3\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
+            & w_0 = 2^{\frac{1}{6}}\left(\cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right)\right) \\
+            & w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right) \\
+            & w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{13\pi}{12}\right) + i\sin\left(\frac{13\pi}{12}\right)\right)
+            \end{aligned}$
+        </div>
+
+        <p><b>(e)</b> $\displaystyle -i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right) \\
+            & w_k = \cos\left(\frac{-\frac{\pi}{2} + 2k\pi}{3}\right) + i\sin\left(\frac{-\frac{\pi}{2} + 2k\pi}{3}\right), \quad k = 0, 1, 2 \\
+            & w_0 = \cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right) = \frac{\sqrt{3}}{2} - \frac{1}{2}i \\
+            & w_1 = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) = i \\
+            & w_2 = \cos\left(\frac{7\pi}{6}\right) + i\sin\left(\frac{7\pi}{6}\right) = -\frac{\sqrt{3}}{2} - \frac{1}{2}i
+            \end{aligned}$
+        </div>
+
+        <p><b>(f)</b> $\displaystyle 1 - i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z = \sqrt{2}\left(\cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right)\right) \\
+            & \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
+            & w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{-\frac{\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{-\frac{\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
+            & w_0 = 2^{\frac{1}{6}}\left(\cos\left(-\frac{\pi}{12}\right) + i\sin\left(-\frac{\pi}{12}\right)\right) \\
+            & w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{7\pi}{12}\right) + i\sin\left(\frac{7\pi}{12}\right)\right) \\
+            & w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right)\right)
+            \end{aligned}$
+        </div>
     </div>
 
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z_1\overline{z_2} + z_2\overline{z_1} = (-2+3i)(5-2i) + (5+2i)(-2-3i) \\
-& \phantom{z_1\overline{z_2} + z_2\overline{z_1}} = (-10 + 4i + 15i + 6) + (-10 - 15i - 4i + 6) \\
-& \phantom{z_1\overline{z_2} + z_2\overline{z_1}} = (-4 + 19i) + (-4 - 19i) \\
-& \phantom{z_1\overline{z_2} + z_2\overline{z_1}} = -8
-\end{aligned}
-$$
-    </div>
+    <div class="problem-box">
+        <h4>Problem 3</h4>
+        <p>Solve the following equations:</p>
+        <div class="solution-title">Solution</div>
+        
+        <p><b>(a)</b> $\displaystyle z^4 = -i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z^4 = \cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right) \\
+            & z_k = \cos\left(\frac{-\frac{\pi}{2} + 2k\pi}{4}\right) + i\sin\left(\frac{-\frac{\pi}{2} + 2k\pi}{4}\right), \quad k = 0, 1, 2, 3 \\
+            & z_0 = \cos\left(-\frac{\pi}{8}\right) + i\sin\left(-\frac{\pi}{8}\right), \quad z_1 = \cos\left(\frac{3\pi}{8}\right) + i\sin\left(\frac{3\pi}{8}\right) \\
+            & z_2 = \cos\left(\frac{7\pi}{8}\right) + i\sin\left(\frac{7\pi}{8}\right), \quad z_3 = \cos\left(\frac{11\pi}{8}\right) + i\sin\left(\frac{11\pi}{8}\right)
+            \end{aligned}$
+        </div>
 
-    <div class="sub-question">(d)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{1}{z_1} = \frac{1}{-2+3i} \\
-& \phantom{\frac{1}{z_1}} = \frac{-2-3i}{(-2+3i)(-2-3i)} \\
-& \phantom{\frac{1}{z_1}} = \frac{-2-3i}{4+9} \\
-& \phantom{\frac{1}{z_1}} = -\frac{2}{13} - \frac{3}{13}i
-\end{aligned}
-$$
-    </div>
+        <p><b>(b)</b> $\displaystyle z^4 = -1$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z^4 = \cos(\pi) + i\sin(\pi) \\
+            & z_k = \cos\left(\frac{\pi + 2k\pi}{4}\right) + i\sin\left(\frac{\pi + 2k\pi}{4}\right), \quad k = 0, 1, 2, 3 \\
+            & z_0 = \cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i \\
+            & z_1 = \cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right) = -\frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i \\
+            & z_2 = \cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right) = -\frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i \\
+            & z_3 = \cos\left(\frac{7\pi}{4}\right) + i\sin\left(\frac{7\pi}{4}\right) = \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i
+            \end{aligned}$
+        </div>
 
-    <div class="sub-question">(e)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{1}{z_2} = \frac{1}{5+2i} \\
-& \phantom{\frac{1}{z_2}} = \frac{5-2i}{(5+2i)(5-2i)} \\
-& \phantom{\frac{1}{z_2}} = \frac{5-2i}{25+4} \\
-& \phantom{\frac{1}{z_2}} = \frac{5}{29} - \frac{2}{29}i
-\end{aligned}
-$$
-    </div>
+        <p><b>(c)</b> $\displaystyle z^4 = -8 - 8\sqrt{3}i$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z^4 = 16\left(\cos\left(-\frac{2\pi}{3}\right) + i\sin\left(-\frac{2\pi}{3}\right)\right) \\
+            & \text{Note: } r^{\frac{1}{4}} = 16^{\frac{1}{4}} = 2 \\
+            & z_k = 2\left(\cos\left(\frac{-\frac{2\pi}{3} + 2k\pi}{4}\right) + i\sin\left(\frac{-\frac{2\pi}{3} + 2k\pi}{4}\right)\right), \quad k = 0, 1, 2, 3 \\
+            & z_0 = 2\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right) = \sqrt{3} - i \\
+            & z_1 = 2\left(\cos\left(\frac{\pi}{3}\right) + i\sin\left(\frac{\pi}{3}\right)\right) = 1 + \sqrt{3}i \\
+            & z_2 = 2\left(\cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right)\right) = -\sqrt{3} + i \\
+            & z_3 = 2\left(\cos\left(\frac{4\pi}{3}\right) + i\sin\left(\frac{4\pi}{3}\right)\right) = -1 - \sqrt{3}i
+            \end{aligned}$
+        </div>
 
-    <div class="sub-question">(f)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{\overline{z_1}}{z_2} = \frac{-2-3i}{5+2i} \\
-& \phantom{\frac{\overline{z_1}}{z_2}} = \frac{(-2-3i)(5-2i)}{29} \\
-& \phantom{\frac{\overline{z_1}}{z_2}} = \frac{-10 + 4i - 15i - 6}{29} \\
-& \phantom{\frac{\overline{z_1}}{z_2}} = -\frac{16}{29} - \frac{11}{29}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(g)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{z_1}{z_2} = \frac{-2+3i}{5+2i} \\
-& \phantom{\frac{z_1}{z_2}} = \frac{(-2+3i)(5-2i)}{29} \\
-& \phantom{\frac{z_1}{z_2}} = \frac{-10 + 4i + 15i + 6}{29} \\
-& \phantom{\frac{z_1}{z_2}} = -\frac{4}{29} + \frac{19}{29}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(h)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{1}{z_1z_2} = \frac{1}{(-2+3i)(5+2i)} \\
-& \phantom{\frac{1}{z_1z_2}} = \frac{1}{-10 - 4i + 15i - 6} \\
-& \phantom{\frac{1}{z_1z_2}} = \frac{1}{-16 + 11i} \\
-& \phantom{\frac{1}{z_1z_2}} = \frac{-16 - 11i}{(-16)^2 + 11^2} \\
-& \phantom{\frac{1}{z_1z_2}} = -\frac{16}{377} - \frac{11}{377}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(i)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{z_2}{z_1} = \frac{5+2i}{-2+3i} \\
-& \phantom{\frac{z_2}{z_1}} = \frac{(5+2i)(-2-3i)}{13} \\
-& \phantom{\frac{z_2}{z_1}} = \frac{-10 - 15i - 4i + 6}{13} \\
-& \phantom{\frac{z_2}{z_1}} = -\frac{4}{13} - \frac{19}{13}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(k)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{\overline{z_1}z_2}{z_1\overline{z_2}} = \frac{(-2-3i)(5+2i)}{(-2+3i)(5-2i)} \\
-& \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{-10 - 4i - 15i + 6}{-10 + 4i + 15i + 6} \\
-& \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{-4 - 19i}{-4 + 19i} \\
-& \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{(-4 - 19i)^2}{(-4)^2 + 19^2} \\
-& \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{16 + 152i + 361i^2}{16 + 361} \\
-& \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = \frac{16 + 152i - 361}{377} \\
-& \phantom{\frac{\overline{z_1}z_2}{z_1\overline{z_2}}} = -\frac{345}{377} + \frac{152}{377}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(l)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{z_2}{z_1} + \frac{z_1}{z_2} = \left(-\frac{4}{13} - \frac{19}{13}i\right) + \left(-\frac{4}{29} + \frac{19}{29}i\right) \\
-& \phantom{\frac{z_2}{z_1} + \frac{z_1}{z_2}} = \frac{29(-4 - 19i) + 13(-4 + 19i)}{377} \\
-& \phantom{\frac{z_2}{z_1} + \frac{z_1}{z_2}} = \frac{-116 - 551i - 52 + 247i}{377} \\
-& \phantom{\frac{z_2}{z_1} + \frac{z_1}{z_2}} = -\frac{168}{377} - \frac{304}{377}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(m)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \left(\frac{z_2}{z_1}\right)^2 = \left(\frac{-4-19i}{13}\right)^2 \\
-& \phantom{\left(\frac{z_2}{z_1}\right)^2} = \frac{16 + 152i - 361}{169} \\
-& \phantom{\left(\frac{z_2}{z_1}\right)^2} = -\frac{345}{169} + \frac{152}{169}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">2. Let $z_1 = 3-2i, z_2 = 1+4i$. Show that:</div>
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \text{LHS} = \overline{(3-2i + 1+4i)} \\
-& \phantom{\text{LHS}} = \overline{4+2i} \\
-& \phantom{\text{LHS}} = 4-2i \\
-& \text{RHS} = (3+2i) + (1-4i) \\
-& \phantom{\text{RHS}} = 4-2i \\
-& \therefore \text{LHS} = \text{RHS}
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \text{LHS} = \overline{(3-2i)(1+4i)} \\
-& \phantom{\text{LHS}}= \overline{3 + 12i - 2i + 8} \\
-& \phantom{\text{LHS}}= \overline{11+10i} \\
-& \phantom{\text{LHS}}= 11-10i \\
-& \text{RHS} = (3+2i)(1-4i) \\
-& \phantom{\text{RHS}}= 3 - 12i + 2i + 8 \\
-& \phantom{\text{RHS}}= 11-10i \\
-& \therefore \text{LHS} = \text{RHS}
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \text{LHS}= \overline{\left(\frac{3-2i}{1+4i}\right)} \\
-& \phantom{\text{LHS}}= \overline{\left(\frac{(3-2i)(1-4i)}{17}\right)} \\
-& \phantom{\text{LHS}}= \overline{\left(\frac{3 - 12i - 2i - 8}{17}\right)} \\
-& \phantom{\text{LHS}}= \overline{\left(\frac{-5-14i}{17}\right)} \\
-& \phantom{\text{LHS}}= -\frac{5}{17} + \frac{14}{17}i \\
-& \text{RHS} = \frac{3+2i}{1-4i} \\
-& \phantom{\text{RHS}}= \frac{(3+2i)(1+4i)}{17} \\
-& \phantom{\text{RHS}}= \frac{3 + 12i + 2i - 8}{17} \\
-& \phantom{\text{RHS}}= -\frac{5}{17} + \frac{14}{17}i \\
-& \therefore \text{LHS} = \text{RHS}
-\end{aligned}
-$$
-    </div>
-
-    <h2>Exercise 1.4</h2>
-    <div class="question-text">1. Find the trigonometric form with $-\pi < \theta \le \pi$.</div>
-    
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = 1 - \sqrt{3}i \\
-& r = \sqrt{1^2 + (-\sqrt{3})^2} = 2 \\
-& \tan\theta = -\sqrt{3} \quad (\text{4th Quadrant}) \implies \theta = -\frac{\pi}{3} \\
-& z = 2\left(\cos\left(-\frac{\pi}{3}\right) + i\sin\left(-\frac{\pi}{3}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = -\sqrt{2} + \sqrt{2}i \\
-& r = \sqrt{2 + 2} = 2 \\
-& \tan\theta = -1 \quad (\text{2nd Quadrant}) \implies \theta = \frac{3\pi}{4} \\
-& z = 2\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = -2 - 2i \\
-& r = \sqrt{4 + 4} = 2\sqrt{2} \\
-& \tan\theta = 1 \quad (\text{3rd Quadrant}) \implies \theta = -\frac{3\pi}{4} \\
-& z = 2\sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i\sin\left(-\frac{3\pi}{4}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \sqrt{3} - i \\
-& r = \sqrt{3 + 1} = 2 \\
-& \tan\theta = -\frac{1}{\sqrt{3}} \quad (\text{4th Quadrant}) \implies \theta = -\frac{\pi}{6} \\
-& z = 2\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(e)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = i \\
-& r = 1, \quad \theta = \frac{\pi}{2} \\
-& z = 1\left(\cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(f)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = -3i \\
-& r = 3, \quad \theta = -\frac{\pi}{2} \\
-& z = 3\left(\cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">2. Given that $z_1 = 2 - 2\sqrt{3}i, z_2 = -1 - i$, find the following complex numbers by using trigonometric forms. Check your answer by direct calculation.</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z_1 = 4\left(\cos\left(-\frac{\pi}{3}\right) + i\sin\left(-\frac{\pi}{3}\right)\right), \quad z_2 = \sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i\sin\left(-\frac{3\pi}{4}\right)\right)
-\end{aligned}
-$$
-    </div>
-    
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z_1 z_2 = (4)(\sqrt{2})\left(\cos\left(-\frac{\pi}{3} - \frac{3\pi}{4}\right) + i\sin\left(-\frac{\pi}{3} - \frac{3\pi}{4}\right)\right) \\
-& \phantom{z_1 z_2} = 4\sqrt{2}\left(\cos\left(-\frac{13\pi}{12}\right) + i\sin\left(-\frac{13\pi}{12}\right)\right) \\
-& \text{Adding } 2\pi \text{ to find the principal argument: } -\frac{13\pi}{12} + 2\pi = \frac{11\pi}{12} \\
-& \phantom{z_1 z_2} = 4\sqrt{2}\left(\cos\left(\frac{11\pi}{12}\right) + i\sin\left(\frac{11\pi}{12}\right)\right) \\
-& \text{Direct Check:} \\
-& z_1 z_2 = (2 - 2\sqrt{3}i)(-1 - i) \\
-& \phantom{z_1 z_2} = -2 - 2i + 2\sqrt{3}i - 2\sqrt{3} \\
-& \phantom{z_1 z_2} = (-2 - 2\sqrt{3}) + (2\sqrt{3} - 2)i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z_1^{-1} = \frac{1}{4}\left(\cos\left(\frac{\pi}{3}\right) + i\sin\left(\frac{\pi}{3}\right)\right) \\
-& \text{Direct Check:} \\
-& \frac{1}{2 - 2\sqrt{3}i} = \frac{2 + 2\sqrt{3}i}{4 + 12} = \frac{2 + 2\sqrt{3}i}{16} = \frac{1}{8} + \frac{\sqrt{3}}{8}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z_2^{-1} = \frac{1}{\sqrt{2}}\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) \\
-& \text{Direct Check:} \\
-& \frac{1}{-1 - i} = \frac{-1 + i}{1 + 1} = -\frac{1}{2} + \frac{1}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{z_1}{z_2} = \frac{4}{\sqrt{2}}\left(\cos\left(-\frac{\pi}{3} - \left(-\frac{3\pi}{4}\right)\right) + i\sin\left(-\frac{\pi}{3} - \left(-\frac{3\pi}{4}\right)\right)\right) \\
-& \phantom{\frac{z_1}{z_2}} = 2\sqrt{2}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right) \\
-& \text{Direct Check:} \\
-& \frac{2 - 2\sqrt{3}i}{-1 - i} = \frac{(2 - 2\sqrt{3}i)(-1 + i)}{(-1 - i)(-1 + i)} \\
-& \phantom{\frac{2 - 2\sqrt{3}i}{-1 - i}} = \frac{-2 + 2i + 2\sqrt{3}i + 2\sqrt{3}}{2} \\
-& \phantom{\frac{2 - 2\sqrt{3}i}{-1 - i}} = (\sqrt{3} - 1) + (\sqrt{3} + 1)i \\
-& \text{Verification of direct result: } z = (\sqrt{3} - 1) + (\sqrt{3} + 1)i \\
-& \text{Magnitude: } |z| = \sqrt{(\sqrt{3}-1)^2 + (\sqrt{3}+1)^2} \\
-& \phantom{\text{Magnitude: } |z|} = \sqrt{(3 - 2\sqrt{3} + 1) + (3 + 2\sqrt{3} + 1)} = \sqrt{8} = 2\sqrt{2} \\
-& \text{Angle (1st Quadrant): } \theta = \tan^{-1}\left(\frac{\sqrt{3}+1}{\sqrt{3}-1}\right) = \frac{5\pi}{12}
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(e)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& \frac{z_2}{z_1} = \frac{\sqrt{2}}{4}\left(\cos\left(-\frac{3\pi}{4} - \left(-\frac{\pi}{3}\right)\right) + i\sin\left(-\frac{3\pi}{4} - \left(-\frac{\pi}{3}\right)\right)\right) \\
-& \phantom{\frac{z_2}{z_1}} = \frac{\sqrt{2}}{4}\left(\cos\left(-\frac{5\pi}{12}\right) + i\sin\left(-\frac{5\pi}{12}\right)\right) \\
-& \text{Direct Check:} \\
-& \frac{-1 - i}{2 - 2\sqrt{3}i} = \frac{(-1 - i)(2 + 2\sqrt{3}i)}{16} \\
-& \phantom{\frac{-1 - i}{2 - 2\sqrt{3}i}} = \frac{-2 - 2\sqrt{3}i - 2i + 2\sqrt{3}}{16} \\
-& \phantom{\frac{-1 - i}{2 - 2\sqrt{3}i}} = \frac{\sqrt{3} - 1}{8} - \frac{\sqrt{3} + 1}{8}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">3. Given that $z = -2\sqrt{3} - 2i$, find (a) $z^5$ (b) $z^{-5}$.</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = 4\left(\cos\left(-\frac{5\pi}{6}\right) + i\sin\left(-\frac{5\pi}{6}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(a)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z^5 = 4^5\left(\cos\left(5 \times -\frac{5\pi}{6}\right) + i\sin\left(5 \times -\frac{5\pi}{6}\right)\right) \\
-& \phantom{z^5} = 1024\left(\cos\left(-\frac{25\pi}{6}\right) + i\sin\left(-\frac{25\pi}{6}\right)\right) \\
-& \text{Adding } 4\pi \text{ to find the principal argument: } -\frac{25\pi}{6} + \frac{24\pi}{6} = -\frac{\pi}{6} \\
-& \phantom{z^5} = 1024\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right) \\
-& \phantom{z^5} = 1024\left(\frac{\sqrt{3}}{2} - \frac{1}{2}i\right) \\
-& \phantom{z^5} = 512\sqrt{3} - 512i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b)</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z^{-5} = 4^{-5}\left(\cos\left(-5 \times -\frac{5\pi}{6}\right) + i\sin\left(-5 \times -\frac{5\pi}{6}\right)\right) \\
-& \phantom{z^{-5}} = \frac{1}{1024}\left(\cos\left(\frac{25\pi}{6}\right) + i\sin\left(\frac{25\pi}{6}\right)\right) \\
-& \text{Subtracting } 4\pi \text{ to find the principal argument: } \frac{25\pi}{6} - \frac{24\pi}{6} = \frac{\pi}{6} \\
-& \phantom{z^{-5}} = \frac{1}{1024}\left(\cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right)\right) \\
-& \phantom{z^{-5}} = \frac{1}{1024}\left(\frac{\sqrt{3}}{2} + \frac{1}{2}i\right) \\
-& \phantom{z^{-5}} = \frac{\sqrt{3}}{2048} + \frac{1}{2048}i
-\end{aligned}
-$$
-    </div>
-
-    <h2>Exercise 1.5</h2>
-    <div class="question-text">1. Find the square roots of the following:</div>
-    
-    <div class="sub-question">(a) $1 + \sqrt{3}i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = 2\left(\cos\left(\frac{\pi}{3}\right) + i\sin\left(\frac{\pi}{3}\right)\right) \\
-& \text{Note: } r^{\frac{1}{2}} = \sqrt{2} \\
-& w_k = \sqrt{2}\left(\cos\left(\frac{\frac{\pi}{3} + 2k\pi}{2}\right) + i\sin\left(\frac{\frac{\pi}{3} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
-& w_0 = \sqrt{2}\left(\cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right)\right) = \frac{\sqrt{6}}{2} + \frac{\sqrt{2}}{2}i \\
-& w_1 = \sqrt{2}\left(\cos\left(\frac{7\pi}{6}\right) + i\sin\left(\frac{7\pi}{6}\right)\right) = -\frac{\sqrt{6}}{2} - \frac{\sqrt{2}}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b) $i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) \\
-& w_k = \cos\left(\frac{\frac{\pi}{2} + 2k\pi}{2}\right) + i\sin\left(\frac{\frac{\pi}{2} + 2k\pi}{2}\right), \quad k = 0, 1 \\
-& w_0 = \cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i \\
-& w_1 = \cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right) = -\frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c) $-\sqrt{3} + i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = 2\left(\cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right)\right) \\
-& w_k = \sqrt{2}\left(\cos\left(\frac{\frac{5\pi}{6} + 2k\pi}{2}\right) + i\sin\left(\frac{\frac{5\pi}{6} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
-& w_0 = \sqrt{2}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right) \\
-& w_1 = \sqrt{2}\left(\cos\left(\frac{17\pi}{12}\right) + i\sin\left(\frac{17\pi}{12}\right)\right) = -\sqrt{2}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d) $-1 - \sqrt{3}i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = 2\left(\cos\left(-\frac{2\pi}{3}\right) + i\sin\left(-\frac{2\pi}{3}\right)\right) \\
-& w_k = \sqrt{2}\left(\cos\left(\frac{-\frac{2\pi}{3} + 2k\pi}{2}\right) + i\sin\left(\frac{-\frac{2\pi}{3} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
-& w_0 = \sqrt{2}\left(\cos\left(-\frac{\pi}{3}\right) + i\sin\left(-\frac{\pi}{3}\right)\right) = \frac{\sqrt{2}}{2} - \frac{\sqrt{6}}{2}i \\
-& w_1 = \sqrt{2}\left(\cos\left(\frac{2\pi}{3}\right) + i\sin\left(\frac{2\pi}{3}\right)\right) = -\frac{\sqrt{2}}{2} + \frac{\sqrt{6}}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(e) $-i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right) \\
-& w_k = \cos\left(\frac{-\frac{\pi}{2} + 2k\pi}{2}\right) + i\sin\left(\frac{-\frac{\pi}{2} + 2k\pi}{2}\right), \quad k = 0, 1 \\
-& w_0 = \cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i \\
-& w_1 = \cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right) = -\frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(f) $\sqrt{3} - i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = 2\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right) \\
-& w_k = \sqrt{2}\left(\cos\left(\frac{-\frac{\pi}{6} + 2k\pi}{2}\right) + i\sin\left(\frac{-\frac{\pi}{6} + 2k\pi}{2}\right)\right), \quad k = 0, 1 \\
-& w_0 = \sqrt{2}\left(\cos\left(-\frac{\pi}{12}\right) + i\sin\left(-\frac{\pi}{12}\right)\right) \\
-& w_1 = \sqrt{2}\left(\cos\left(\frac{11\pi}{12}\right) + i\sin\left(\frac{11\pi}{12}\right)\right) = -\sqrt{2}\left(\cos\left(-\frac{\pi}{12}\right) + i\sin\left(-\frac{\pi}{12}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">2. Find the cube roots of the following complex numbers.</div>
-    
-    <div class="sub-question">(a) $1 + i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \sqrt{2}\left(\cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)\right) \\
-& \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
-& w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{\frac{\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{\frac{\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
-& w_0 = 2^{\frac{1}{6}}\left(\cos\left(\frac{\pi}{12}\right) + i\sin\left(\frac{\pi}{12}\right)\right) \\
-& w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) \\
-& w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{17\pi}{12}\right) + i\sin\left(\frac{17\pi}{12}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b) $i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) \\
-& w_k = \cos\left(\frac{\frac{\pi}{2} + 2k\pi}{3}\right) + i\sin\left(\frac{\frac{\pi}{2} + 2k\pi}{3}\right), \quad k = 0, 1, 2 \\
-& w_0 = \cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right) = \frac{\sqrt{3}}{2} + \frac{1}{2}i \\
-& w_1 = \cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right) = -\frac{\sqrt{3}}{2} + \frac{1}{2}i \\
-& w_2 = \cos\left(\frac{3\pi}{2}\right) + i\sin\left(\frac{3\pi}{2}\right) = -i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c) $-1 + i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \sqrt{2}\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) \\
-& \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
-& w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{\frac{3\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{\frac{3\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
-& w_0 = 2^{\frac{1}{6}}\left(\cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)\right) \\
-& w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{11\pi}{12}\right) + i\sin\left(\frac{11\pi}{12}\right)\right) \\
-& w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{19\pi}{12}\right) + i\sin\left(\frac{19\pi}{12}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d) $-1 - i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i\sin\left(-\frac{3\pi}{4}\right)\right) \\
-& \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
-& w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{-\frac{3\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{-\frac{3\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
-& w_0 = 2^{\frac{1}{6}}\left(\cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right)\right) \\
-& w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{5\pi}{12}\right) + i\sin\left(\frac{5\pi}{12}\right)\right) \\
-& w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{13\pi}{12}\right) + i\sin\left(\frac{13\pi}{12}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(e) $-i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right) \\
-& w_k = \cos\left(\frac{-\frac{\pi}{2} + 2k\pi}{3}\right) + i\sin\left(\frac{-\frac{\pi}{2} + 2k\pi}{3}\right), \quad k = 0, 1, 2 \\
-& w_0 = \cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right) = \frac{\sqrt{3}}{2} - \frac{1}{2}i \\
-& w_1 = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) = i \\
-& w_2 = \cos\left(\frac{7\pi}{6}\right) + i\sin\left(\frac{7\pi}{6}\right) = -\frac{\sqrt{3}}{2} - \frac{1}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(f) $1 - i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z = \sqrt{2}\left(\cos\left(-\frac{\pi}{4}\right) + i\sin\left(-\frac{\pi}{4}\right)\right) \\
-& \text{Note: } r^{\frac{1}{3}} = (\sqrt{2})^{\frac{1}{3}} = (2^{\frac{1}{2}})^{\frac{1}{3}} = 2^{\frac{1}{6}} \\
-& w_k = 2^{\frac{1}{6}}\left(\cos\left(\frac{-\frac{\pi}{4} + 2k\pi}{3}\right) + i\sin\left(\frac{-\frac{\pi}{4} + 2k\pi}{3}\right)\right), \quad k = 0, 1, 2 \\
-& w_0 = 2^{\frac{1}{6}}\left(\cos\left(-\frac{\pi}{12}\right) + i\sin\left(-\frac{\pi}{12}\right)\right) \\
-& w_1 = 2^{\frac{1}{6}}\left(\cos\left(\frac{7\pi}{12}\right) + i\sin\left(\frac{7\pi}{12}\right)\right) \\
-& w_2 = 2^{\frac{1}{6}}\left(\cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right)\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="question-text">3. Solve the following equations:</div>
-    
-    <div class="sub-question">(a) $z^4 = -i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z^4 = \cos\left(-\frac{\pi}{2}\right) + i\sin\left(-\frac{\pi}{2}\right) \\
-& z_k = \cos\left(\frac{-\frac{\pi}{2} + 2k\pi}{4}\right) + i\sin\left(\frac{-\frac{\pi}{2} + 2k\pi}{4}\right), \quad k = 0, 1, 2, 3 \\
-& z_0 = \cos\left(-\frac{\pi}{8}\right) + i\sin\left(-\frac{\pi}{8}\right), \quad z_1 = \cos\left(\frac{3\pi}{8}\right) + i\sin\left(\frac{3\pi}{8}\right) \\
-& z_2 = \cos\left(\frac{7\pi}{8}\right) + i\sin\left(\frac{7\pi}{8}\right), \quad z_3 = \cos\left(\frac{11\pi}{8}\right) + i\sin\left(\frac{11\pi}{8}\right)
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(b) $z^4 = -1$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z^4 = \cos(\pi) + i\sin(\pi) \\
-& z_k = \cos\left(\frac{\pi + 2k\pi}{4}\right) + i\sin\left(\frac{\pi + 2k\pi}{4}\right), \quad k = 0, 1, 2, 3 \\
-& z_0 = \cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i \\
-& z_1 = \cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right) = -\frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2}i \\
-& z_2 = \cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right) = -\frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i \\
-& z_3 = \cos\left(\frac{7\pi}{4}\right) + i\sin\left(\frac{7\pi}{4}\right) = \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(c) $z^4 = -8 - 8\sqrt{3}i$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z^4 = 16\left(\cos\left(-\frac{2\pi}{3}\right) + i\sin\left(-\frac{2\pi}{3}\right)\right) \\
-& \text{Note: } r^{\frac{1}{4}} = 16^{\frac{1}{4}} = 2 \\
-& z_k = 2\left(\cos\left(\frac{-\frac{2\pi}{3} + 2k\pi}{4}\right) + i\sin\left(\frac{-\frac{2\pi}{3} + 2k\pi}{4}\right)\right), \quad k = 0, 1, 2, 3 \\
-& z_0 = 2\left(\cos\left(-\frac{\pi}{6}\right) + i\sin\left(-\frac{\pi}{6}\right)\right) = \sqrt{3} - i \\
-& z_1 = 2\left(\cos\left(\frac{\pi}{3}\right) + i\sin\left(\frac{\pi}{3}\right)\right) = 1 + \sqrt{3}i \\
-& z_2 = 2\left(\cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right)\right) = -\sqrt{3} + i \\
-& z_3 = 2\left(\cos\left(\frac{4\pi}{3}\right) + i\sin\left(\frac{4\pi}{3}\right)\right) = -1 - \sqrt{3}i
-\end{aligned}
-$$
-    </div>
-
-    <div class="sub-question">(d) $z^6 = -1$</div>
-    <div class="math-block">
-$$ \displaystyle
-\begin{aligned}
-& z^6 = \cos(\pi) + i\sin(\pi) \\
-& z_k = \cos\left(\frac{\pi + 2k\pi}{6}\right) + i\sin\left(\frac{\pi + 2k\pi}{6}\right), \quad k = 0, 1, 2, 3, 4, 5 \\
-& z_0 = \cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right) = \frac{\sqrt{3}}{2} + \frac{1}{2}i \\
-& z_1 = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) = i \\
-& z_2 = \cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right) = -\frac{\sqrt{3}}{2} + \frac{1}{2}i \\
-& z_3 = \cos\left(\frac{7\pi}{6}\right) + i\sin\left(\frac{7\pi}{6}\right) = -\frac{\sqrt{3}}{2} - \frac{1}{2}i \\
-& z_4 = \cos\left(\frac{3\pi}{2}\right) + i\sin\left(\frac{3\pi}{2}\right) = -i \\
-& z_5 = \cos\left(\frac{11\pi}{6}\right) + i\sin\left(\frac{11\pi}{6}\right) = \frac{\sqrt{3}}{2} - \frac{1}{2}i
-\end{aligned}
-$$
+        <p><b>(d)</b> $\displaystyle z^6 = -1$</p>
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & z^6 = \cos(\pi) + i\sin(\pi) \\
+            & z_k = \cos\left(\frac{\pi + 2k\pi}{6}\right) + i\sin\left(\frac{\pi + 2k\pi}{6}\right), \quad k = 0, 1, 2, 3, 4, 5 \\
+            & z_0 = \cos\left(\frac{\pi}{6}\right) + i\sin\left(\frac{\pi}{6}\right) = \frac{\sqrt{3}}{2} + \frac{1}{2}i \\
+            & z_1 = \cos\left(\frac{\pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right) = i \\
+            & z_2 = \cos\left(\frac{5\pi}{6}\right) + i\sin\left(\frac{5\pi}{6}\right) = -\frac{\sqrt{3}}{2} + \frac{1}{2}i \\
+            & z_3 = \cos\left(\frac{7\pi}{6}\right) + i\sin\left(\frac{7\pi}{6}\right) = -\frac{\sqrt{3}}{2} - \frac{1}{2}i \\
+            & z_4 = \cos\left(\frac{3\pi}{2}\right) + i\sin\left(\frac{3\pi}{2}\right) = -i \\
+            & z_5 = \cos\left(\frac{11\pi}{6}\right) + i\sin\left(\frac{11\pi}{6}\right) = \frac{\sqrt{3}}{2} - \frac{1}{2}i
+            \end{aligned}$
+        </div>
     </div>
 
 </div>

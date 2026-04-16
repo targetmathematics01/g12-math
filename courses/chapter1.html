@@ -13,36 +13,14 @@
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 macros: {
                     frac: ["{\\displaystyle {#1 \\over #2}}", 2]
                 }
             },
             chtml: {
-                displayAlign: "center",
+                displayAlign: "left", // Force left alignment
                 matchFontHeight: false, 
                 scale: 1
-            },
-            startup: {
-                pageReady: () => {
-                    return MathJax.startup.defaultPageReady().then(() => {
-                        // Display Math များအတွက် Wrapper (Block Level Swipe)
-                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'math-display-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                        
-                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
-                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
-                            const wrapper = document.createElement('span');
-                            wrapper.className = 'math-inline-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                    });
-                }
             }
         };
     </script>
@@ -110,37 +88,35 @@
         .hint-box { background-color: #fcebeb; border-left: 5px solid #c0392b; padding: 15px; margin: 20px 0; font-style: italic; }
 
         /* ==================================================================== */
-        /* 2. THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Inline & Display Wrapper) */
+        /* 2. THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Left Align & Indent) */
         /* ==================================================================== */
-        .math-display-wrapper {
+        .math-block {
+            display: block;
             width: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            scrollbar-width: none;
-        }
-        .math-display-wrapper::-webkit-scrollbar { display: none; }
-
-        .math-inline-wrapper {
-            display: inline-block;
             max-width: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            vertical-align: middle;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            box-sizing: border-box;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            text-align: left; /* Strict Left Alignment */
+            padding-left: 40px; /* Precise indentation matching the image */
+            margin: 15px 0;
+            padding-bottom: 5px;
         }
-        .math-inline-wrapper::-webkit-scrollbar { display: none; }
+        .math-block::-webkit-scrollbar {
+            height: 6px;
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none;
+            width: 0;
+        }
+        .math-block::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
 
         mjx-container {
-            max-width: none !important; /* Wrapper က ထိန်းချုပ်မည်ဖြစ်၍ Math ကို လွတ်လပ်စွာ နေရာယူခွင့်ပေးမည် */
-        }
-        
-        mjx-container[display="true"] {
-            margin: 0 !important; 
-            padding: 5px 0 !important;
+            text-align: left !important;
         }
         /* ==================================================================== */
 
@@ -153,31 +129,32 @@
             margin: 20px auto; 
             word-wrap: break-word;
         }
-        table.math-table th, table.math-table td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        table.math-table th, table.math-table td { border: 1px solid #ccc; padding: 10px; text-align: left; padding-left: 20px; }
         table.math-table th { background-color: #f0f0f0; }
         
-        /* Exercise Box အတွင်း Responsive Flex-container များ */
+        /* Exercise Box အတွင်း Responsive Grid (Equal Spacing) */
         .flex-container { 
-            display: flex; 
-            flex-wrap: wrap; 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); /* Equal Spacing 3 Columns */
             gap: 15px; 
             width: 100%; 
             box-sizing: border-box; 
         }
         
-        /* Flex item ကိုယ်တိုင် Swipe လုပ်နိုင်အောင် ထပ်မံကာကွယ်ပေးထားသည် */
+        /* Grid Item (Swipeable) */
         .flex-item { 
-            flex: 1 1 200px; 
-            min-width: 0; 
-            max-width: 100%;
+            width: 100%;
             box-sizing: border-box; 
-            overflow-x: auto; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            text-align: left; /* Left align lists */
         }
         .flex-item::-webkit-scrollbar { display: none; }
+        .flex-item::-webkit-scrollbar:vertical { display: none; }
         
-        /* SVG Responsive Settings - Desktop တွင် အဆမတန် မကြီးစေရန် ထိန်းချုပ်ထားသည် */
+        /* SVG Responsive Settings */
         .svg-container { 
             text-align: center; 
             margin: 30px 0; 
@@ -201,26 +178,24 @@
         ol ol, ul ul, ol ul, ul ol { margin-top: 15px; }
 
         /* ==================================================================== */
-        /* 3. MOBILE RESPONSIVE (100% Uniform Adjustments) */
+        /* 3. MOBILE RESPONSIVE */
         /* ==================================================================== */
         @media (max-width: 768px) {
             .content-box { padding: 25px 15px; }
             .example-box, .exercise-box, .problem-box, .concept-box { padding: 15px; }
             .problem-box h4 { font-size: 18px; }
             
-            /* Mobile တွင် Flex Item များကို အလိုအလျောက် အောက်သို့ စီချမည် (Stack vertically) */
+            /* Mobile တွင် 1 column သာပြရန် */
             .flex-container { 
-                flex-direction: column; 
+                grid-template-columns: 1fr; 
                 gap: 15px; 
             }
-            .flex-item { 
-                flex: 1 1 100%; 
-                width: 100%; 
+            
+            .math-block {
+                padding-left: 10px; /* Mobile မှာ indent လျှော့ရန် */
             }
             
-            ul, ol { padding-left: 20px; } /* Mobile တွင် ဘေးသားနေရာ ပိုရစေရန် */
-            
-            /* SVG များကို mobile တွင် ပိုမိုရှင်းလင်းစေရန် */
+            ul, ol { padding-left: 20px; }
             .svg-container { flex-direction: column; }
         }
     </style>
@@ -249,17 +224,17 @@
 
             <p>But if there is a pure imaginary unit $i$ such that</p>
 
-            $$i^{2}=-1$$
+            <div class="math-block">$\displaystyle i^{2}=-1$</div>
 
             <p>with acceptance of the usual operations on real numbers and $i$ such as</p>
 
-            $$(2i)^{2}=4i^{2}=4(-1)=-4 \quad \text{and} \quad (-2i)^{2}=4i^{2}=4(-1)=-4$$
+            <div class="math-block">$\displaystyle (2i)^{2}=4i^{2}=4(-1)=-4 \quad \text{and} \quad (-2i)^{2}=4i^{2}=4(-1)=-4$</div>
 
             <p>then $x^{2}=-4$ has two solutions $2i$ and $-2i$.</p>
 
             <p>If we try to solve $x^{2}=-n$, for $n>0$, like $x^{2}=-4$, then $\sqrt{n}i$ and $-\sqrt{n}i$ are solutions because</p>
 
-            $$(\pm\sqrt{n}i)^{2}=ni^{2}=n(-1)=-n$$
+            <div class="math-block">$\displaystyle (\pm\sqrt{n}i)^{2}=ni^{2}=n(-1)=-n$</div>
 
             <div class="example-box">
                 <h4>Example 1.</h4>
@@ -267,15 +242,15 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x^{2}+2x+5&=0 \\
                 x^{2}+2x+1&=-4 \\
                 (x+1)^{2}&=-4 \\
                 x+1&=\pm\sqrt{4}i \\
                 x&=-1\pm2i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>So there are two solutions $x=-1+2i$ and $x=-1-2i$.</p>
             </div>
@@ -286,39 +261,39 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x^{2}+2x+3&=0 \\
                 x^{2}+2x+1&=-2 \\
                 (x+1)^{2}&=-2 \\
                 x+1&=\pm\sqrt{2}i \\
                 x&=-1\pm\sqrt{2}i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>So two solutions are $x=-1+\sqrt{2}i$ and $x=-1-\sqrt{2}i$.</p>
 
                 <p>For $x=-1+\sqrt{2}i$,</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x^{2}+2x+3&=(-1+\sqrt{2}i)^{2}+2(-1+\sqrt{2}i)+3 \\
                 &=1-2\sqrt{2}i+2i^{2}-2+2\sqrt{2}i+3 \\
                 &=1-2\sqrt{2}i-2-2+2\sqrt{2}i+3 \\
                 &=0
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>For $x=-1-\sqrt{2}i$,</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x^{2}+2x+3&=(-1-\sqrt{2}i)^{2}+2(-1-\sqrt{2}i)+3 \\
                 &=1+2\sqrt{2}i+2i^{2}-2-2\sqrt{2}i+3 \\
                 &=1+2\sqrt{2}i-2-2-2\sqrt{2}i+3 \\
                 &=0
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="concept-box">
@@ -343,14 +318,14 @@
 
                 <p>Solve the quadratic factor $z^2 - 2z + 5 = 0$ by completing the square:</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 z^{2}-2z+1&=-4 \\
                 (z-1)^{2}&=-4 \\
                 z-1&=\pm2i \\
                 z&=1\pm2i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>The remaining two complex roots are a conjugate pair: $1+2i$ and $1-2i$.</p>
             </div>
@@ -380,19 +355,19 @@
 
             <p>As we have just seen in Section 1.1, there are numbers like $x_{1}+y_{1}i$ and $x_{2}+y_{2}i$ such that</p>
 
-            $$
-            (x_{1}+y_{1}i)+(x_{2}+y_{2}i)=(x_{1}+x_{2})+(y_{1}+y_{2})i
-            $$
+            <div class="math-block">
+            $\displaystyle (x_{1}+y_{1}i)+(x_{2}+y_{2}i)=(x_{1}+x_{2})+(y_{1}+y_{2})i$
+            </div>
 
             <p>and</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             (x_{1}+y_{1}i)(x_{2}+y_{2}i)&=x_{1}x_{2}+(x_{1}y_{2}+y_{1}x_{2})i+y_{1}y_{2}i^{2} \\
             &=x_{1}x_{2}+(x_{1}y_{2}+y_{1}x_{2})i+y_{1}y_{2}(-1) \\
             &=(x_{1}x_{2}-y_{1}y_{2})+(x_{1}y_{2}+y_{1}x_{2})i
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <p>for real numbers $x_{1}$, $x_{2}$, $y_{1}$, $y_{2}$, so we define the number $x+yi$ as follows.</p>
 
@@ -405,9 +380,9 @@
 
             <p>Then we have</p>
 
-            $$
-            (x,0)+(y,0)=(x+y,0) \quad \text{and} \quad (x,0)(y,0)=(xy,0)
-            $$
+            <div class="math-block">
+            $\displaystyle (x,0)+(y,0)=(x+y,0) \quad \text{and} \quad (x,0)(y,0)=(xy,0)$
+            </div>
 
             <p>From these facts, all real numbers can be considered as complex numbers as shown in the following table.</p>
             
@@ -424,22 +399,22 @@
 
             <p>Since $(0,1)(0,1)=(0-1,0+0)=(-1,0)$, let us denote</p>
 
-            $$i=(0,1)$$
+            <div class="math-block">$\displaystyle i=(0,1)$</div>
 
             <p>and with the convention $i^{2}=ii$, $i^{3}=i^{2}i$, etc., we have</p>
 
-            $$i^{2}=(0,1)(0,1)=(0-1,0+0)=(-1,0)=-1$$
+            <div class="math-block">$\displaystyle i^{2}=(0,1)(0,1)=(0-1,0+0)=(-1,0)=-1$</div>
 
             <p>And we have</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             x+yi&=(x,0)+(y,0)(0,1) \\
             &=(x,0)+(0-0,y+0) \\
             &=(x,0)+(0,y) \\
             x+yi&=(x,y)
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <p>Note that sum and product of complex numbers satisfy commutative, associative and distributive properties.</p>
 
@@ -451,26 +426,26 @@
 
                 <p><b>Method 1</b></p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (-2,3)(1,-2)+(1,1)(0,1)&=(-2-(-6),4+3)+(0-1,1+0) \\
                 &=(4,7)+(-1,1) \\
                 &=(3,8)
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p><b>Method 2</b></p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (-2,3)(1,-2)+(1,1)(0,1)&=(-2+3i)(1-2i)+(1+i)i \\
                 &=(-2+4i+3i-6i^{2})+(i+i^{2}) \\
                 &=(-2+7i-6(-1))+(i-1) \\
                 &=(4+7i)+(-1+i) \\
                 &=3+8i \\
                 &=(3,8)
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="example-box">
@@ -482,25 +457,25 @@
 
                 <p><b>(a)</b></p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (2+3i)(4+5i)&= 2(4+5i) + 3i(4+5i) \\
                 &= 8 + 10i + 12i + 15i^2 \\
                 &= 8 + 22i - 15 \\
                 &= -7 + 22i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p><b>(b)</b></p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (7-4i)^2&= (7-4i)(7-4i) \\
                 &= 49 - 28i - 28i + 16i^2 \\
                 &= 49 - 56i - 16 \\
                 &= 33 - 56i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="exercise-box">
@@ -529,9 +504,9 @@
 
             <p>Sum and product of complex numbers were defined in Section 1.2. Subtraction of complex numbers is defined as in real numbers as follows:</p>
 
-            $$
-            (x_{1}+y_{1}i)-(x_{2}+y_{2}i)=(x_{1}+y_{1}i)+(-x_{2}-y_{2}i)
-            $$
+            <div class="math-block">
+            $\displaystyle (x_{1}+y_{1}i)-(x_{2}+y_{2}i)=(x_{1}+y_{1}i)+(-x_{2}-y_{2}i)$
+            </div>
             
             <p>Complex numbers can also be represented as vectors on an Argand diagram, $\binom{x}{y}$. You can add or subtract complex numbers by adding or subtracting their corresponding vectors using the parallelogram rule.</p>
 
@@ -598,12 +573,12 @@
 
             <p>From now on let us denote a complex number by $z$, so that</p>
 
-            $$z=x+yi=(x,y)$$
+            <div class="math-block">$\displaystyle z=x+yi=(x,y)$</div>
             
             <div class="concept-box">
                 <p>The conjugate $\overline{z}$ (also denoted as $z^*$) of a complex number $z=x+yi=(x,y)$ is defined by</p>
 
-                $$\overline{z}=x-yi=(x,-y)$$
+                <div class="math-block">$\displaystyle \overline{z}=x-yi=(x,-y)$</div>
 
                 <p>Together, $z$ and $\overline{z}$ are called a complex conjugate pair.</p>
 
@@ -616,14 +591,14 @@
 
             <p>Let $z_{1}=x_{1}+y_{1}i$ and $z_{2}=x_{2}+y_{2}i$. We will calculate $\frac{z_{1}}{z_{2}}$, $(z_{2}\ne0)$, as follows:</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             \frac{z_{1}}{z_{2}}&=\frac{z_{1}}{z_{2}}\frac{\overline{z}_{2}}{\overline{z}_{2}} \\
             &=\frac{x_{1}+y_{1}i}{x_{2}+y_{2}i}\frac{x_{2}-y_{2}i}{x_{2}-y_{2}i} \\
             &=\frac{x_{1}x_{2}+y_{1}y_{2}+(y_{1}x_{2}-x_{1}y_{2})i}{{x_{2}}^{2}+{y_{2}}^{2}} \\
             &=\frac{x_{1}x_{2}+y_{1}y_{2}}{{x_{2}}^{2}+{y_{2}}^{2}}+\frac{y_{1}x_{2}-x_{1}y_{2}}{{x_{2}}^{2}+{y_{2}}^{2}}i
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <div class="example-box">
                 <h4>Example 6.</h4>
@@ -631,14 +606,14 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{2+3i}{3+i}&=\frac{2+3i}{3+i}\frac{3-i}{3-i} \\
                 &=\frac{6+3+(9-2)i}{9+1} \\
                 &=\frac{9+7i}{10} \\
                 &=\frac{9}{10}+\frac{7}{10}i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="example-box">
@@ -649,42 +624,42 @@
 
                 <p>Multiply numerator and denominator by the conjugate of the denominator ($2+3i$):</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{5+4i}{2-3i}&=\frac{5+4i}{2-3i} \times \frac{2+3i}{2+3i} \\
                 &=\frac{10 + 15i + 8i + 12i^2}{4 + 6i - 6i - 9i^2} \\
                 &=\frac{10 + 23i - 12}{4 + 9} \\
                 &=\frac{-2 + 23i}{13} \\
                 &=-\frac{2}{13} + \frac{23}{13}i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <p>Now we calculate $\frac{1}{z}$ for $z=x+yi$, $z\ne0$.</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             \frac{1}{z}&=\frac{1}{x+yi}\frac{x-yi}{x-yi} \\
             &=\frac{x-yi}{x^{2}+y^{2}} \\
             &=\frac{x}{x^{2}+y^{2}}-\frac{y}{x^{2}+y^{2}}i
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <p>And we can check that</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             z\left(\frac{1}{z}\right)&=(x+yi)\left(\frac{x}{x^{2}+y^{2}}-\frac{y}{x^{2}+y^{2}}i\right) \\
             &=\frac{x^{2}+y^{2}}{x^{2}+y^{2}}+\frac{yx-xy}{x^{2}+y^{2}}i \\
             &=1
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <p>So, for a non-zero complex number $z$, $\frac{1}{z}$ is the multiplicative inverse of $z$ and is denoted by $z^{-1}$.</p>
 
             <p>From these facts, division of complex numbers is defined as</p>
 
-            $$\frac{z_{1}}{z_{2}}=z_{1}{z_{2}}^{-1}$$
+            <div class="math-block">$\displaystyle \frac{z_{1}}{z_{2}}=z_{1}{z_{2}}^{-1}$</div>
 
             <p>but we usually calculate $\frac{z_{1}}{z_{2}}$ as in Example 6 and 7.</p>
 
@@ -818,13 +793,13 @@
 
             <p>From trigonometry, we have known that</p>
 
-            $$r=\sqrt{x^{2}+y^{2}}$$
-            $$x=r~\cos~\theta$$
-            $$y=r~\sin~\theta$$
+            <div class="math-block">$\displaystyle r=\sqrt{x^{2}+y^{2}}$</div>
+            <div class="math-block">$\displaystyle x=r~\cos~\theta$</div>
+            <div class="math-block">$\displaystyle y=r~\sin~\theta$</div>
 
             <p>So we have $z=(x,y)=x+yi=r~\cos~\theta+i~r~\sin~\theta$</p>
 
-            $$z=r(\cos~\theta+i~\sin~\theta)$$
+            <div class="math-block">$\displaystyle z=r(\cos~\theta+i~\sin~\theta)$</div>
 
             <p>which is called the trigonometric form (or modulus-argument form) of a complex number. $z=(r,\theta)$ is called the polar form of $z$.</p>
 
@@ -837,27 +812,27 @@
                 
                 <p>(a) $z=1+\sqrt{3}i=(1,\sqrt{3})$</p>
 
-                $$r=\sqrt{1+3}=2, \quad \cos~\theta=\frac{1}{2}, \quad \sin~\theta=\frac{\sqrt{3}}{2}$$
-                $$\theta=\frac{\pi}{3}$$
-                $$z=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right)$$
+                <div class="math-block">$\displaystyle r=\sqrt{1+3}=2, \quad \cos~\theta=\frac{1}{2}, \quad \sin~\theta=\frac{\sqrt{3}}{2}$</div>
+                <div class="math-block">$\displaystyle \theta=\frac{\pi}{3}$</div>
+                <div class="math-block">$\displaystyle z=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right)$</div>
                 
                 <p>(b) $z=-1+i=(-1,1)$</p>
 
-                $$r=\sqrt{1+1}=\sqrt{2}, \quad \cos~\theta=-\frac{1}{\sqrt{2}}, \quad \sin~\theta=\frac{1}{\sqrt{2}}$$
-                $$\theta=\frac{3\pi}{4}$$
-                $$z=\sqrt{2}\left(\cos\frac{3\pi}{4}+i~\sin\frac{3\pi}{4}\right)$$
+                <div class="math-block">$\displaystyle r=\sqrt{1+1}=\sqrt{2}, \quad \cos~\theta=-\frac{1}{\sqrt{2}}, \quad \sin~\theta=\frac{1}{\sqrt{2}}$</div>
+                <div class="math-block">$\displaystyle \theta=\frac{3\pi}{4}$</div>
+                <div class="math-block">$\displaystyle z=\sqrt{2}\left(\cos\frac{3\pi}{4}+i~\sin\frac{3\pi}{4}\right)$</div>
                 
                 <p>(c) $z=-\sqrt{3}-i=(-\sqrt{3},-1)$</p>
 
-                $$r=\sqrt{3+1}=2, \quad \cos~\theta=-\frac{\sqrt{3}}{2}, \quad \sin~\theta=-\frac{1}{2}$$
-                $$\theta=-\frac{5\pi}{6}$$
-                $$z=2\left(\cos\left(-\frac{5\pi}{6}\right)+i~\sin\left(-\frac{5\pi}{6}\right)\right)$$
+                <div class="math-block">$\displaystyle r=\sqrt{3+1}=2, \quad \cos~\theta=-\frac{\sqrt{3}}{2}, \quad \sin~\theta=-\frac{1}{2}$</div>
+                <div class="math-block">$\displaystyle \theta=-\frac{5\pi}{6}$</div>
+                <div class="math-block">$\displaystyle z=2\left(\cos\left(-\frac{5\pi}{6}\right)+i~\sin\left(-\frac{5\pi}{6}\right)\right)$</div>
                 
                 <p>(d) $z=-1=(-1,0)$</p>
 
-                $$r=1, \quad \cos~\theta=-1, \quad \sin~\theta=0$$
-                $$\theta=\pi$$
-                $$z=\cos~\pi+i~\sin~\pi$$
+                <div class="math-block">$\displaystyle r=1, \quad \cos~\theta=-1, \quad \sin~\theta=0$</div>
+                <div class="math-block">$\displaystyle \theta=\pi$</div>
+                <div class="math-block">$\displaystyle z=\cos~\pi+i~\sin~\pi$</div>
             </div>
 
             <div class="example-box">
@@ -870,12 +845,12 @@
 
                 <p>2. Find $\theta$ (argument): The point $(-1, -1)$ is in the third quadrant.</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \alpha&= \arctan\left( 1 \right) = \frac{\pi}{4} \\
                 \theta&= -(\pi - \alpha) = -\left(\pi - \frac{\pi}{4}\right) = -\frac{3\pi}{4}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>Therefore, $z = \sqrt{2}\left(\cos\left(-\frac{3\pi}{4}\right) + i \sin\left(-\frac{3\pi}{4}\right)\right)$</p>
             </div>
@@ -884,13 +859,13 @@
 
             <p>Let $z_{1}=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})$ and $z_{2}=r_{2}(\cos~\theta_{2}+i~\sin~\theta_{2})$. Then their product is</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             z_{1}z_{2}&=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})r_{2}(\cos~\theta_{2}+i~\sin~\theta_{2}) \\
             &=r_{1}r_{2}((\cos~\theta_{1}\cos~\theta_{2}-\sin~\theta_{1}\sin~\theta_{2})+i(\sin~\theta_{1}\cos~\theta_{2}+\cos~\theta_{1}\sin~\theta_{2})) \\
             z_{1}z_{2}&=r_{1}r_{2}(\cos(\theta_{1}+\theta_{2})+i~\sin(\theta_{1}+\theta_{2}))
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <div class="example-box">
                 <h4>Example 10.</h4>
@@ -898,38 +873,38 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 z_{1}&=1+\sqrt{3}i=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right) \\
                 z_{2}&=-1+i=\sqrt{2}\left(\cos\frac{3\pi}{4}+i~\sin\frac{3\pi}{4}\right) \\
                 z_{1}z_{2}&=2\sqrt{2}\left(\cos\left(\frac{\pi}{3}+\frac{3\pi}{4}\right)+i~\sin\left(\frac{\pi}{3}+\frac{3\pi}{4}\right)\right) \\
                 &=-1-\sqrt{3}+(1-\sqrt{3})i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>By direct multiplication:</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 z_{1}z_{2}&=(1+\sqrt{3}i)(-1+i) \\
                 &=-1+i-\sqrt{3}i+\sqrt{3}i^{2} \\
                 &=-1-\sqrt{3}+(1-\sqrt{3})i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <h3>Multiplicative Inverse in Trigonometric Form</h3>
 
             <p>Since $z^{-1}=\frac{x}{x^{2}+y^{2}}-\frac{y}{x^{2}+y^{2}}i$ for $z=x+yi$,</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             z^{-1}&=\frac{1}{x^{2}+y^{2}}(x-yi) \\
             &=\frac{1}{r^{2}}r(\cos~\theta-i~\sin~\theta) \\
             &=\frac{1}{r}(\cos~\theta-i~\sin~\theta) \\
             z^{-1}&=\frac{1}{r}(\cos(-\theta)+i~\sin(-\theta))
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <div class="example-box">
                 <h4>Example 11.</h4>
@@ -937,31 +912,31 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 z&=-\sqrt{3}-i=2\left(\cos\left(-\frac{5\pi}{6}\right)+i~\sin\left(-\frac{5\pi}{6}\right)\right) \\
                 z^{-1}&=\frac{1}{2}\left(\cos\frac{5\pi}{6}+i~\sin\frac{5\pi}{6}\right) \\
                 &=\frac{1}{2}\left(-\frac{\sqrt{3}}{2}+\frac{1}{2}i\right) \\
                 &=-\frac{\sqrt{3}}{4}+\frac{1}{4}i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>Checking:</p>
 
-                $$zz^{-1}=(-\sqrt{3}-i)\left(-\frac{\sqrt{3}}{4}+\frac{1}{4}i\right)=\frac{3}{4}-\frac{\sqrt{3}}{4}i+\frac{\sqrt{3}}{4}i-\frac{1}{4}i^{2}=\frac{3}{4}+\frac{1}{4}=1$$
+                <div class="math-block">$\displaystyle zz^{-1}=(-\sqrt{3}-i)\left(-\frac{\sqrt{3}}{4}+\frac{1}{4}i\right)=\frac{3}{4}-\frac{\sqrt{3}}{4}i+\frac{\sqrt{3}}{4}i-\frac{1}{4}i^{2}=\frac{3}{4}+\frac{1}{4}=1$</div>
             </div>
 
             <h3>Division in Trigonometric Form</h3>
 
             <p>Let $z_{1}=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})$ and $z_{2}=r_{2}(\cos~\theta_{2}+i~\sin~\theta_{2})$. Then</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             \frac{z_{1}}{z_{2}}&=z_{1}z_{2}^{-1} \\
             &=r_{1}(\cos~\theta_{1}+i~\sin~\theta_{1})\frac{1}{r_{2}}(\cos(-\theta_{2})+i~\sin(-\theta_{2})) \\
             \frac{z_{1}}{z_{2}}&=\frac{r_{1}}{r_{2}}(\cos(\theta_{1}-\theta_{2})+i~\sin(\theta_{1}-\theta_{2}))
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <div class="example-box">
                 <h4>Example 12.</h4>
@@ -969,32 +944,32 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 z_{1}&=1+\sqrt{3}i=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right) \\
                 z_{2}&=-1+i=\sqrt{2}\left(\cos\frac{3\pi}{4}+i~\sin\frac{3\pi}{4}\right) \\
                 \frac{z_{1}}{z_{2}}&=\frac{2}{\sqrt{2}}\left(\cos\left(\frac{\pi}{3}-\frac{3\pi}{4}\right)+i~\sin\left(\frac{\pi}{3}-\frac{3\pi}{4}\right)\right) \\
                 &=\frac{-1+\sqrt{3}}{2}-\frac{1+\sqrt{3}}{2}i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>By direct calculation:</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{z_{1}}{z_{2}}&=\frac{1+\sqrt{3}i}{-1+i}\frac{-1-i}{-1-i} \\
                 &=\frac{-1+\sqrt{3}-(1+\sqrt{3})i}{2} \\
                 &=\frac{-1-i-\sqrt{3}i-\sqrt{3}i^{2}}{1+1} \\
                 &=\frac{-1+\sqrt{3}}{2}-\frac{1+\sqrt{3}}{2}i
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <h3>Powers of Complex Numbers</h3>
 
             <p>The powers of a complex number $z=r(\cos~\theta+i~\sin~\theta)$ is given by</p>
 
-            $$z^{n}=r^{n}(\cos~n\theta+i~\sin~n\theta) \quad \text{(n is an integer)}$$
+            <div class="math-block">$\displaystyle z^{n}=r^{n}(\cos~n\theta+i~\sin~n\theta) \quad \text{(n is an integer)}$</div>
 
             <div class="example-box">
                 <h4>Example 13.</h4>
@@ -1004,9 +979,9 @@
 
                 <p>$z=1+\sqrt{3}i=2\left(\cos\frac{\pi}{3}+i~\sin\frac{\pi}{3}\right)$</p>
 
-                $$\text{(a)} \quad z^{10}=2^{10}\left(\cos\frac{10\pi}{3}+i~\sin\frac{10\pi}{3}\right)=1024\left(-\frac{1}{2}-\frac{\sqrt{3}}{2}i\right)=-512-512\sqrt{3}i$$
+                <div class="math-block">$\displaystyle \text{(a)} \quad z^{10}=2^{10}\left(\cos\frac{10\pi}{3}+i~\sin\frac{10\pi}{3}\right)=1024\left(-\frac{1}{2}-\frac{\sqrt{3}}{2}i\right)=-512-512\sqrt{3}i$</div>
 
-                $$\text{(b)} \quad z^{-10}=\frac{1}{2^{10}}\left(\cos\left(-\frac{10\pi}{3}\right)+i~\sin\left(-\frac{10\pi}{3}\right)\right)=\frac{1}{1024}\left(-\frac{1}{2}+\frac{\sqrt{3}}{2}i\right)=-\frac{1}{2048}+\frac{\sqrt{3}}{2048}i$$
+                <div class="math-block">$\displaystyle \text{(b)} \quad z^{-10}=\frac{1}{2^{10}}\left(\cos\left(-\frac{10\pi}{3}\right)+i~\sin\left(-\frac{10\pi}{3}\right)\right)=\frac{1}{1024}\left(-\frac{1}{2}+\frac{\sqrt{3}}{2}i\right)=-\frac{1}{2048}+\frac{\sqrt{3}}{2048}i$</div>
             </div>
 
             <div class="exercise-box">
@@ -1041,35 +1016,35 @@
 
             <p>Since $z=r(\cos~\theta+i~\sin~\theta)$ and</p>
 
-            $$
-            \left(\sqrt[n]{r}\left(\cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}\right)\right)^{n}=(\sqrt[n]{r})^{n}\left(\cos~n\left(\frac{\theta}{n}\right)+i~\sin~n\left(\frac{\theta}{n}\right)\right)=r(\cos~\theta+i~\sin~\theta)=z
-            $$
+            <div class="math-block">
+            $\displaystyle \left(\sqrt[n]{r}\left(\cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}\right)\right)^{n}=(\sqrt[n]{r})^{n}\left(\cos~n\left(\frac{\theta}{n}\right)+i~\sin~n\left(\frac{\theta}{n}\right)\right)=r(\cos~\theta+i~\sin~\theta)=z$
+            </div>
 
             <p>we have an $n^{th}$ root of a complex number $z$ as $\sqrt[n]{r}\left(\cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}\right)$.</p>
 
             <p>Moreover, since $z$ can also be represented as $z=r(\cos(\theta+2k\pi)+i~\sin(\theta+2k\pi))$ for every integer $k$, we have</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             \left(\sqrt[n]{r}\left(\cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}\right)\right)^{n}&=(\sqrt[n]{r})^{n}\left(\cos~n\frac{\theta+2k\pi}{n}+i~\sin~n\frac{\theta+2k\pi}{n}\right) \\
             &=r(\cos(\theta+2k\pi)+i~\sin(\theta+2k\pi)) = z
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <p>But for $k=n$ we have</p>
 
-            $$
-            \begin{aligned}
+            <div class="math-block">
+            $\displaystyle \begin{aligned}
             \cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}&=\cos\frac{\theta+2n\pi}{n}+i~\sin\frac{\theta+2n\pi}{n} \\
             &=\cos\left(\frac{\theta}{n}+2\pi\right)+i~\sin\left(\frac{\theta}{n}+2\pi\right) = \cos\frac{\theta}{n}+i~\sin\frac{\theta}{n}
-            \end{aligned}
-            $$
+            \end{aligned}$
+            </div>
 
             <p>so the root for $k=n$ is the same as the root for $k=0$. The same is also true for $k>n$ as the root for $k=n+1$ is same as the root for $k=1$, and so on. Therefore the roots of $z$, denoted by $w_{k}$ of $z$ are</p>
 
-            $$
-            w_{k}=\sqrt[n]{r}\left(\cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}\right), \quad k=0,1,2,...,n-1.
-            $$
+            <div class="math-block">
+            $\displaystyle w_{k}=\sqrt[n]{r}\left(\cos\frac{\theta+2k\pi}{n}+i~\sin\frac{\theta+2k\pi}{n}\right), \quad k=0,1,2,...,n-1.$
+            </div>
 
             <div class="example-box">
                 <h4>Example 14.</h4>
@@ -1087,7 +1062,7 @@
 
                 <p>Then we have</p>
 
-                $$w_{k}=\sqrt[3]{2\sqrt{2}}\left(\cos\frac{-\frac{3\pi}{4}+2k\pi}{3}+i~\sin\frac{-\frac{3\pi}{4}+2k\pi}{3}\right), \quad k=0,1,2.$$
+                <div class="math-block">$\displaystyle w_{k}=\sqrt[3]{2\sqrt{2}}\left(\cos\frac{-\frac{3\pi}{4}+2k\pi}{3}+i~\sin\frac{-\frac{3\pi}{4}+2k\pi}{3}\right), \quad k=0,1,2.$</div>
 
                 <p>Therefore the cube roots are</p>
 
@@ -1104,14 +1079,14 @@
 
                 <div class="solution-title">Solution</div>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 1&=(1,0)=1(\cos~0+i~\sin~0)=1(\cos(0+2k\pi)+i~\sin(0+2k\pi)) \\
                 z^{6}&=1(\cos(0+2k\pi)+i~\sin(0+2k\pi)) \\
                 z&=(1(\cos(0+2k\pi)+i~\sin(0+2k\pi)))^{\frac{1}{6}} \\
                 z&=\sqrt[6]{1}\left(\cos\frac{0+2k\pi}{6}+i~\sin\frac{0+2k\pi}{6}\right)
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>When $k=0, \quad z=\cos~0+i~\sin~0=1.$</p>
 
@@ -1167,11 +1142,11 @@
             <div class="concept-box">
                 <p><strong>Euler's Formula:</strong> For any real number $\theta$,</p>
 
-                $$ e^{i\theta} = \cos\theta + i\sin\theta $$
+                <div class="math-block">$\displaystyle e^{i\theta} = \cos\theta + i\sin\theta$</div>
 
                 <p>By multiplying both sides by the modulus $r$, we obtain the <strong>exponential form</strong> of a complex number:</p>
 
-                $$ z = r e^{i\theta} $$
+                <div class="math-block">$\displaystyle z = r e^{i\theta}$</div>
 
                 <p>Where:</p>
                 <ul>
@@ -1190,22 +1165,22 @@
 
                 <p>First, find the modulus $r$ and argument $\theta$.</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 r &= \sqrt{(-1)^2 + (\sqrt{3})^2} = \sqrt{1 + 3} = 2 \\
                 \alpha &= \arctan\left({ \sqrt{3} \over 1 }\right) = {\pi \over 3}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>Since the point $(-1, \sqrt{3})$ lies in the second quadrant:</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \theta &= \pi - \alpha \\
                 &= \pi - {\pi \over 3} \\
                 &= {2\pi \over 3}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>Therefore, the exponential form is $z = 2e^{i {2\pi \over 3}}$.</p>
             </div>
@@ -1305,12 +1280,12 @@
 
                 <p>First, rewrite the conditions to clearly identify the fixed point $z_1$:</p>
 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 |z - (2 - i)| &\le 3 \\
                 0 \le \arg(z - (2 - i)) &\le {\pi \over 4}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
 
                 <p>The fixed point is $z_1 = 2 - i$.</p>
 

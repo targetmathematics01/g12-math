@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapter 4: Exercise Problems | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            chtml: {
+                displayAlign: "left", 
+                matchFontHeight: false, 
+                scale: 1
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6; 
+            margin: 0; 
+            padding: 15px; 
+            line-height: 1.7;
+            color: #333;
+            overflow-x: hidden; 
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+        
+        .container { 
+            width: 100%;
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: #fff;
+            padding: 25px; 
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+        }
+        
+        h1 { color: #2c3e50; margin-bottom: 5px; text-align: center; font-family: 'Alice', serif; font-size: 1.8rem; }
+        .subtitle { text-align: center; color: #777; margin-bottom: 35px; font-size: 1.1em; }
+        
+        h3.section-title {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 15px; font-size: 1.1rem; }
+        
+        .problem-box { 
+            width: 100%;
+            border: 1px solid #e0e0e0; 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-bottom: 35px; 
+            background: #fafafa; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+            box-sizing: border-box; 
+            word-wrap: break-word;
+            overflow-x: hidden;
+        }
+        .problem-box h4 { margin-top: 0; color: #d9534f; font-size: 1.3rem; margin-bottom: 15px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .problem-box p { color: #333; font-size: 16px; line-height: 1.8; margin-bottom: 15px; word-wrap: break-word; }
+
+        /* ==================================================================== */
+        /* THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Left Align & Indent)          */
+        /* ==================================================================== */
+        .math-block {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            background: #fff;
+            padding: 15px;
+            padding-left: 40px; 
+            border-left: 4px solid #2980b9;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            text-align: left; 
+        }
+        .math-block::-webkit-scrollbar {
+            height: 6px;
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none;
+            width: 0;
+        }
+        .math-block::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        mjx-container {
+            text-align: left !important;
+            max-width: 100% !important; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; 
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+        }
+        mjx-container::-webkit-scrollbar {
+            height: 6px; 
+        }
+        mjx-container::-webkit-scrollbar:vertical {
+            display: none; 
+            width: 0;
+        }
+        mjx-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+        /* ==================================================================== */
+
+        /* Equal Spacing Grid For Lists */
+        .flex-container { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 15px;
+        }
+        .flex-container-2 { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 15px;
+        }
+        
+        .flex-item { 
+            width: 100%;
+            box-sizing: border-box; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            text-align: left; 
+        }
+        .flex-item::-webkit-scrollbar { display: none; }
+        .flex-item::-webkit-scrollbar:vertical { display: none; }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .problem-box { padding: 15px; margin-bottom: 25px; }
+            .flex-container, .flex-container-2 { grid-template-columns: 1fr; gap: 15px; }
+            .math-block { padding-left: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chapter 4: Vector Algebra</h1>
+        <p class="subtitle">Exercise Solutions (4.1 to 4.4)</p>
+
+        <h3 class="section-title">Exercise 4.1</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Let $\displaystyle \vec{a} = \begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix}$, $\displaystyle \vec{b} = \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix}$ and $\displaystyle \vec{c} = \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix}$. Find the following vectors.</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle 3\vec{a}$</div>
+                <div class="flex-item">(b) $\displaystyle 4\vec{b}$</div>
+                <div class="flex-item">(c) $\displaystyle \vec{a}-\vec{b}$</div>
+                <div class="flex-item">(d) $\displaystyle \vec{b}+\vec{c}$</div>
+                <div class="flex-item">(e) $\displaystyle 2\vec{b}+\vec{c}$</div>
+                <div class="flex-item">(f) $\displaystyle \vec{a}-2\vec{b}$</div>
+                <div class="flex-item">(g) $\displaystyle \vec{a}+\vec{b}-2\vec{c}$</div>
+                <div class="flex-item">(h) $\displaystyle 3\vec{a}-\vec{b}+\vec{c}$</div>
+            </div>
+            
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> $\displaystyle 3\vec{a}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                3\vec{a} &= 3\begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix} = \begin{pmatrix} 15 \\ -6 \\ -12 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            
+            <p><b>(b)</b> $\displaystyle 4\vec{b}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                4\vec{b} &= 4\begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} = \begin{pmatrix} 12 \\ -24 \\ 4 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> $\displaystyle \vec{a}-\vec{b}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a}-\vec{b} &= \begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix} - \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} = \begin{pmatrix} 5 - 3 \\ -2 - (-6) \\ -4 - 1 \end{pmatrix} = \begin{pmatrix} 2 \\ 4 \\ -5 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(d)</b> $\displaystyle \vec{b}+\vec{c}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{b}+\vec{c} &= \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix} = \begin{pmatrix} 3 + 0 \\ -6 + 7 \\ 1 - 1 \end{pmatrix} = \begin{pmatrix} 3 \\ 1 \\ 0 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(e)</b> $\displaystyle 2\vec{b}+\vec{c}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2\vec{b}+\vec{c} &= 2\begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix} = \begin{pmatrix} 6 \\ -12 \\ 2 \end{pmatrix} + \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix} = \begin{pmatrix} 6 \\ -5 \\ 1 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(f)</b> $\displaystyle \vec{a}-2\vec{b}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a}-2\vec{b} &= \begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix} - 2\begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} = \begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix} - \begin{pmatrix} 6 \\ -12 \\ 2 \end{pmatrix} = \begin{pmatrix} -1 \\ 10 \\ -6 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(g)</b> $\displaystyle \vec{a}+\vec{b}-2\vec{c}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a}+\vec{b}-2\vec{c} &= \begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix} + \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} - 2\begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix} \\
+                &= \begin{pmatrix} 8 \\ -8 \\ -3 \end{pmatrix} - \begin{pmatrix} 0 \\ 14 \\ -2 \end{pmatrix} \\
+                &= \begin{pmatrix} 8 \\ -22 \\ -1 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(h)</b> $\displaystyle 3\vec{a}-\vec{b}+\vec{c}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                3\vec{a}-\vec{b}+\vec{c} &= 3\begin{pmatrix} 5 \\ -2 \\ -4 \end{pmatrix} - \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix} \\
+                &= \begin{pmatrix} 15 \\ -6 \\ -12 \end{pmatrix} - \begin{pmatrix} 3 \\ -6 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ 7 \\ -1 \end{pmatrix} \\
+                &= \begin{pmatrix} 12 \\ 7 \\ -14 \end{pmatrix}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Given vectors $\displaystyle \vec{a} = \begin{pmatrix} 1 \\ 2 \\ 7 \end{pmatrix}$, $\displaystyle \vec{b} = \begin{pmatrix} -3 \\ 4 \\ 2 \end{pmatrix}$ and $\displaystyle \vec{c} = \begin{pmatrix} -2 \\ p \\ q \end{pmatrix}$.</p>
+            <p>(a) Find the values of $\displaystyle p$ and $\displaystyle q$ such that $\displaystyle \vec{c}$ is parallel to $\displaystyle \vec{a}$.</p>
+            <p>(b) Find the value of scalar $\displaystyle k$ such that $\displaystyle \vec{a}+k\vec{b}$ is parallel to vector $\displaystyle \begin{pmatrix} 0 \\ 10 \\ 23 \end{pmatrix}$.</p>
+            
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> Since $\displaystyle \vec{c}$ is parallel to $\displaystyle \vec{a}$, we have $\displaystyle \vec{c} = m\vec{a}$ for some scalar $\displaystyle m$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \begin{pmatrix} -2 \\ p \\ q \end{pmatrix} &= m\begin{pmatrix} 1 \\ 2 \\ 7 \end{pmatrix} = \begin{pmatrix} m \\ 2m \\ 7m \end{pmatrix} \\
+                \end{aligned}$
+            </div>
+            
+            <p>Equating the components, we get:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                m &= -2 \\
+                p &= 2m = 2(-2) = -4 \\
+                q &= 7m = 7(-2) = -14
+                \end{aligned}$
+            </div>
+            <p>Therefore, $\displaystyle p = -4$ and $\displaystyle q = -14$.</p>
+
+            <p><b>(b)</b> Let $\displaystyle \vec{v} = \begin{pmatrix} 0 \\ 10 \\ 23 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} + k\vec{b} &= \begin{pmatrix} 1 \\ 2 \\ 7 \end{pmatrix} + k\begin{pmatrix} -3 \\ 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 1-3k \\ 2+4k \\ 7+2k \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \vec{a}+k\vec{b}$ is parallel to $\displaystyle \vec{v}$, their components must be proportional.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                1-3k &= 0 \cdot m \implies 1-3k = 0 \implies k = \frac{1}{3}
+                \end{aligned}$
+            </div>
+            <p>Checking the other components with $\displaystyle k = \frac{1}{3}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2 + 4\left(\frac{1}{3}\right) &= \frac{10}{3} \\
+                7 + 2\left(\frac{1}{3}\right) &= \frac{23}{3}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \begin{pmatrix} 0 \\ 10/3 \\ 23/3 \end{pmatrix} = \frac{1}{3}\begin{pmatrix} 0 \\ 10 \\ 23 \end{pmatrix}$, they are parallel. Thus, $\displaystyle k = \frac{1}{3}$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Points $\displaystyle A, B, C$ and $\displaystyle D$ have position vectors $\displaystyle \vec{a} = \begin{pmatrix} 3 \\ -1 \\ 1 \end{pmatrix}$, $\displaystyle \vec{b} = \begin{pmatrix} 5 \\ 0 \\ 3 \end{pmatrix}$, $\displaystyle \vec{c} = \begin{pmatrix} 7 \\ 8 \\ -3 \end{pmatrix}$ and $\displaystyle \vec{d} = \begin{pmatrix} 4 \\ 3 \\ -2 \end{pmatrix}$ respectively. Point $\displaystyle E$ is the midpoint of $\displaystyle BC$.</p>
+            <p>(a) Find the position vector of $\displaystyle E$.</p>
+            <p>(b) Show that $\displaystyle ABED$ is a parallelogram.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> Since $\displaystyle E$ is the midpoint of $\displaystyle BC$, its position vector $\displaystyle \vec{e}$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{e} &= \frac{1}{2}(\vec{b} + \vec{c}) \\
+                &= \frac{1}{2} \left[ \begin{pmatrix} 5 \\ 0 \\ 3 \end{pmatrix} + \begin{pmatrix} 7 \\ 8 \\ -3 \end{pmatrix} \right] \\
+                &= \frac{1}{2} \begin{pmatrix} 12 \\ 8 \\ 0 \end{pmatrix} \\
+                &= \begin{pmatrix} 6 \\ 4 \\ 0 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            
+            <p><b>(b)</b> For $\displaystyle ABED$ to be a parallelogram, we need to show that $\displaystyle \overrightarrow{AB} = \overrightarrow{DE}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \overrightarrow{AB} &= \vec{b} - \vec{a} = \begin{pmatrix} 5 \\ 0 \\ 3 \end{pmatrix} - \begin{pmatrix} 3 \\ -1 \\ 1 \end{pmatrix} = \begin{pmatrix} 2 \\ 1 \\ 2 \end{pmatrix} \\
+                \overrightarrow{DE} &= \vec{e} - \vec{d} = \begin{pmatrix} 6 \\ 4 \\ 0 \end{pmatrix} - \begin{pmatrix} 4 \\ 3 \\ -2 \end{pmatrix} = \begin{pmatrix} 2 \\ 1 \\ 2 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>Since $\displaystyle \overrightarrow{AB} = \overrightarrow{DE}$, $\displaystyle ABED$ is a parallelogram.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Points $\displaystyle A, B$ and $\displaystyle C$ have position vectors $\displaystyle \vec{a} = \begin{pmatrix} 2 \\ -1 \\ 4 \end{pmatrix}$, $\displaystyle \vec{b} = \begin{pmatrix} 5 \\ 1 \\ 2 \end{pmatrix}$ and $\displaystyle \vec{c} = \begin{pmatrix} 3 \\ 1 \\ 4 \end{pmatrix}$ respectively. Find the position vector of point $\displaystyle D$ such that $\displaystyle ABCD$ is a parallelogram.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p>For $\displaystyle ABCD$ to be a parallelogram, $\displaystyle \overrightarrow{AB} = \overrightarrow{DC}$. Let the position vector of $\displaystyle D$ be $\displaystyle \vec{d}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{b} - \vec{a} &= \vec{c} - \vec{d} \\
+                \vec{d} &= \vec{c} - \vec{b} + \vec{a} \\
+                &= \begin{pmatrix} 3 \\ 1 \\ 4 \end{pmatrix} - \begin{pmatrix} 5 \\ 1 \\ 2 \end{pmatrix} + \begin{pmatrix} 2 \\ -1 \\ 4 \end{pmatrix} \\
+                &= \begin{pmatrix} 3 - 5 + 2 \\ 1 - 1 - 1 \\ 4 - 2 + 4 \end{pmatrix} \\
+                &= \begin{pmatrix} 0 \\ -1 \\ 6 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>The position vector of point $\displaystyle D$ is $\displaystyle \begin{pmatrix} 0 \\ -1 \\ 6 \end{pmatrix}$.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 5</h4>
+            <p>$\displaystyle K(1,-1,0)$, $\displaystyle L(4,-3,7)$ and $\displaystyle M(a,2,b)$ are collinear. Find $\displaystyle a$ and $\displaystyle b$.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p>Since $\displaystyle K, L,$ and $\displaystyle M$ are collinear, the vectors $\displaystyle \overrightarrow{KM}$ and $\displaystyle \overrightarrow{KL}$ are parallel. Therefore, $\displaystyle \overrightarrow{KM} = k\overrightarrow{KL}$ for some scalar $\displaystyle k$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \overrightarrow{KL} &= \overrightarrow{OL} - \overrightarrow{OK} = \begin{pmatrix} 4 \\ -3 \\ 7 \end{pmatrix} - \begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix} = \begin{pmatrix} 3 \\ -2 \\ 7 \end{pmatrix} \\
+                \overrightarrow{KM} &= \overrightarrow{OM} - \overrightarrow{OK} = \begin{pmatrix} a \\ 2 \\ b \end{pmatrix} - \begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix} = \begin{pmatrix} a-1 \\ 3 \\ b \end{pmatrix}
+                \end{aligned}$
+            </div>
+            
+            <p>By equating $\displaystyle \overrightarrow{KM} = k\overrightarrow{KL}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \begin{pmatrix} a-1 \\ 3 \\ b \end{pmatrix} &= k\begin{pmatrix} 3 \\ -2 \\ 7 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            
+            <p>Equating the components:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                3 &= -2k \implies k = -\frac{3}{2} \\
+                a-1 &= 3k = 3\left(-\frac{3}{2}\right) = -\frac{9}{2} \implies a = -\frac{7}{2} \\
+                b &= 7k = 7\left(-\frac{3}{2}\right) = -\frac{21}{2}
+                \end{aligned}$
+            </div>
+            <p>Therefore, $\displaystyle a = -\frac{7}{2}$ and $\displaystyle b = -\frac{21}{2}$.</p>
+        </div>
+
+        <h3 class="section-title">Exercise 4.2</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>For $\displaystyle \vec{p} = \begin{pmatrix} 3 \\ 2 \end{pmatrix}$, $\displaystyle \vec{q} = \begin{pmatrix} -1 \\ 5 \end{pmatrix}$ and $\displaystyle \vec{r} = \begin{pmatrix} -2 \\ 4 \end{pmatrix}$, find:</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle \vec{q} \cdot \vec{p}$</div>
+                <div class="flex-item">(b) $\displaystyle \vec{q} \cdot \vec{r}$</div>
+                <div class="flex-item">(c) $\displaystyle \vec{q} \cdot (\vec{p} + \vec{r})$</div>
+                <div class="flex-item">(d) $\displaystyle \hat{\text{i}} \cdot \vec{p}$</div>
+                <div class="flex-item">(e) $\displaystyle \vec{q} \cdot \hat{\text{j}}$</div>
+                <div class="flex-item">(f) $\displaystyle \hat{\text{i}} \cdot \hat{\text{i}}$</div>
+            </div>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> $\displaystyle \vec{q} \cdot \vec{p}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{q} \cdot \vec{p} &= \begin{pmatrix} -1 \\ 5 \end{pmatrix} \cdot \begin{pmatrix} 3 \\ 2 \end{pmatrix} = (-1)(3) + (5)(2) = -3 + 10 = 7
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> $\displaystyle \vec{q} \cdot \vec{r}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{q} \cdot \vec{r} &= \begin{pmatrix} -1 \\ 5 \end{pmatrix} \cdot \begin{pmatrix} -2 \\ 4 \end{pmatrix} = (-1)(-2) + (5)(4) = 2 + 20 = 22
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> $\displaystyle \vec{q} \cdot (\vec{p} + \vec{r})$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{q} \cdot (\vec{p} + \vec{r}) &= \vec{q} \cdot \vec{p} + \vec{q} \cdot \vec{r} = 7 + 22 = 29
+                \end{aligned}$
+            </div>
+
+            <p><b>(d)</b> $\displaystyle \hat{\text{i}} \cdot \vec{p}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \hat{\text{i}} \cdot \vec{p} &= \begin{pmatrix} 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 3 \\ 2 \end{pmatrix} = (1)(3) + (0)(2) = 3
+                \end{aligned}$
+            </div>
+
+            <p><b>(e)</b> $\displaystyle \vec{q} \cdot \hat{\text{j}}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{q} \cdot \hat{\text{j}} &= \begin{pmatrix} -1 \\ 5 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ 1 \end{pmatrix} = (-1)(0) + (5)(1) = 5
+                \end{aligned}$
+            </div>
+
+            <p><b>(f)</b> $\displaystyle \hat{\text{i}} \cdot \hat{\text{i}}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \hat{\text{i}} \cdot \hat{\text{i}} &= \begin{pmatrix} 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 0 \end{pmatrix} = (1)(1) + (0)(0) = 1
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>For $\displaystyle \vec{a} = \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}$, $\displaystyle \vec{b} = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$ and $\displaystyle \vec{c} = \begin{pmatrix} 0 \\ -1 \\ 1 \end{pmatrix}$. Find:</p>
+            <div class="flex-container">
+                <div class="flex-item">(a) $\displaystyle \vec{a} \cdot \vec{b}$</div>
+                <div class="flex-item">(b) $\displaystyle \vec{b} \cdot \vec{a}$</div>
+                <div class="flex-item">(c) $\displaystyle |\vec{a}|^2$</div>
+                <div class="flex-item">(d) $\displaystyle \vec{a} \cdot \vec{a}$</div>
+                <div class="flex-item">(e) $\displaystyle \vec{a} \cdot (\vec{b} + \vec{c})$</div>
+                <div class="flex-item">(f) $\displaystyle \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}$</div>
+            </div>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> $\displaystyle \vec{a} \cdot \vec{b}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} \cdot \vec{b} &= \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix} = (2)(-1) + (1)(1) + (3)(1) = -2 + 1 + 3 = 2
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> $\displaystyle \vec{b} \cdot \vec{a}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{b} \cdot \vec{a} &= \vec{a} \cdot \vec{b} = 2
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> $\displaystyle |\vec{a}|^2$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                |\vec{a}|^2 &= 2^2 + 1^2 + 3^2 = 4 + 1 + 9 = 14
+                \end{aligned}$
+            </div>
+
+            <p><b>(d)</b> $\displaystyle \vec{a} \cdot \vec{a}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} \cdot \vec{a} &= |\vec{a}|^2 = 14
+                \end{aligned}$
+            </div>
+
+            <p><b>(e)</b> $\displaystyle \vec{a} \cdot (\vec{b} + \vec{c})$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} \cdot (\vec{b} + \vec{c}) &= \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix} \cdot \left[ \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ -1 \\ 1 \end{pmatrix} \right] \\
+                &= \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ 0 \\ 2 \end{pmatrix} \\
+                &= (2)(-1) + (1)(0) + (3)(2) = -2 + 0 + 6 = 4
+                \end{aligned}$
+            </div>
+
+            <p><b>(f)</b> $\displaystyle \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} \cdot \vec{c} &= \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ -1 \\ 1 \end{pmatrix} = (2)(0) + (1)(-1) + (3)(1) = -1 + 3 = 2 \\
+                \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c} &= 2 + 2 = 4
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Find the angle between $\displaystyle \vec{m}$ and $\displaystyle \vec{n}$ if:</p>
+            <p>(a) $\displaystyle \vec{m} = \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix}$, and $\displaystyle \vec{n} = \begin{pmatrix} -1 \\ 3 \\ 2 \end{pmatrix}$</p>
+            <p>(b) $\displaystyle \vec{m} = 2\hat{\text{j}} - \hat{\text{k}}$ and $\displaystyle \vec{n} = \hat{\text{i}} + 2\hat{\text{k}}$</p>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> Let $\displaystyle \theta$ be the angle between $\displaystyle \vec{m}$ and $\displaystyle \vec{n}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{m} \cdot \vec{n} &= \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ 3 \\ 2 \end{pmatrix} = (2)(-1) + (-1)(3) + (-1)(2) = -2 - 3 - 2 = -7 \\
+                |\vec{m}| &= \sqrt{2^2 + (-1)^2 + (-1)^2} = \sqrt{4 + 1 + 1} = \sqrt{6} \\
+                |\vec{n}| &= \sqrt{(-1)^2 + 3^2 + 2^2} = \sqrt{1 + 9 + 4} = \sqrt{14} \\
+                \cos \theta &= \frac{\vec{m} \cdot \vec{n}}{|\vec{m}||\vec{n}|} = \frac{-7}{\sqrt{6}\sqrt{14}} = \frac{-7}{\sqrt{84}} = \frac{-7}{2\sqrt{21}} \\
+                \theta &= \cos^{-1} \left( \frac{-7}{2\sqrt{21}} \right)
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> Let $\displaystyle \theta$ be the angle between $\displaystyle \vec{m}$ and $\displaystyle \vec{n}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{m} &= \begin{pmatrix} 0 \\ 2 \\ -1 \end{pmatrix} , \quad \vec{n} = \begin{pmatrix} 1 \\ 0 \\ 2 \end{pmatrix} \\
+                \vec{m} \cdot \vec{n} &= (0)(1) + (2)(0) + (-1)(2) = -2 \\
+                |\vec{m}| &= \sqrt{0^2 + 2^2 + (-1)^2} = \sqrt{5} \\
+                |\vec{n}| &= \sqrt{1^2 + 0^2 + 2^2} = \sqrt{5} \\
+                \cos \theta &= \frac{\vec{m} \cdot \vec{n}}{|\vec{m}||\vec{n}|} = \frac{-2}{\sqrt{5}\sqrt{5}} = -\frac{2}{5} \\
+                \theta &= \cos^{-1} \left( -\frac{2}{5} \right)
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Find $\displaystyle t$ if the given pair of vectors are (i) perpendicular (ii) parallel.</p>
+            <p>(a) $\displaystyle \vec{p} = \begin{pmatrix} 3 \\ t \end{pmatrix}$ and $\displaystyle \vec{q} = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$</p>
+            <p>(b) $\displaystyle \vec{a} = \begin{pmatrix} 0 \\ t+2 \end{pmatrix}$ and $\displaystyle \vec{b} = \begin{pmatrix} 2-3t \\ t \end{pmatrix}$</p>
+            <p>(c) $\displaystyle \vec{r} = \begin{pmatrix} t \\ t+2 \end{pmatrix}$ and $\displaystyle \vec{s} = \begin{pmatrix} t \\ -4 \end{pmatrix}$</p>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> $\displaystyle \vec{p} = \begin{pmatrix} 3 \\ t \end{pmatrix}$ and $\displaystyle \vec{q} = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{(i)} \quad & \text{For perpendicular vectors, } \vec{p} \cdot \vec{q} = 0. \\
+                & (3)(-2) + (t)(1) = 0 \implies -6 + t = 0 \implies t = 6. \\
+                \text{(ii)} \quad & \text{For parallel vectors, their components are proportional.} \\
+                & \frac{3}{-2} = \frac{t}{1} \implies t = -\frac{3}{2}.
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> $\displaystyle \vec{a} = \begin{pmatrix} 0 \\ t+2 \end{pmatrix}$ and $\displaystyle \vec{b} = \begin{pmatrix} 2-3t \\ t \end{pmatrix}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{(i)} \quad & \text{For perpendicular vectors, } \vec{a} \cdot \vec{b} = 0. \\
+                & (0)(2-3t) + (t+2)(t) = 0 \implies t^2 + 2t = 0 \implies t(t + 2) = 0. \\
+                & \therefore t = 0 \text{ or } t = -2. \\
+                \text{(ii)} \quad & \text{For parallel vectors, } \vec{a} = k\vec{b}. \\
+                & \implies (0)(t) - (t+2)(2-3t) = 0 \implies (t+2)(2-3t) = 0. \\
+                & \therefore t = -2 \text{ or } t = \frac{2}{3}.
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> $\displaystyle \vec{r} = \begin{pmatrix} t \\ t+2 \end{pmatrix}$ and $\displaystyle \vec{s} = \begin{pmatrix} t \\ -4 \end{pmatrix}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{(i)} \quad & \text{For perpendicular vectors, } \vec{r} \cdot \vec{s} = 0. \\
+                & (t)(t) + (t+2)(-4) = 0 \implies t^2 - 4t - 8 = 0. \\
+                & \text{Using quadratic formula: } t = \frac{4 \pm \sqrt{16 - 4(1)(-8)}}{2} = \frac{4 \pm \sqrt{48}}{2} = 2 \pm 2\sqrt{3}. \\
+                \text{(ii)} \quad & \text{For parallel vectors, their components are proportional.} \\
+                & (t)(-4) - (t+2)(t) = 0 \implies -4t - t^2 - 2t = 0 \implies -t^2 - 6t = 0. \\
+                & \implies t(t + 6) = 0. \\
+                & \therefore t = 0 \text{ or } t = -6.
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 5</h4>
+            <p>Find $\displaystyle t$ if $\displaystyle \begin{pmatrix} 3 \\ t \\ -2 \end{pmatrix}$ is perpendicular to $\displaystyle \begin{pmatrix} 1-t \\ -3 \\ 4 \end{pmatrix}$.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p>Since the vectors are perpendicular, their scalar product is zero.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \begin{pmatrix} 3 \\ t \\ -2 \end{pmatrix} \cdot \begin{pmatrix} 1-t \\ -3 \\ 4 \end{pmatrix} &= 0 \\
+                3(1-t) + t(-3) + (-2)(4) &= 0 \\
+                3 - 3t - 3t - 8 &= 0 \\
+                -6t - 5 &= 0 \\
+                -6t &= 5 \\
+                t &= -\frac{5}{6}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 6</h4>
+            <p>$\displaystyle ABCD$ is a parallelogram with $\displaystyle AB$ parallel to $\displaystyle DC$. Let $\displaystyle \overrightarrow{AB} = \vec{a}$ and $\displaystyle \overrightarrow{AD} = \vec{b}$.</p>
+            <p>(a) Express $\displaystyle \overrightarrow{AC}$ and $\displaystyle \overrightarrow{BD}$ in terms of $\displaystyle \vec{a}$ and $\displaystyle \vec{b}$.</p>
+            <p>(b) Simplify $\displaystyle (\vec{a} + \vec{b}) \cdot (\vec{b} - \vec{a})$.</p>
+            <p>(c) Hence show that if $\displaystyle ABCD$ is a rhombus then its diagonals are perpendicular.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> Express $\displaystyle \overrightarrow{AC}$ and $\displaystyle \overrightarrow{BD}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{By triangle law, } \overrightarrow{AC} &= \overrightarrow{AB} + \overrightarrow{BC} \\
+                \text{Since } ABCD \text{ is a parallelogram, } \overrightarrow{BC} &= \overrightarrow{AD} = \vec{b}. \\
+                \therefore \overrightarrow{AC} &= \vec{a} + \vec{b}. \\
+                \text{For } \overrightarrow{BD}, \quad \overrightarrow{BD} &= \overrightarrow{AD} - \overrightarrow{AB} = \vec{b} - \vec{a}.
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> Simplify $\displaystyle (\vec{a} + \vec{b}) \cdot (\vec{b} - \vec{a})$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (\vec{a} + \vec{b}) \cdot (\vec{b} - \vec{a}) &= \vec{a} \cdot \vec{b} - \vec{a} \cdot \vec{a} + \vec{b} \cdot \vec{b} - \vec{b} \cdot \vec{a} \\
+                &= \vec{a} \cdot \vec{b} - |\vec{a}|^2 + |\vec{b}|^2 - \vec{a} \cdot \vec{b} \\
+                &= |\vec{b}|^2 - |\vec{a}|^2.
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> If $\displaystyle ABCD$ is a rhombus, all its sides are equal in length, so $\displaystyle |\vec{a}| = |\vec{b}|$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{Therefore, } |\vec{b}|^2 - |\vec{a}|^2 &= 0. \\
+                \implies (\vec{a} + \vec{b}) \cdot (\vec{b} - \vec{a}) &= 0. \\
+                \implies \overrightarrow{AC} \cdot \overrightarrow{BD} &= 0.
+                \end{aligned}$
+            </div>
+            <p>Since the scalar product of the diagonals is zero, the diagonals $\displaystyle \overrightarrow{AC}$ and $\displaystyle \overrightarrow{BD}$ are perpendicular.</p>
+        </div>
+
+        <h3 class="section-title">Exercise 4.3</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Find a vector perpendicular to the following pair of vectors:</p>
+            <div class="flex-container-2">
+                <div class="flex-item">(a) $\displaystyle \begin{pmatrix} 3 \\ 1 \\ 1 \end{pmatrix}$ and $\displaystyle \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$</div>
+                <div class="flex-item">(b) $\displaystyle \begin{pmatrix} 3 \\ -1 \\ 4 \end{pmatrix}$ and $\displaystyle \begin{pmatrix} -1 \\ 1 \\ 5 \end{pmatrix}$</div>
+            </div>
+
+            <div class="solution-title">Solution</div>
+            <p>A vector perpendicular to two given vectors can be found by calculating their cross product (using the column vector method).</p>
+
+            <p><b>(a)</b> Let $\displaystyle \vec{u} = \begin{pmatrix} 3 \\ 1 \\ 1 \end{pmatrix}$ and $\displaystyle \vec{v} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{u} \times \vec{v} &= \begin{pmatrix} 3 \\ 1 \\ 1 \end{pmatrix} \times \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \\
+                &= \begin{pmatrix} (1)(3) - (1)(2) \\ (1)(1) - (3)(3) \\ (3)(2) - (1)(1) \end{pmatrix} \\
+                &= \begin{pmatrix} 3 - 2 \\ 1 - 9 \\ 6 - 1 \end{pmatrix} \\
+                &= \begin{pmatrix} 1 \\ -8 \\ 5 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> Let $\displaystyle \vec{u} = \begin{pmatrix} 3 \\ -1 \\ 4 \end{pmatrix}$ and $\displaystyle \vec{v} = \begin{pmatrix} -1 \\ 1 \\ 5 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{u} \times \vec{v} &= \begin{pmatrix} 3 \\ -1 \\ 4 \end{pmatrix} \times \begin{pmatrix} -1 \\ 1 \\ 5 \end{pmatrix} \\
+                &= \begin{pmatrix} (-1)(5) - (4)(1) \\ (4)(-1) - (3)(5) \\ (3)(1) - (-1)(-1) \end{pmatrix} \\
+                &= \begin{pmatrix} -5 - 4 \\ -4 - 15 \\ 3 - 1 \end{pmatrix} \\
+                &= \begin{pmatrix} -9 \\ -19 \\ 2 \end{pmatrix}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>Consider $\displaystyle \vec{a} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$ and $\displaystyle \vec{b} = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$.</p>
+            <p>(a) Find $\displaystyle \vec{a} \times \vec{b}$.</p>
+            <p>(b) Find $\displaystyle \sin \theta$ using $\displaystyle |\vec{a} \times \vec{b}| = |\vec{a}||\vec{b}|\sin \theta$.</p>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> $\displaystyle \vec{a} \times \vec{b}$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} \times \vec{b} &= \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix} \times \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} \\
+                &= \begin{pmatrix} (-1)(-1) - (3)(0) \\ (3)(1) - (2)(-1) \\ (2)(0) - (-1)(1) \end{pmatrix} \\
+                &= \begin{pmatrix} 1 - 0 \\ 3 + 2 \\ 0 + 1 \end{pmatrix} \\
+                &= \begin{pmatrix} 1 \\ 5 \\ 1 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> Find $\displaystyle \sin \theta$</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                |\vec{a} \times \vec{b}| &= \sqrt{1^2 + 5^2 + 1^2} = \sqrt{1 + 25 + 1} = \sqrt{27} \\
+                |\vec{a}| &= \sqrt{2^2 + (-1)^2 + 3^2} = \sqrt{4 + 1 + 9} = \sqrt{14} \\
+                |\vec{b}| &= \sqrt{1^2 + 0^2 + (-1)^2} = \sqrt{1 + 0 + 1} = \sqrt{2} \\
+                |\vec{a} \times \vec{b}| &= |\vec{a}||\vec{b}|\sin \theta \\
+                \sqrt{27} &= \sqrt{14}\sqrt{2} \sin \theta \\
+                \sin \theta &= \frac{\sqrt{27}}{\sqrt{28}} = \frac{3\sqrt{3}}{2\sqrt{7}} = \frac{3\sqrt{21}}{14}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Prove that for any two vectors $\displaystyle \vec{a}$ and $\displaystyle \vec{b}$, $\displaystyle |\vec{a} \times \vec{b}|^2 + (\vec{a} \cdot \vec{b})^2 = |\vec{a}|^2|\vec{b}|^2$.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p>Let $\displaystyle \theta$ be the angle between vectors $\displaystyle \vec{a}$ and $\displaystyle \vec{b}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{We know that } |\vec{a} \times \vec{b}| &= |\vec{a}||\vec{b}|\sin \theta \\
+                \text{and } \vec{a} \cdot \vec{b} &= |\vec{a}||\vec{b}|\cos \theta. \\
+                \text{Substitute these into the left hand side:} \\
+                |\vec{a} \times \vec{b}|^2 + (\vec{a} \cdot \vec{b})^2 &= (|\vec{a}||\vec{b}|\sin \theta)^2 + (|\vec{a}||\vec{b}|\cos \theta)^2 \\
+                &= |\vec{a}|^2|\vec{b}|^2\sin^2 \theta + |\vec{a}|^2|\vec{b}|^2\cos^2 \theta \\
+                &= |\vec{a}|^2|\vec{b}|^2(\sin^2 \theta + \cos^2 \theta) \\
+                \text{Since } \sin^2 \theta + \cos^2 \theta = 1, \\
+                &= |\vec{a}|^2|\vec{b}|^2(1) \\
+                &= |\vec{a}|^2|\vec{b}|^2
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Given points $\displaystyle A$, $\displaystyle B$ and $\displaystyle C$ with coordinates $\displaystyle (3, 5, 1)$, $\displaystyle (7, 7, 2)$ and $\displaystyle (-1,1,3)$.</p>
+            <p>(a) Calculate $\displaystyle \vec{p} = \overrightarrow{AB} \times \overrightarrow{AC}$ and $\displaystyle \vec{q} = \overrightarrow{BA} \times \overrightarrow{BC}$.</p>
+            <p>(b) What can you say about vectors $\displaystyle \vec{p}$ and $\displaystyle \vec{q}$?</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> Calculate $\displaystyle \vec{p}$ and $\displaystyle \vec{q}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \overrightarrow{AB} &= \begin{pmatrix} 7-3 \\ 7-5 \\ 2-1 \end{pmatrix} = \begin{pmatrix} 4 \\ 2 \\ 1 \end{pmatrix} \\
+                \overrightarrow{AC} &= \begin{pmatrix} -1-3 \\ 1-5 \\ 3-1 \end{pmatrix} = \begin{pmatrix} -4 \\ -4 \\ 2 \end{pmatrix} \\
+                \vec{p} = \overrightarrow{AB} \times \overrightarrow{AC} &= \begin{pmatrix} 4 \\ 2 \\ 1 \end{pmatrix} \times \begin{pmatrix} -4 \\ -4 \\ 2 \end{pmatrix} \\
+                &= \begin{pmatrix} (2)(2) - (1)(-4) \\ (1)(-4) - (4)(2) \\ (4)(-4) - (2)(-4) \end{pmatrix} \\
+                &= \begin{pmatrix} 4 + 4 \\ -4 - 8 \\ -16 + 8 \end{pmatrix} = \begin{pmatrix} 8 \\ -12 \\ -8 \end{pmatrix} \\
+                \\
+                \overrightarrow{BA} &= -\overrightarrow{AB} = \begin{pmatrix} -4 \\ -2 \\ -1 \end{pmatrix} \\
+                \overrightarrow{BC} &= \begin{pmatrix} -1-7 \\ 1-7 \\ 3-2 \end{pmatrix} = \begin{pmatrix} -8 \\ -6 \\ 1 \end{pmatrix} \\
+                \vec{q} = \overrightarrow{BA} \times \overrightarrow{BC} &= \begin{pmatrix} -4 \\ -2 \\ -1 \end{pmatrix} \times \begin{pmatrix} -8 \\ -6 \\ 1 \end{pmatrix} \\
+                &= \begin{pmatrix} (-2)(1) - (-1)(-6) \\ (-1)(-8) - (-4)(1) \\ (-4)(-6) - (-2)(-8) \end{pmatrix} \\
+                &= \begin{pmatrix} -2 - 6 \\ 8 + 4 \\ 24 - 16 \end{pmatrix} = \begin{pmatrix} -8 \\ 12 \\ 8 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> Comparing $\displaystyle \vec{p}$ and $\displaystyle \vec{q}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \text{We can see that } \vec{p} &= \begin{pmatrix} 8 \\ -12 \\ -8 \end{pmatrix} \text{ and } \vec{q} = \begin{pmatrix} -8 \\ 12 \\ 8 \end{pmatrix}. \\
+                \implies \vec{p} &= -\vec{q}
+                \end{aligned}$
+            </div>
+            <p>The vectors $\displaystyle \vec{p}$ and $\displaystyle \vec{q}$ have the same magnitude but are opposite in direction. They both represent the normal to the plane containing the triangle $\displaystyle ABC$, but their orientations follow the right-hand rule from different starting vertices.</p>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 5</h4>
+            <p>The points $\displaystyle A(3,1,2)$, $\displaystyle B(-1,1,5)$ and $\displaystyle C(7,2,3)$ are vertices of a parallelogram $\displaystyle ABCD$.</p>
+            <p>(a) Find the coordinates of $\displaystyle D$.</p>
+            <p>(b) Calculate the area of the parallelogram.</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p><b>(a)</b> For a parallelogram $\displaystyle ABCD$, $\displaystyle \overrightarrow{AB} = \overrightarrow{DC}$. Let the position vector of $\displaystyle D$ be $\displaystyle \vec{d}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \overrightarrow{AB} &= \begin{pmatrix} -1-3 \\ 1-1 \\ 5-2 \end{pmatrix} = \begin{pmatrix} -4 \\ 0 \\ 3 \end{pmatrix} \\
+                \vec{c} - \vec{d} &= \overrightarrow{AB} \\
+                \vec{d} &= \vec{c} - \overrightarrow{AB} \\
+                &= \begin{pmatrix} 7 \\ 2 \\ 3 \end{pmatrix} - \begin{pmatrix} -4 \\ 0 \\ 3 \end{pmatrix} = \begin{pmatrix} 11 \\ 2 \\ 0 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>The coordinates of $\displaystyle D$ are $\displaystyle (11, 2, 0)$.</p>
+
+            <p><b>(b)</b> The area of the parallelogram $\displaystyle ABCD$ is given by $\displaystyle |\overrightarrow{AB} \times \overrightarrow{AD}|$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \overrightarrow{AD} &= \vec{d} - \vec{a} = \begin{pmatrix} 11 \\ 2 \\ 0 \end{pmatrix} - \begin{pmatrix} 3 \\ 1 \\ 2 \end{pmatrix} = \begin{pmatrix} 8 \\ 1 \\ -2 \end{pmatrix} \\
+                \overrightarrow{AB} \times \overrightarrow{AD} &= \begin{pmatrix} -4 \\ 0 \\ 3 \end{pmatrix} \times \begin{pmatrix} 8 \\ 1 \\ -2 \end{pmatrix} \\
+                &= \begin{pmatrix} (0)(-2) - (3)(1) \\ (3)(8) - (-4)(-2) \\ (-4)(1) - (0)(8) \end{pmatrix} \\
+                &= \begin{pmatrix} 0 - 3 \\ 24 - 8 \\ -4 - 0 \end{pmatrix} = \begin{pmatrix} -3 \\ 16 \\ -4 \end{pmatrix} \\
+                \text{Area} &= |\overrightarrow{AB} \times \overrightarrow{AD}| = \sqrt{(-3)^2 + 16^2 + (-4)^2} \\
+                &= \sqrt{9 + 256 + 16} = \sqrt{281} \text{ units}^2
+                \end{aligned}$
+            </div>
+        </div>
+
+        <h3 class="section-title">Exercise 4.4</h3>
+
+        <div class="problem-box">
+            <h4>Problem 1</h4>
+            <p>Find the vector equation of the line:</p>
+            <p>(a) parallel to $\displaystyle \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}$ and through the point $\displaystyle (1,3,-7)$.</p>
+            <p>(b) through $\displaystyle (0,1,2)$ and with direction vector $\displaystyle \hat{\text{i}} + \hat{\text{j}} - 2\hat{\text{k}}$.</p>
+            <p>(c) parallel to the x-axis and through the point $\displaystyle (-2,2,2)$.</p>
+
+            <div class="solution-title">Solution</div>
+            <p>The vector equation of a line is $\displaystyle \vec{r} = \vec{a} + t\vec{b}$.</p>
+
+            <p><b>(a)</b> $\displaystyle \vec{a} = \begin{pmatrix} 1 \\ 3 \\ -7 \end{pmatrix}$ and $\displaystyle \vec{b} = \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{r} &= \begin{pmatrix} 1 \\ 3 \\ -7 \end{pmatrix} + t\begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> $\displaystyle \vec{a} = \begin{pmatrix} 0 \\ 1 \\ 2 \end{pmatrix}$ and $\displaystyle \vec{b} = \hat{\text{i}} + \hat{\text{j}} - 2\hat{\text{k}} = \begin{pmatrix} 1 \\ 1 \\ -2 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{r} &= \begin{pmatrix} 0 \\ 1 \\ 2 \end{pmatrix} + t\begin{pmatrix} 1 \\ 1 \\ -2 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> Parallel to the x-axis means the direction vector is $\displaystyle \vec{b} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$. Passed through $\displaystyle \vec{a} = \begin{pmatrix} -2 \\ 2 \\ 2 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{r} &= \begin{pmatrix} -2 \\ 2 \\ 2 \end{pmatrix} + t\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 2</h4>
+            <p>(a) Find the Cartesian equation of the line with parametric equation $\displaystyle x = 3t + 1$, $\displaystyle y = 4 - 2t$, $\displaystyle z = 3t - 1.$</p>
+            <p>(b) Find the unit vector in the direction of the line.</p>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> From the parametric equations, express $\displaystyle t$ in terms of $\displaystyle x, y, z$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                t &= \frac{x-1}{3} \\
+                t &= \frac{y-4}{-2} \\
+                t &= \frac{z+1}{3}
+                \end{aligned}$
+            </div>
+            <p>Equating these gives the Cartesian equation:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x-1}{3} &= \frac{y-4}{-2} = \frac{z+1}{3}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> The direction vector of the line is $\displaystyle \vec{v} = \begin{pmatrix} 3 \\ -2 \\ 3 \end{pmatrix}$. The magnitude is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                |\vec{v}| &= \sqrt{3^2 + (-2)^2 + 3^2} = \sqrt{9 + 4 + 9} = \sqrt{22}
+                \end{aligned}$
+            </div>
+            <p>The unit vector in the direction of the line is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \hat{v} &= \frac{1}{\sqrt{22}}\begin{pmatrix} 3 \\ -2 \\ 3 \end{pmatrix} = \begin{pmatrix} \frac{3}{\sqrt{22}} \\ -\frac{2}{\sqrt{22}} \\ \frac{3}{\sqrt{22}} \end{pmatrix}
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 3</h4>
+            <p>Find the equation of the plane:</p>
+            <p>(a) with normal vector $\displaystyle \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$ and which passes through $\displaystyle (-1, 2, 4)$.</p>
+            <p>(b) perpendicular to the line joining points $\displaystyle A(2, 3, 1)$ and $\displaystyle B(5, 7, 2)$ and which passes through $\displaystyle A$.</p>
+            <p>(c) containing $\displaystyle A(3, 2, 1)$ and the line $\displaystyle x=1+t$, $\displaystyle y=2-t$, $\displaystyle z=3+2t$.</p>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> Normal $\displaystyle \vec{n} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$ and point $\displaystyle \vec{a} = \begin{pmatrix} -1 \\ 2 \\ 4 \end{pmatrix}$. Equation is $\displaystyle \vec{r} \cdot \vec{n} = \vec{a} \cdot \vec{n}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                2x - y + 3z &= 2(-1) + (-1)(2) + 3(4) \\
+                2x - y + 3z &= -2 - 2 + 12 \\
+                2x - y + 3z &= 8
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> The plane is perpendicular to $\displaystyle AB$, so the normal vector $\displaystyle \vec{n} = \overrightarrow{AB}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{n} &= \overrightarrow{AB} = \begin{pmatrix} 5-2 \\ 7-3 \\ 2-1 \end{pmatrix} = \begin{pmatrix} 3 \\ 4 \\ 1 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>Passes through $\displaystyle A(2, 3, 1)$. Thus, $\displaystyle \vec{a} = \begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                3x + 4y + z &= 3(2) + 4(3) + 1(1) \\
+                3x + 4y + z &= 6 + 12 + 1 \\
+                3x + 4y + z &= 19
+                \end{aligned}$
+            </div>
+
+            <p><b>(c)</b> The plane contains the line, which passes through $\displaystyle P(1, 2, 3)$ with direction vector $\displaystyle \vec{d_1} = \begin{pmatrix} 1 \\ -1 \\ 2 \end{pmatrix}$.</p>
+            <p>It also contains $\displaystyle A(3, 2, 1)$. Vector $\displaystyle \overrightarrow{PA}$ also lies on the plane:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{d_2} &= \overrightarrow{PA} = \begin{pmatrix} 3-1 \\ 2-2 \\ 1-3 \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \\ -2 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>The normal vector $\displaystyle \vec{n}$ is perpendicular to both $\displaystyle \vec{d_1}$ and $\displaystyle \vec{d_2}$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{n} &= \vec{d_1} \times \vec{d_2} = \begin{pmatrix} 1 \\ -1 \\ 2 \end{pmatrix} \times \begin{pmatrix} 2 \\ 0 \\ -2 \end{pmatrix} \\
+                &= \begin{pmatrix} (-1)(-2) - (2)(0) \\ (2)(2) - (1)(-2) \\ (1)(0) - (-1)(2) \end{pmatrix} \\
+                &= \begin{pmatrix} 2 \\ 6 \\ 2 \end{pmatrix} \implies \text{We can use } \begin{pmatrix} 1 \\ 3 \\ 1 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>Passes through $\displaystyle A(3, 2, 1)$:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x + 3y + z &= 1(3) + 3(2) + 1(1) \\
+                x + 3y + z &= 3 + 6 + 1 \\
+                x + 3y + z &= 10
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 4</h4>
+            <p>Find the equation of the plane through $\displaystyle A(-1,2,1)$, $\displaystyle B(4,1,1)$ and $\displaystyle C(2,0,3)$:</p>
+            <p>(a) in vector form</p>
+            <p>(b) in Cartesian form.</p>
+
+            <div class="solution-title">Solution</div>
+
+            <p><b>(a)</b> Vector form</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{a} &= \overrightarrow{OA} = \begin{pmatrix} -1 \\ 2 \\ 1 \end{pmatrix} \\
+                \vec{d_1} &= \overrightarrow{AB} = \begin{pmatrix} 4 - (-1) \\ 1 - 2 \\ 1 - 1 \end{pmatrix} = \begin{pmatrix} 5 \\ -1 \\ 0 \end{pmatrix} \\
+                \vec{d_2} &= \overrightarrow{AC} = \begin{pmatrix} 2 - (-1) \\ 0 - 2 \\ 3 - 1 \end{pmatrix} = \begin{pmatrix} 3 \\ -2 \\ 2 \end{pmatrix} \\
+                \text{Vector Equation: } \vec{r} &= \begin{pmatrix} -1 \\ 2 \\ 1 \end{pmatrix} + t_1\begin{pmatrix} 5 \\ -1 \\ 0 \end{pmatrix} + t_2\begin{pmatrix} 3 \\ -2 \\ 2 \end{pmatrix}
+                \end{aligned}$
+            </div>
+
+            <p><b>(b)</b> Cartesian form</p>
+            <p>The normal vector $\displaystyle \vec{n}$ is $\displaystyle \overrightarrow{AB} \times \overrightarrow{AC}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{n} &= \begin{pmatrix} 5 \\ -1 \\ 0 \end{pmatrix} \times \begin{pmatrix} 3 \\ -2 \\ 2 \end{pmatrix} = \begin{pmatrix} (-1)(2) - (0)(-2) \\ (0)(3) - (5)(2) \\ (5)(-2) - (-1)(3) \end{pmatrix} \\
+                &= \begin{pmatrix} -2 \\ -10 \\ -7 \end{pmatrix} \implies \text{We can use } \begin{pmatrix} 2 \\ 10 \\ 7 \end{pmatrix} \\
+                \vec{r} \cdot \vec{n} &= \vec{a} \cdot \vec{n} \\
+                2x + 10y + 7z &= 2(-1) + 10(2) + 7(1) \\
+                2x + 10y + 7z &= -2 + 20 + 7 \\
+                2x + 10y + 7z &= 25
+                \end{aligned}$
+            </div>
+        </div>
+
+        <div class="problem-box">
+            <h4>Problem 5</h4>
+            <p>Find the Cartesian equation of the plane with vector equation $\displaystyle \vec{r} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} + t_1\begin{pmatrix} 1 \\ 1 \\ 2 \end{pmatrix} + t_2\begin{pmatrix} 2 \\ -1 \\ 5 \end{pmatrix}.$</p>
+
+            <div class="solution-title">Solution</div>
+            
+            <p>The plane is parallel to vectors $\displaystyle \vec{d_1} = \begin{pmatrix} 1 \\ 1 \\ 2 \end{pmatrix}$ and $\displaystyle \vec{d_2} = \begin{pmatrix} 2 \\ -1 \\ 5 \end{pmatrix}$. The normal vector $\displaystyle \vec{n}$ is:</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{n} &= \vec{d_1} \times \vec{d_2} = \begin{pmatrix} 1 \\ 1 \\ 2 \end{pmatrix} \times \begin{pmatrix} 2 \\ -1 \\ 5 \end{pmatrix} \\
+                &= \begin{pmatrix} (1)(5) - (2)(-1) \\ (2)(2) - (1)(5) \\ (1)(-1) - (1)(2) \end{pmatrix} \\
+                &= \begin{pmatrix} 5 + 2 \\ 4 - 5 \\ -1 - 2 \end{pmatrix} = \begin{pmatrix} 7 \\ -1 \\ -3 \end{pmatrix}
+                \end{aligned}$
+            </div>
+            <p>The plane passes through the point $\displaystyle \vec{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}$.</p>
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \vec{r} \cdot \vec{n} &= \vec{a} \cdot \vec{n} \\
+                7x - y - 3z &= 7(1) + (-1)(2) + (-3)(3) \\
+                7x - y - 3z &= 7 - 2 - 9 \\
+                7x - y - 3z &= -4
+                \end{aligned}$
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,57 +7,38 @@
     <link rel="icon" type="image/ico" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
     
-   <script>
-        // Recursive Error လုံးဝမဖြစ်စေရန် Native \over ကိုသာ သုံးထားပါသည်
-        // Math Font များ Uniform ဖြစ်စေရန် matchFontHeight: false ကို ထည့်သွင်းထားပါသည်
+    <script>
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 macros: {
-                    frac: ["{\\displaystyle {#1 \\over #2}}", 2]
+                    ds: "\\displaystyle"
                 }
             },
             chtml: {
-                displayAlign: "center",
+                displayAlign: "left", 
                 matchFontHeight: false, 
                 scale: 1
             },
-            startup: {
-                pageReady: () => {
-                    return MathJax.startup.defaultPageReady().then(() => {
-                        // Display Math များအတွက် Wrapper (Block Level Swipe)
-                        document.querySelectorAll('mjx-container[display="true"]').forEach(node => {
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'math-display-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                        
-                        // Inline Math များအတွက် Wrapper (Inline Level Swipe - Exercise Box များအတွက် အထူး)
-                        document.querySelectorAll('mjx-container:not([display="true"])').forEach(node => {
-                            const wrapper = document.createElement('span');
-                            wrapper.className = 'math-inline-wrapper';
-                            node.parentNode.insertBefore(wrapper, node);
-                            wrapper.appendChild(node);
-                        });
-                    });
-                }
+            svg: {
+                fontCache: 'global'
             }
         };
     </script>
-   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
         /* Base & Resets */
         * {
             box-sizing: border-box;
         }
-        body { 
+        html, body { 
             font-family: 'Open Sans', sans-serif; 
             background-color: #f4f7f6; 
             margin: 0; 
             padding: 0; 
+            overflow-x: hidden; 
+            width: 100%; 
         }
         
         /* Header & Nav */
@@ -118,57 +99,75 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
             margin-bottom: 40px; 
             text-align: left; 
+            width: 100%;
         }
         
         /* Typography */
         .content-box h1 { color: #333; margin-bottom: 20px; text-align: center; font-family: 'Alice', serif; }
         .content-box h2 { color: #0056b3; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
         .content-box h3 { color: #444; margin-top: 25px; }
-        .content-box p { color: #555; line-height: 1.8; font-size: 16px; margin-bottom: 15px; }
+        .content-box p { color: #555; line-height: 1.8; font-size: 16px; margin-bottom: 15px; word-wrap: break-word; }
         .figure-caption { text-align: center; font-style: italic; color: #777; margin-bottom: 30px; margin-top: 10px; }
         
         ul, ol {
             margin-bottom: 20px;
             font-size: 1.1em;
-            padding-left: 40px; 
+            padding-left: 35px; 
             color: #555;
             line-height: 1.8;
+            word-wrap: break-word;
         }
         li { margin-bottom: 15px; padding-left: 5px; }
 
-        /* Math & Code Components */
-        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
-        
-        .example-box { 
-            border: 1px solid #e0e0e0; 
-            padding: 25px; 
-            border-radius: 8px; 
-            margin: 25px 0; 
-            background: #fafafa; 
-            overflow-x: auto; 
-            width: 100%; 
+        /* ==================================================================== */
+        /* THE ULTIMATE MATHJAX MOBILE SWIPE FIX (Left Align & Indent)          */
+        /* ==================================================================== */
+        .math-block {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            text-align: left; 
+            padding-left: 40px; 
+            margin: 15px 0;
+            padding-bottom: 5px;
         }
+        .math-block::-webkit-scrollbar {
+            height: 6px;
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none;
+            width: 0;
+        }
+        .math-block::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        mjx-container {
+            text-align: left !important;
+        }
+        /* ==================================================================== */
+
+        .example-box, .exercise-box, .concept-box { 
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 8px; 
+            overflow: hidden; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+        
+        .example-box { border: 1px solid #e0e0e0; padding: 25px; margin: 25px 0; background: #fafafa; }
         .example-box h4 { margin-top: 0; color: #222; font-size: 18px; }
         
-        .exercise-box { 
-            border: 2px dashed #ccc; 
-            padding: 25px; 
-            border-radius: 8px; 
-            margin: 35px 0; 
-            overflow-x: auto; 
-            width: 100%; 
-        }
+        .exercise-box { border: 2px dashed #ccc; padding: 25px; margin: 35px 0; background: #fff; }
         .exercise-box h4 { color: #d9534f; margin-top: 0; font-size: 20px; }
         
-        .concept-box { 
-            background-color: #e8f4f8; 
-            border-left: 5px solid #2980b9; 
-            padding: 20px; 
-            margin: 20px 0; 
-            border-radius: 4px; 
-            overflow-x: auto; 
-            width: 100%; 
-        }
+        .concept-box { background-color: #e8f4f8; border-left: 5px solid #2980b9; padding: 20px; margin: 20px 0; }
 
         .solution-title { font-weight: bold; color: #28a745; margin-top: 20px; margin-bottom: 10px; }
         
@@ -185,10 +184,10 @@
             margin: 0 auto; 
             background-color: #fff; 
         }
-        table.math-table th, table.math-table td { border: 1px solid #ccc; padding: 12px; text-align: center; }
-        table.math-table th { background-color: #f0f0f0; font-weight: 600; }
+        table.math-table th, table.math-table td { border: 1px solid #ccc; padding: 12px; text-align: left; padding-left: 20px; }
+        table.math-table th { background-color: #f0f0f0; font-weight: 600; text-align: center; padding-left: 12px; }
         
-        /* SVGs & ../images */
+        /* SVGs & Images */
         .svg-container { 
             text-align: center; 
             margin: 30px auto; 
@@ -205,14 +204,27 @@
             max-width: 100%;
         }
 
-        /* Flex Layouts */
+        /* Exercise Box အတွင်း Responsive Grid (Equal Spacing) */
         .flex-container { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-            justify-content: space-around;
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
         }
-        .flex-item { flex: 1; min-width: 200px; }
+        
+        /* Grid Item (Swipeable) */
+        .flex-item { 
+            width: 100%;
+            box-sizing: border-box; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            text-align: left; 
+        }
+        .flex-item::-webkit-scrollbar { display: none; }
+        .flex-item::-webkit-scrollbar:vertical { display: none; }
         
         .svg-row-wrapper {
             display: flex;
@@ -226,7 +238,7 @@
         .svg-row-wrapper .svg-container {
             flex: 1 1 calc(33.333% - 20px); 
             min-width: 250px;
-            margin: 0; /* Override auto margin for flex children */
+            margin: 0; 
         }
         .svg-row-wrapper svg {
             width: 100%;
@@ -240,21 +252,27 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .content-box { padding: 25px 20px; }
+            .content-box { padding: 25px 15px; }
             .page-navigation { flex-direction: column; gap: 15px; }
             .btn-nav { width: 100%; }
             .top-nav-box { gap: 5px; flex-wrap: wrap; }
             .nav-link { padding: 10px 15px; }
             
-            /* Un-float SVGs on small screens */
+            .flex-container { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .math-block {
+                padding-left: 10px; 
+            }
+            ul, ol { padding-left: 20px; }
+            
             .float-svg-container {
                 float: none;
                 margin: 20px auto;
                 display: flex;
                 justify-content: center;
             }
-            
-            /* Stack flex items completely */
             .svg-row-wrapper .svg-container {
                 flex: 1 1 100%;
             }
@@ -401,8 +419,6 @@
                         <text x="345" y="240">(-, +, -)</text>
                         <text x="55" y="265">(+, -, -)</text>
                     </g>
-
-                   
                 </svg>
             </div>
 
@@ -541,8 +557,6 @@
                     </svg>
                 </div>
             </div>
-            
-            
 
             <h3>Line perpendicular to the xy-plane</h3>
             
@@ -766,11 +780,11 @@
             
             <p>The distance between points $\ds P(x_1,y_1,z_1)$ and $\ds Q(x_2,y_2,z_2)$ is</p>
             
-            $$
-            \begin{aligned}
-            PQ &= \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                PQ &= \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}
+                \end{aligned}$
+            </div>
 
             <div class="exercise-box">
                 <h4>Exercise 3.1</h4>
@@ -802,20 +816,20 @@
             
             <p>For a line segment $\ds PQ$, directed values $\ds \langle l,m,n \rangle$ of $\ds PQ$ where $\ds P$ is $\ds (x_1,y_1,z_1)$ and $\ds Q$ is $\ds (x_2,y_2,z_2)$ is defined by</p>
             
-            $$
-            \begin{aligned}
-            \langle PQ \rangle &= \langle l,m,n \rangle = \langle x_2-x_1, y_2-y_1, z_2-z_1 \rangle
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \langle PQ \rangle &= \langle l,m,n \rangle = \langle x_2-x_1, y_2-y_1, z_2-z_1 \rangle
+                \end{aligned}$
+            </div>
             
             <p>The length of the segment $\ds PQ$ is</p>
             
-            $$
-            \begin{aligned}
-            PQ &= \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2} \\
-               &= \sqrt{l^2 + m^2 + n^2}
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                PQ &= \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2} \\
+                   &= \sqrt{l^2 + m^2 + n^2}
+                \end{aligned}$
+            </div>
 
             <h3>Real numbers and points on the line</h3>
             
@@ -825,11 +839,11 @@
             
             <p>In general, if a segment of a line through $\ds (x_1,y_1,z_1)$ has directed values $\ds \langle l,m,n \rangle$ which are not equal to zero, then the equation of the line can be written as</p>
             
-            $$
-            \begin{aligned}
-            \frac{x-x_1}{l} &= \frac{y-y_1}{m} = \frac{z-z_1}{n}
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \frac{x-x_1}{l} &= \frac{y-y_1}{m} = \frac{z-z_1}{n}
+                \end{aligned}$
+            </div>
             
             <p>Since $\ds \langle PR \rangle = \langle x_1+kl-x_1, y_1+km-y_1, z_1+kn-z_1 \rangle = \langle kl, km, kn \rangle$ and $\ds R$ is any point on the line $\ds PQ$ with $\ds \langle PQ \rangle = \langle l,m,n \rangle$, we will defined directed values of a line $\ds PQ$ as $\ds (kl, km, kn)$ where $\ds k$ is a real number.</p>
 
@@ -844,13 +858,13 @@
                 
                 <p>By given $\ds P(1,2,3)$ and $\ds Q(3,6,5)$,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \langle PQ \rangle &= \langle l,m,n \rangle \\
                 &= \langle 3-1, 6-2, 5-3 \rangle \\
                 &= \langle 2,4,2 \rangle
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p><b>(a)</b> For $\ds k=\frac{1}{2}$, $\ds (x,y,z) = \left(1+\frac{1}{2}(2), 2+\frac{1}{2}(4), 3+\frac{1}{2}(2)\right) = (2,4,4)$.</p>
                 
@@ -870,64 +884,64 @@
                 
                 <p>By given $\ds P(-1,2,3)$ and $\ds Q(3,5,-2)$</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \langle PQ \rangle &= \langle l,m,n \rangle \\
                 &= \langle 3+1, 5-2, -2-3 \rangle \\
                 &= \langle 4,3,-5 \rangle
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Thus, the equation of the line $\ds PQ$ is $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$</p>
                 
                 <p><b>(a)</b> If $\ds (x,y,z) = \left(1,\frac{7}{2},\frac{1}{2}\right)$ then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x+1}{4} &= \frac{1+1}{4} = \frac{1}{2} \\
                 \frac{y-2}{3} &= \frac{\frac{7}{2}-2}{3} = \frac{1}{2} \\
                 \frac{z-3}{-5} &= \frac{\frac{1}{2}-3}{-5} = \frac{1}{2}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$ for $\ds \left(1,\frac{7}{2},\frac{1}{2}\right)$.<br>
                 Hence the point $\ds \left(1,\frac{7}{2},\frac{1}{2}\right)$ is on the line $\ds PQ$ with corresponding parameter is $\ds \frac{1}{2}$.</p>
 
                 <p><b>(b)</b> If $\ds (x,y,z) = (7,8,-7)$, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x+1}{4} &= \frac{7+1}{4} = 2 \\
                 \frac{y-2}{3} &= \frac{8-2}{3} = 2 \\
                 \frac{z-3}{-5} &= \frac{-7-3}{-5} = 2
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$ for $\ds (7,8,-7)$.<br>
                 Hence the point $\ds (7,8,-7)$ is on the line $\ds PQ$ with corresponding parameter is $\ds 2$.</p>
 
                 <p><b>(c)</b> If $\ds (x,y,z) = (-5,-1,8)$, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x+1}{4} &= \frac{-5+1}{4} = -1 \\
                 \frac{y-2}{3} &= \frac{-1-2}{3} = -1 \\
                 \frac{z-3}{-5} &= \frac{8-3}{-5} = -1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} = \frac{z-3}{-5}$ for $\ds (-5,-1,8)$.<br>
                 Hence the point $\ds (-5,-1,8)$ is on the line $\ds PQ$ with corresponding parameter is $\ds -1$.</p>
 
                 <p><b>(d)</b> If $\ds (x,y,z) = (7,8,-2)$, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x+1}{4} &= \frac{7+1}{4} = 2 \\
                 \frac{y-2}{3} &= \frac{8-2}{3} = 2 \\
                 \frac{z-3}{-5} &= \frac{-2-3}{-5} = 1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>So $\ds \frac{x+1}{4} = \frac{y-2}{3} \ne \frac{z-3}{-5}$ for $\ds (7,8,-2)$.<br>
                 Hence the point $\ds (7,8,-2)$ is not on the line $\ds PQ$.</p>
@@ -944,13 +958,13 @@
                 
                 <p>By given $\ds P(2,1,3)$ and $\ds Q(6,-5,3)$,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \langle PQ \rangle &= \langle l,m,n \rangle \\
                 &= \langle 6-2, -5-1, 3-3 \rangle \\
                 &= \langle 4,-6,0 \rangle
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Then the coordinates of the point $\ds (x,y,z)$ on the line $\ds PQ$ are<br>
                 $\ds (x,y,z) = (2+4k, 1-6k, 3)$.<br>
@@ -958,48 +972,48 @@
 
                 <p><b>(a)</b> If $\ds (x,y,z) = (4,-2,3)$, then $\ds (4,-2,3) = (2+4k, 1-6k, 3)$</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2+4k &= 4 \\
                 1-6k &= -2 \\
                 k &= \frac{1}{2}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Thus the point $\ds (4,-2,3)$ is on the line $\ds PQ$ with corresponding parameter $\ds \frac{1}{2}$.</p>
 
                 <p><b>(b)</b> If $\ds (x,y,z) = (-2,7,3)$, then $\ds (-2,7,3) = (2+4k, 1-6k, 3)$</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2+4k &= -2 \\
                 1-6k &= 7 \\
                 k &= -1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Thus the point $\ds (-2,7,3)$ is on the line $\ds PQ$ with corresponding parameter $\ds -1$.</p>
 
                 <p><b>(c)</b> If $\ds (x,y,z) = (10,-11,3)$, then $\ds (10,-11,3) = (2+4k, 1-6k, 3)$</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2+4k &= 10 \\
                 1-6k &= -11 \\
                 k &= 2
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Thus, the point $\ds (10,-11,3)$ is on the line $\ds PQ$ with corresponding parameter $\ds 2$.</p>
 
                 <p><b>(d)</b> If $\ds (x,y,z) = (1,1,3)$, then $\ds (1,1,3) = (2+4k, 1-6k, 3)$</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2+4k &= 1 \Rightarrow k = -\frac{1}{4} \\
                 1-6k &= 1 \Rightarrow k = 0
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>There is no value $\ds k$ that satisfies this condition. Therefore, the point $\ds (1,1,3)$ is not on the line $\ds PQ$.</p>
             </div>
@@ -1066,14 +1080,14 @@
             
             <p>Consider $\ds P(x_1,y_1,z_1)$, $\ds A(a,b,c)$ and $\ds Q(x_2,y_2,z_2)$.</p>
             
-            $$
-            \begin{aligned}
-            \langle AP \rangle &= \langle l_1,m_1,n_1 \rangle = \langle x_1-a, y_1-b, z_1-c \rangle \\
-            \langle AQ \rangle &= \langle l_2,m_2,n_2 \rangle = \langle x_2-a, y_2-b, z_2-c \rangle \\
-            \langle PQ \rangle &= \langle l_3,m_3,n_3 \rangle = \langle x_2-x_1, y_2-y_1, z_2-z_1 \rangle \\
-            &= \langle l_2-l_1, m_2-m_1, n_2-n_1 \rangle
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \langle AP \rangle &= \langle l_1,m_1,n_1 \rangle = \langle x_1-a, y_1-b, z_1-c \rangle \\
+                \langle AQ \rangle &= \langle l_2,m_2,n_2 \rangle = \langle x_2-a, y_2-b, z_2-c \rangle \\
+                \langle PQ \rangle &= \langle l_3,m_3,n_3 \rangle = \langle x_2-x_1, y_2-y_1, z_2-z_1 \rangle \\
+                &= \langle l_2-l_1, m_2-m_1, n_2-n_1 \rangle
+                \end{aligned}$
+            </div>
 
             <div style="display: flex; justify-content: center;">
                 <img src="images/angle-measure.png" alt="Angle Measure" style="max-width: 50%; height: auto;">
@@ -1083,21 +1097,21 @@
             
             
 
-            $$
-            \begin{aligned}
-            AP^2 + AQ^2 - PQ^2 &= l_1^2 + m_1^2 + n_1^2 + l_2^2 + m_2^2 + n_2^2 - (l_2-l_1)^2 - (m_2-m_1)^2 - (n_2-n_1)^2 \\
-            &= 2(l_1l_2 + m_1m_2 + n_1n_2)
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                AP^2 + AQ^2 - PQ^2 &= l_1^2 + m_1^2 + n_1^2 + l_2^2 + m_2^2 + n_2^2 - (l_2-l_1)^2 - (m_2-m_1)^2 - (n_2-n_1)^2 \\
+                &= 2(l_1l_2 + m_1m_2 + n_1n_2)
+                \end{aligned}$
+            </div>
             
             <p>By the law of cosines, $\ds \cos \angle PAQ = \frac{AP^2 + AQ^2 - PQ^2}{2AP.AQ}$</p>
             
-            $$
-            \begin{aligned}
-            \cos \angle PAQ &= \frac{2(l_1l_2 + m_1m_2 + n_1n_2)}{2AP.AQ} \\
-            &= \frac{l_1l_2 + m_1m_2 + n_1n_2}{\sqrt{l_1^2+m_1^2+n_1^2}\sqrt{l_2^2+m_2^2+n_2^2}}
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                \cos \angle PAQ &= \frac{2(l_1l_2 + m_1m_2 + n_1n_2)}{2AP.AQ} \\
+                &= \frac{l_1l_2 + m_1m_2 + n_1n_2}{\sqrt{l_1^2+m_1^2+n_1^2}\sqrt{l_2^2+m_2^2+n_2^2}}
+                \end{aligned}$
+            </div>
             
             <p>If $\ds l_1l_2 + m_1m_2 + n_1n_2 = 0$ then $\ds \cos \angle PAQ = 0$ and hence $\ds \angle PAQ = 90^\circ$.</p>
 
@@ -1117,35 +1131,35 @@
                 
                 <p>Since directed values of $\ds PQ$ are not multiple of $\ds RS$,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{4}{-3} &\ne \frac{-6}{2} \ne \frac{1}{-3}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>So, two lines are not parallel.</p>
                 
                 <p>If a point $\ds (x,y,z)$ is on the lines $\ds PQ$ and $\ds RS$, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x &= 2+4s \quad &x &= 2-3t \\
                 y &= 1-6s \quad &y &= 3+2t \\
                 z &= 3+s \quad &z &= 4-3t
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>for real numbers $\ds s$ and $\ds t$.</p>
                 
                 <p>Thus,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2+4s &= 2-3t \\
                 1-6s &= 3+2t \\
                 3+s &= 4-3t
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Solving first two of these equations, we have<br>
                 $\ds s = -\frac{3}{5}$ and $\ds t = \frac{4}{5}$.</p>
@@ -1167,32 +1181,32 @@
                 
                 <p>If a point $\ds (x,y,z)$ is on the lines $\ds PQ$ and $\ds RS$, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x &= 0+3s \quad &x &= 0+3t \\
                 y &= 0+6s \quad &y &= 3-3t \\
                 z &= 1+3s \quad &z &= 1+3t
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>for real numbers $\ds s$ and $\ds t$.</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 3s &= 3t \Rightarrow s=t \\
                 6s &= 3-3t \Rightarrow 6s = 3-3s \Rightarrow s = \frac{1}{3} \\
                 1+3s &= 1+3t \Rightarrow t = \frac{1}{3}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>$\ds x = 3\left(\frac{1}{3}\right) = 1$, $\ds y = 6\left(\frac{1}{3}\right) = 2$, $\ds z = 1+3\left(\frac{1}{3}\right) = 2$.<br>
                 The point of intersection is $\ds (1, 2, 2)$ and two lines intersect.</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 l_1l_2 + m_1m_2 + n_1n_2 &= (3)(3) + (6)(-3) + (3)(3) = 0
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Hence $\ds PQ$ and $\ds RS$ are perpendicular.</p>
             </div>
@@ -1207,31 +1221,31 @@
                 <p>Directed values of the given line are $\ds \langle 2, 3, -1 \rangle$.<br>
                 Directed values of the require line are</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \langle -4-(3+2k), 7-(-1+3k), -3-(1-k) \rangle &= \langle -7-2k, 8-3k, -4+k \rangle \quad \text{for some real number } k
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>If two lines are perpendicular, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2(-7-2k) + 3(8-3k) + (-1)(-4+k) &= 0 \\
                 -14-4k+24-9k+5-k &= 0 \\
                 14k &= 14 \\
                 k &= 1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>So, directed values of required line are $\ds \langle -7-2(1), 8-3(1), -4+1 \rangle = \langle -9,5,-3 \rangle$<br>
                 and the equation of the line is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (x,y,z) &= (-4-9t, 7+5t, -3-3t)
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The point of intersection is $\ds (x,y,z) = (5,2,0)$.</p>
             </div>
@@ -1271,13 +1285,13 @@
             
             <p>As shown in the given figure, coordinates of any point $\ds (x,y,z)$ on the plane are</p>
             
-            $$
-            \begin{aligned}
-            x &= x_1+sl_1+tl_2 \\
-            y &= y_1+sm_1+tm_2 \\
-            z &= z_1+sn_1+tn_2
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                x &= x_1+sl_1+tl_2 \\
+                y &= y_1+sm_1+tm_2 \\
+                z &= z_1+sn_1+tn_2
+                \end{aligned}$
+            </div>
             
             <p>for some parameter $\ds t$.</p>
 
@@ -1289,22 +1303,22 @@
 
             <p>Let</p>
             
-            $$
-            \begin{aligned}
-            a &= m_1n_2 - m_2n_1 \\
-            b &= n_1l_2 - n_2l_1 \\
-            c &= l_1m_2 - l_2m_1
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                a &= m_1n_2 - m_2n_1 \\
+                b &= n_1l_2 - n_2l_1 \\
+                c &= l_1m_2 - l_2m_1
+                \end{aligned}$
+            </div>
             
             <p>Then $\ds al_1 + bm_1 + cn_1 = 0$ and $\ds al_2 + bm_2 + cn_2 = 0$.<br>
             Thus, the plane equation is</p>
             
-            $$
-            \begin{aligned}
-            ax+by+cz &= ax_1+by_1+cz_1
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                ax+by+cz &= ax_1+by_1+cz_1
+                \end{aligned}$
+            </div>
             
             <p>Cartesian form: $\ds ax+by+cz=d$ where $\ds d = ax_1+by_1+cz_1$.</p>
 
@@ -1344,41 +1358,41 @@
                 
                 <p>$\ds A(1,0,1)$, $\ds B(3,6,4)$, $\ds C(-2,3,1)$</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \langle AB \rangle &= \langle 2,6,3 \rangle \\
                 \langle AC \rangle &= \langle -3,3,0 \rangle
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 2a + 6b + 3c &= 0 \\
                 -3a + 3b + 0c &= 0
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Using cross multiplication method:</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 a &= 6(0) - 3(3) = -9 \\
                 b &= 3(-3) - 0(2) = -9 \\
                 c &= 2(3) - (-3)(6) = 24 \\
                 d &= ax_1+by_1+cz_1 \\
                   &= -9(1) + (-9)(0) + 24(1) \\
                   &= 15
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The equation of the plane</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 -9x - 9y + 24z &= 15 \\
                 3x + 3y - 8z &= -5
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="example-box">
@@ -1407,43 +1421,43 @@
                 <p>$\ds \langle a,b,c \rangle = \langle 3,-2,-1 \rangle$.<br>
                 The equation of the line is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x-(-1)}{3} &= \frac{y-3}{-2} = \frac{z-2}{-1}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x+1}{3} &= \frac{y-3}{-2} = \frac{z-2}{-1} = k \quad \text{(say)}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x &= 3k-1 \\
                 y &= -2k+3 \\
                 z &= -k+2
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 3x-2y-z &= 3 \\
                 3(3k-1) - 2(-2k+3) - (-k+2) &= 3 \\
                 9k-3 + 4k-6 + k-2 &= 3 \\
                 14k &= 14 \\
                 k &= 1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x &= 3-1 = 2 \\
                 y &= -2+3 = 1 \\
                 z &= -1+2 = 1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Hence the point of intersection is $\ds (2, 1, 1)$.</p>
                 
@@ -1477,28 +1491,28 @@
                 <p>$\ds \langle a,b,c \rangle = \langle 3,-2,-3 \rangle$<br>
                 Thus the equation of the required plane is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 3x-2y-3z &= d
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The point $\ds (-1,3,2)$ lies on the required plane.</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 3(-1) - 2(3) - 3(2) &= d \\
                 d &= -15
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The equation of the required plane is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 3x-2y-3z &= -15
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <div style="clear: both;"></div>
             </div>
@@ -1537,19 +1551,19 @@
 
             <p>The distance between center $\ds (x_1,y_1,z_1)$ and any point $\ds (x,y,z)$ of a sphere is radius $\ds r$.</p>
             
-            $$
-            \begin{aligned}
-            r &= \sqrt{(x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2}
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                r &= \sqrt{(x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2}
+                \end{aligned}$
+            </div>
             
             <p>The equation of the sphere with center $\ds (x_1,y_1,z_1)$ and radius $\ds r$ is</p>
             
-            $$
-            \begin{aligned}
-            (x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2 &= r^2
-            \end{aligned}
-            $$
+            <div class="math-block">
+                $\displaystyle \begin{aligned}
+                (x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2 &= r^2
+                \end{aligned}$
+            </div>
 
             <div class="example-box">
                 <h4>Example 11</h4>
@@ -1579,12 +1593,12 @@
                 
                 <p>Since $\ds P(3,4,1)$ is on the plane, so we get</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 3+3(4)+2(1) &= d \\
                 d &= 17
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The equation of the plane is $\ds x+3y+2z=17$.</p>
                 
@@ -1600,65 +1614,65 @@
                 
                 <p>The equation of the line that passes through the center $\ds C(0,1,0)$ and perpendicular to the plane $\ds x-2y+2z+5=0$ is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x-0}{1} &= \frac{y-1}{-2} = \frac{z-0}{2}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 \frac{x}{1} &= \frac{y-1}{-2} = \frac{z}{2} = s \quad \text{(say)}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x &= s \\
                 y &= -2s+1 \\
                 z &= 2s
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>If one of these points $\ds P$ is on the plane, then</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 s - 2(-2s+1) + 2(2s) + 5 &= 0 \\
                 s - 2 + 4s + 4s + 5 &= 0 \\
                 9s &= -3 \\
                 s &= -\frac{1}{3}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x &= -\frac{1}{3} \\
                 y &= -2\left(-\frac{1}{3}\right)+1 = \frac{5}{3} \\
                 z &= 2\left(-\frac{1}{3}\right) = -\frac{2}{3}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The point of intersection $\ds = \left(-\frac{1}{3},\frac{5}{3},-\frac{2}{3}\right)$.</p>
                 
                 <p>Radius</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 CP &= \sqrt{\left(-\frac{1}{3}-0\right)^2 + \left(\frac{5}{3}-1\right)^2 + \left(-\frac{2}{3}-0\right)^2} \\
                 &= \sqrt{\frac{1}{9}+\frac{4}{9}+\frac{4}{9}} \\
                 &= 1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>The equation of the sphere is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (x-0)^2 + (y-1)^2 + (z-0)^2 &= 1 \\
                 x^2 + (y-1)^2 + z^2 &= 1
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="example-box">
@@ -1670,84 +1684,84 @@
                 
                 <p>The equation of the sphere with center $\ds (x_1,y_1,z_1)$ and radius $\ds r$ is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (x-x_1)^2 + (y-y_1)^2 + (z-z_1)^2 &= r^2
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>$\ds (x-0)^2 + (y-y_1)^2 + (z-z_1)^2 = r^2$, since its center lies on the yz-plane.</p>
                 
                 <p>At $\ds (9,0,0)$,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (9-0)^2 + (0-y_1)^2 + (0-z_1)^2 &= r^2 \\
                 81 + y_1^2 + z_1^2 &= r^2 \quad \text{(1)}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>At $\ds (3, 13, 5)$,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (3-0)^2 + (13-y_1)^2 + (5-z_1)^2 &= r^2 \\
                 9 + (13-y_1)^2 + (5-z_1)^2 &= r^2 \quad \text{(2)}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>At $\ds (11, 0, 10)$,</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 (11-0)^2 + (0-y_1)^2 + (10-z_1)^2 &= r^2 \\
                 121 + y_1^2 + (10-z_1)^2 &= r^2 \quad \text{(3)}
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>From (1) and (3),</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 81 + y_1^2 + z_1^2 &= 121 + y_1^2 + (10-z_1)^2 \\
                 81 + z_1^2 &= 121 + 100 - 20z_1 + z_1^2 \\
                 20z_1 &= 140 \\
                 z_1 &= 7
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>From (1) and (2),</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 81 + y_1^2 + z_1^2 &= 9 + (13-y_1)^2 + (5-z_1)^2 \\
                 81 + y_1^2 + 7^2 &= 9 + 169 - 26y_1 + y_1^2 + (5-7)^2 \\
                 81 + 49 &= 178 - 26y_1 + 4 \\
                 130 &= 182 - 26y_1 \\
                 26y_1 &= 52 \\
                 y_1 &= 2
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Center $\ds = (0,2,7)$</p>
                 
                 <p>Substitute $\ds x_1=0$, $\ds y_1=2$ and $\ds z_1=7$ in equation (1),</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 81 + (2)^2 + 7^2 &= r^2 \\
                 81 + 4 + 49 &= r^2 \\
                 r^2 &= 134
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
                 
                 <p>Hence the equation of the sphere is</p>
                 
-                $$
-                \begin{aligned}
+                <div class="math-block">
+                $\displaystyle \begin{aligned}
                 x^2 + (y-2)^2 + (z-7)^2 &= 134
-                \end{aligned}
-                $$
+                \end{aligned}$
+                </div>
             </div>
 
             <div class="exercise-box">

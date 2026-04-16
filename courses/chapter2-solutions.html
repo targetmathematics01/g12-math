@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapter 2: Solutions | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            chtml: {
+                displayAlign: "left", 
+                matchFontHeight: false, 
+                scale: 1
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 15px;
+            background-color: #f4f7f6;
+            color: #333;
+            overflow-x: hidden; 
+            max-width: 100vw;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+            margin: 0 auto;
+            overflow-x: hidden; 
+        }
+        h1 { 
+            color: #2c3e50; 
+            margin-bottom: 5px; 
+            text-align: center; 
+            font-family: 'Alice', serif; 
+            font-size: 1.8rem; 
+        }
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 35px;
+            font-size: 1.1em;
+        }
+        .problem-box {
+            width: 100%; 
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+            background: #fafafa;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            box-sizing: border-box;
+        }
+        .problem-box h4 {
+            margin-top: 0;
+            color: #d9534f;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 10px;
+        }
+        .problem-box p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            word-wrap: break-word;
+        }
+        .solution-title {
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        /* Math Block - Strictly Left Aligned and Swipeable */
+        .math-block {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            background: #fff;
+            padding: 15px;
+            padding-left: 30px; 
+            border-left: 4px solid #2980b9;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; 
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            text-align: left; 
+        }
+        .math-block::-webkit-scrollbar {
+            height: 6px;
+        }
+        .math-block::-webkit-scrollbar:vertical {
+            display: none;
+            width: 0;
+        }
+        .math-block::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 3px;
+        }
+        
+        mjx-container {
+            text-align: left !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .problem-box {
+                padding: 15px;
+                margin-bottom: 25px;
+            }
+            .math-block {
+                padding-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Chapter 2: Mathematical Induction</h1>
+    <p class="subtitle">Exercise 2.1 Solutions</p>
+
+    <div class="problem-box">
+        <h4>Problem 1(a)</h4>
+        <p>Prove that $\displaystyle 1 + 3 + 3^2 + \cdots + 3^{n-1} = \frac{3^n - 1}{2}$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 + 3 + 3^2 + \cdots + 3^{n-1} = \frac{3^n - 1}{2}$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1$ and $\displaystyle \text{RHS} = \frac{3^1 - 1}{2} = \frac{2}{2} = 1$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1 + 3 + 3^2 + \cdots + 3^{k-1} = \frac{3^k - 1}{2}.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 + 3 + 3^2 + \cdots + 3^k = \frac{3^{k+1} - 1}{2}.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 + 3 + 3^2 + \cdots + 3^{k-1} + 3^k \\
+            & = \frac{3^k - 1}{2} + 3^k \\
+            & = \frac{3^k - 1 + 2 \cdot 3^k}{2} \\
+            & = \frac{3 \cdot 3^k - 1}{2} \\
+            & = \frac{3^{k+1} - 1}{2}
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 1(b)</h4>
+        <p>Prove that $\displaystyle 1^3 + 2^3 + 3^3 + \cdots + n^3 = \left( \frac{n(n+1)}{2} \right)^2$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1^3 + 2^3 + 3^3 + \cdots + n^3 = \left( \frac{n(n+1)}{2} \right)^2$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1^3 = 1$ and $\displaystyle \text{RHS} = \left( \frac{1(1+1)}{2} \right)^2 = 1^2 = 1$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1^3 + 2^3 + \cdots + k^3 = \left( \frac{k(k+1)}{2} \right)^2.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1^3 + 2^3 + \cdots + (k+1)^3 = \left( \frac{(k+1)(k+2)}{2} \right)^2.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1^3 + 2^3 + \cdots + k^3 + (k+1)^3 \\
+            & = \frac{k^2(k+1)^2}{4} + (k+1)^3 \\
+            & = \frac{(k+1)^2}{4} \left[ k^2 + 4(k+1) \right] \\
+            & = \frac{(k+1)^2(k^2 + 4k + 4)}{4} \\
+            & = \frac{(k+1)^2(k+2)^2}{4} \\
+            & = \left( \frac{(k+1)(k+2)}{2} \right)^2
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 1(c)</h4>
+        <p>Prove that $\displaystyle 2^3 + 4^3 + 6^3 + \cdots + (2n)^3 = 2n^2(n+1)^2$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 2^3 + 4^3 + \cdots + (2n)^3 = 2n^2(n+1)^2$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 2^3 = 8$ and $\displaystyle \text{RHS} = 2(1)^2(1+1)^2 = 2(4) = 8$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 2^3 + 4^3 + \cdots + (2k)^3 = 2k^2(k+1)^2.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2^3 + 4^3 + \cdots + (2k+2)^3 = 2(k+1)^2(k+2)^2.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 2^3 + 4^3 + \cdots + (2k)^3 + (2k+2)^3 \\
+            & = 2k^2(k+1)^2 + (2(k+1))^3 \\
+            & = 2k^2(k+1)^2 + 8(k+1)^3 \\
+            & = 2(k+1)^2 \left[ k^2 + 4(k+1) \right] \\
+            & = 2(k+1)^2 (k^2 + 4k + 4) \\
+            & = 2(k+1)^2(k+2)^2
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 1(d)</h4>
+        <p>Prove that $\displaystyle 1 \cdot 2 + 2 \cdot 3 + 3 \cdot 4 + \cdots + n(n+1) = \frac{n(n+1)(n+2)}{3}$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 \cdot 2 + 2 \cdot 3 + \cdots + n(n+1) = \frac{n(n+1)(n+2)}{3}$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1 \cdot 2 = 2$ and $\displaystyle \text{RHS} = \frac{1(1+1)(1+2)}{3} = \frac{6}{3} = 2$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1 \cdot 2 + 2 \cdot 3 + \cdots + k(k+1) = \frac{k(k+1)(k+2)}{3}.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 \cdot 2 + 2 \cdot 3 + \cdots + (k+1)(k+2) = \frac{(k+1)(k+2)(k+3)}{3}.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 \cdot 2 + 2 \cdot 3 + \cdots + k(k+1) + (k+1)(k+2) \\
+            & = \frac{k(k+1)(k+2)}{3} + (k+1)(k+2) \\
+            & = (k+1)(k+2) \left[ \frac{k}{3} + 1 \right] \\
+            & = \frac{(k+1)(k+2)(k+3)}{3}
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 1(e)</h4>
+        <p>Prove that $\displaystyle \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \cdots + \frac{1}{2^n} = 1 - \frac{1}{2^n}$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle \frac{1}{2} + \frac{1}{4} + \cdots + \frac{1}{2^n} = 1 - \frac{1}{2^n}$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = \frac{1}{2}$ and $\displaystyle \text{RHS} = 1 - \frac{1}{2^1} = \frac{1}{2}$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle \frac{1}{2} + \frac{1}{4} + \cdots + \frac{1}{2^k} = 1 - \frac{1}{2^k}.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle \frac{1}{2} + \frac{1}{4} + \cdots + \frac{1}{2^{k+1}} = 1 - \frac{1}{2^{k+1}}.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{1}{2} + \frac{1}{4} + \cdots + \frac{1}{2^k} + \frac{1}{2^{k+1}} \\
+            & = \left( 1 - \frac{1}{2^k} \right) + \frac{1}{2^{k+1}} \\
+            & = 1 - \frac{2}{2^{k+1}} + \frac{1}{2^{k+1}} \\
+            & = 1 - \frac{1}{2^{k+1}}
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 1(f)</h4>
+        <p>Prove that $\displaystyle 1 + 2 + 2^2 + \cdots + 2^{n-1} = 2^n - 1$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 1 + 2 + 2^2 + \cdots + 2^{n-1} = 2^n - 1$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 1$ and $\displaystyle \text{RHS} = 2^1 - 1 = 1$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 1 + 2 + 2^2 + \cdots + 2^{k-1} = 2^k - 1.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 1 + 2 + 2^2 + \cdots + 2^k = 2^{k+1} - 1.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & 1 + 2 + 2^2 + \cdots + 2^{k-1} + 2^k \\
+            & = (2^k - 1) + 2^k \\
+            & = 2 \cdot 2^k - 1 \\
+            & = 2^{k+1} - 1
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 1(g)</h4>
+        <p>Prove that $\displaystyle \frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} + \frac{1}{3 \cdot 4} + \cdots + \frac{1}{n(n+1)} = \frac{n}{n+1}$ by using the principle of mathematical induction for all natural numbers $\displaystyle n$.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle \frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} + \cdots + \frac{1}{n(n+1)} = \frac{n}{n+1}$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = \frac{1}{1 \cdot 2} = \frac{1}{2}$ and $\displaystyle \text{RHS} = \frac{1}{1+1} = \frac{1}{2}$.<br>
+        Since $\displaystyle \text{LHS} = \text{RHS}$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle \frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} + \cdots + \frac{1}{k(k+1)} = \frac{k}{k+1}.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle \frac{1}{1 \cdot 2} + \cdots + \frac{1}{(k+1)(k+2)} = \frac{k+1}{k+2}.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            & \frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} + \cdots + \frac{1}{k(k+1)} + \frac{1}{(k+1)(k+2)} \\
+            & = \frac{k}{k+1} + \frac{1}{(k+1)(k+2)} \\
+            & = \frac{k(k+2) + 1}{(k+1)(k+2)} \\
+            & = \frac{k^2 + 2k + 1}{(k+1)(k+2)} \\
+            & = \frac{(k+1)^2}{(k+1)(k+2)} \\
+            & = \frac{k+1}{k+2}
+            \end{aligned}$
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 2</h4>
+        <p>Prove that $\displaystyle (n + 1)^2 < 2n^2$ for all natural numbers $\displaystyle n \ge 3$ by using the principle of mathematical induction.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle (n + 1)^2 < 2n^2$ for $\displaystyle n \ge 3$.</p>
+        
+        <p>(1) For $\displaystyle n = 3$,<br>
+        $\displaystyle \text{LHS} = (3 + 1)^2 = 16$ and $\displaystyle \text{RHS} = 2(3)^2 = 18$.<br>
+        Since $\displaystyle 16 < 18$, $\displaystyle P(3)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}, k \ge 3$, that is<br>
+        $\displaystyle (k + 1)^2 < 2k^2.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle (k + 2)^2 < 2(k + 1)^2.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            (k + 2)^2
+            &= k^2 + 4k + 4 \\[4pt]
+            &= (k^2 + 2k + 1) + 2k + 3 \\[4pt]
+            &= (k + 1)^2 + 2k + 3
+            \end{aligned}$
+        </div>
+        
+        <p>By the induction hypothesis,</p>
+        
+        <div class="math-block">
+            $\displaystyle (k + 1)^2 < 2k^2.$
+        </div>
+        
+        <p>Therefore,</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            (k + 2)^2
+            &= (k + 1)^2 + 2k + 3 \\[4pt]
+            &< 2k^2 + 2k + 3.
+            \end{aligned}$
+        </div>
+        
+        <p>Now, since $\displaystyle k \ge 3$, we have $\displaystyle 2k \ge 6$, so</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            2k + 3 &\le 4k + 2.
+            \end{aligned}$
+        </div>
+        
+        <p>Hence,</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            2k^2 + 2k + 3
+            &\le 2k^2 + 4k + 2 \\[4pt]
+            &= 2(k^2 + 2k + 1) \\[4pt]
+            &= 2(k + 1)^2.
+            \end{aligned}$
+        </div>
+        
+        <p>Thus,</p>
+        
+        <div class="math-block">
+            $\displaystyle (k + 2)^2 < 2(k + 1)^2.
+            $
+        </div>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by the principle of mathematical induction, the statement $\displaystyle (n + 1)^2 < 2n^2$ is true for all natural numbers $\displaystyle n \ge 3$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 3</h4>
+        <p>Prove that $\displaystyle (2n + 7) < (n + 3)^2$ for all natural numbers $\displaystyle n$ by using the mathematical induction.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle (2n + 7) < (n + 3)^2$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle \text{LHS} = 2(1) + 7 = 9$ and $\displaystyle \text{RHS} = (1 + 3)^2 = 16$.<br>
+        Since $\displaystyle 9 < 16$, $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 2k + 7 < (k + 3)^2.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 2(k + 1) + 7 < (k + 4)^2.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            2(k + 1) + 7 & = (2k + 7) + 2 \\
+            & < (k + 3)^2 + 2 \quad (\text{since } 2k + 7 < (k + 3)^2) \\
+            & = k^2 + 6k + 9 + 2 \\
+            & = k^2 + 6k + 11
+            \end{aligned}$
+        </div>
+        
+        <p>We know that $\displaystyle (k + 4)^2 = k^2 + 8k + 16$.</p>
+        
+        <p>Since $\displaystyle k \ge 1$, we have $\displaystyle 6k + 11 < 8k + 16$.</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            k^2 + 6k + 11 & < k^2 + 8k + 16 \\
+            & = (k + 4)^2
+            \end{aligned}$
+        </div>
+        
+        <p>Thus, $\displaystyle 2(k + 1) + 7 < (k + 4)^2$.</p>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 4</h4>
+        <p>Prove that $\displaystyle 3$ is a factor of $\displaystyle 4^n - 1$ for all natural numbers $\displaystyle n$ by using the mathematical induction.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 4^n - 1 \text{ is a multiple of } 3$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle 4^1 - 1 = 3$, which is a multiple of $\displaystyle 3$.<br>
+        $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 4^k - 1 \text{ is a multiple of } 3.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 4^{k + 1} - 1 \text{ is a multiple of } 3.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            4^{k + 1} - 1 & = 4 \cdot 4^k - 1 \\
+            & = 4(4^k - 1) + 4 - 1 \\
+            & = 4(4^k - 1) + 3
+            \end{aligned}$
+        </div>
+        
+        <p>Since $\displaystyle 4(4^k - 1)$ is a multiple of $\displaystyle 3$ (from the assumption) and $\displaystyle 3$ is a multiple of $\displaystyle 3$, their sum $\displaystyle 4(4^k - 1) + 3 = 4^{k + 1} - 1$ is also a multiple of $\displaystyle 3$.</p>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 5</h4>
+        <p>Prove that $\displaystyle 3^{2n} - 1$ is divisible by $\displaystyle 8$ for all natural number $\displaystyle n$ by using the mathematical induction.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle 3^{2n} - 1 \text{ is divisible by } 8$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle 3^{2(1)} - 1 = 9 - 1 = 8$, which is divisible by $\displaystyle 8$.<br>
+        $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle 3^{2k} - 1 \text{ is divisible by } 8.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle 3^{2(k + 1)} - 1 \text{ is divisible by } 8.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            3^{2(k + 1)} - 1 & = 3^{2k + 2} - 1 \\
+            & = 9 \cdot 3^{2k} - 1 \\
+            & = 9(3^{2k} - 1) + 9 - 1 \\
+            & = 9(3^{2k} - 1) + 8
+            \end{aligned}$
+        </div>
+        
+        <p>Since $\displaystyle 9(3^{2k} - 1)$ is divisible by $\displaystyle 8$ (from the assumption) and $\displaystyle 8$ is divisible by $\displaystyle 8$, their sum $\displaystyle 9(3^{2k} - 1) + 8 = 3^{2(k + 1)} - 1$ is also divisible by $\displaystyle 8$.</p>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 6</h4>
+        <p>Prove that $\displaystyle n^3 - n + 3$ is divisible by $\displaystyle 3$ for all natural numbers $\displaystyle n$ by using the mathematical induction.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle n^3 - n + 3 \text{ is divisible by } 3$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle 1^3 - 1 + 3 = 3$, which is divisible by $\displaystyle 3$.<br>
+        $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle k^3 - k + 3 \text{ is divisible by } 3.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle (k + 1)^3 - (k + 1) + 3 \text{ is divisible by } 3.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            (k + 1)^3 - (k + 1) + 3 & = k^3 + 3k^2 + 3k + 1 - k - 1 + 3 \\
+            & = (k^3 - k + 3) + 3k^2 + 3k \\
+            & = (k^3 - k + 3) + 3(k^2 + k)
+            \end{aligned}$
+        </div>
+        
+        <p>Since $\displaystyle (k^3 - k + 3)$ is divisible by $\displaystyle 3$ (from the assumption) and $\displaystyle 3(k^2 + k)$ is divisible by $\displaystyle 3$, their sum is also divisible by $\displaystyle 3$.</p>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+    <div class="problem-box">
+        <h4>Problem 7</h4>
+        <p>Prove that $\displaystyle x^{2n} - y^{2n}$ is divisible by $\displaystyle x + y$ for all natural numbers $\displaystyle n$ by using the mathematical induction.</p>
+        
+        <div class="solution-title">Solution</div>
+        
+        <p>Let $\displaystyle P(n)$ denote the statement $\displaystyle x^{2n} - y^{2n} \text{ is divisible by } x + y$.</p>
+        
+        <p>(1) For $\displaystyle n = 1$,<br>
+        $\displaystyle x^{2(1)} - y^{2(1)} = x^2 - y^2 = (x + y)(x - y)$.<br>
+        Since it contains the factor $\displaystyle (x + y)$, it is divisible by $\displaystyle x + y$.<br>
+        $\displaystyle P(1)$ is true.</p>
+        
+        <p>(2) Assume $\displaystyle P(k)$ is true for some $\displaystyle k \in \mathbb{N}$, that is<br>
+        $\displaystyle x^{2k} - y^{2k} \text{ is divisible by } x + y.$</p>
+        
+        <p>We will show that $\displaystyle P(k + 1)$ is true, that is:<br>
+        $\displaystyle x^{2(k + 1)} - y^{2(k + 1)} \text{ is divisible by } x + y.$</p>
+        
+        <p>The proof is as follows:</p>
+        
+        <div class="math-block">
+            $\displaystyle \begin{aligned}
+            x^{2(k + 1)} - y^{2(k + 1)} & = x^{2k + 2} - y^{2k + 2} \\
+            & = x^2 \cdot x^{2k} - y^2 \cdot y^{2k} \\
+            & = x^2(x^{2k} - y^{2k} + y^{2k}) - y^2 \cdot y^{2k} \\
+            & = x^2(x^{2k} - y^{2k}) + x^2 y^{2k} - y^2 y^{2k} \\
+            & = x^2(x^{2k} - y^{2k}) + y^{2k}(x^2 - y^2) \\
+            & = x^2(x^{2k} - y^{2k}) + y^{2k}(x + y)(x - y)
+            \end{aligned}$
+        </div>
+        
+        <p>Since $\displaystyle x^2(x^{2k} - y^{2k})$ is divisible by $\displaystyle x + y$ (from the assumption) and $\displaystyle y^{2k}(x + y)(x - y)$ contains the factor $\displaystyle x + y$, their sum is also divisible by $\displaystyle x + y$.</p>
+        
+        <p>Therefore, $\displaystyle P(k + 1)$ is true.</p>
+        
+        <p>(3) Hence, by principle of mathematical induction, the statement $\displaystyle P(n)$ is true for all natural numbers $\displaystyle n$.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
