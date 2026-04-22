@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: Permutations and Combinations Quiz | Target Mathematics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Alice&display=swap" rel="stylesheet">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
+        header { background: #0056b3; color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logo { font-size: 28px; font-weight: 600; letter-spacing: 2px; color: #f39c12; }
+        .logo span { color: #f4f6f1; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        .content-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 40px; text-align: left; }
+        .content-box h1 { color: #333; margin-bottom: 10px; text-align: center; font-family: 'Alice', serif; }
+        .content-box p.subtitle { text-align: center; color: #777; margin-bottom: 40px; font-size: 1.1em; }
+        
+        .quiz-header { background-color: #e8f4f8; border-left: 5px solid #0056b3; padding: 20px; border-radius: 4px; margin-bottom: 30px; }
+        .quiz-header p { margin: 0; color: #333; font-weight: 600; }
+
+        .question-card { background: #fafafa; padding: 25px; margin-bottom: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); border: 1px solid #eee; border-left: 5px solid #0056b3; transition: border-left-color 0.3s; }
+        .question-card p { margin-top: 0; font-size: 16px; color: #333; line-height: 1.6; }
+        
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .option-label { display: flex; align-items: flex-start; cursor: pointer; padding: 15px; background-color: #fff; border: 1px solid #ccc; border-radius: 6px; transition: all 0.2s ease; font-size: 15px; line-height: 1.5; }
+        .option-label:hover { background-color: #e8f4f8; border-color: #0056b3; }
+        input[type="radio"] { margin-right: 12px; margin-top: 3px; transform: scale(1.2); cursor: pointer; flex-shrink: 0; }
+        
+        .opt-key { font-weight: bold; margin-right: 18px; min-width: 15px; color: #0056b3; flex-shrink: 0; }
+        .opt-val { flex: 1; word-wrap: break-word; }
+
+        .submit-btn { display: block; width: 100%; padding: 18px; background-color: #0056b3; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 35px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .submit-btn:disabled { background-color: #a0bcdc; cursor: not-allowed; box-shadow: none; }
+        .submit-btn:not(:disabled):hover { background-color: #004494; }
+        
+        #result { margin-top: 35px; padding: 30px; background: #ffffff; border-radius: 8px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px solid #28a745; }
+        .wrong-answer { color: #c0392b; margin-bottom: 15px; padding: 15px; background-color: #fcebeb; border-radius: 5px; border-left: 4px solid #c0392b; line-height: 1.6; }
+        .score-display { font-size: 26px; font-weight: bold; color: #0056b3; text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #eee; }
+
+        .page-navigation { display: flex; justify-content: space-between; margin-top: 50px; border-top: 2px solid #eee; padding-top: 20px; }
+        .btn-nav { display: inline-block; padding: 12px 24px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.3s; text-align: center; border: 1px solid #ccc; }
+        .btn-nav:hover { background-color: #e0e0e0; }
+
+        @media (max-width: 768px) {
+            .content-box { padding: 25px 15px; }
+            .options { grid-template-columns: 1fr; }
+            .page-navigation { flex-direction: column; gap: 15px; }
+            .btn-nav { width: 100%; box-sizing: border-box; }
+        }
+
+        .top-nav-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: -25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+        }
+        .nav-link {
+            padding: 12px 30px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #0056b3;
+            background-color: #f4f7f6;
+        }
+        .nav-link.active {
+            color: #0056b3;
+            background-color: #e8f4f8;
+        }
+        @media (max-width: 768px) {
+            .top-nav-box { flex-direction: row; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
+            .nav-link { flex: 1; text-align: center; padding: 12px 10px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="content-box">
+            <h1>Chapter 5: Permutations and Combinations</h1>
+            <p class="subtitle">Chapter Quiz & Assessment</p>
+
+            <div class="quiz-header">
+                <p>Please answer all <span id="q-count"></span> questions below. The submit button will be enabled once completed.</p>
+            </div>
+
+            <form id="quizForm">
+                <div id="questionsContainer"></div>
+                <button type="submit" id="submitBtn" class="submit-btn" disabled>Submit Answers</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { id: 1, text: "A person making a book display wants to show a novel, a history book and a travel guide. There are four choices for the novel, two choices for the history book, and ten choices for the travel guide. How many ways are there for the person to make a choice?", options: { A: "24", B: "80", C: "16", D: "120" }, answer: "B" },
+            { id: 2, text: "A variable name for a certain computer programming language consists of a single letter (A through Z) or two letters, or a letter followed by a digit (0 through 9). How many different variable names are possible to use in this language?", options: { A: "962", B: "3", C: "6760", D: "4569760" }, answer: "A" },
+            { id: 3, text: "There are four different roads from town A to town B, three different roads from town B to town C, two different roads from town A to town C. How many different ways to go from A to C altogether?", options: { A: "9", B: "18", C: "24", D: "14" }, answer: "D" },
+            { id: 4, text: "How many different ways are there for a group of 10 people to make a line-up of (any) five, in increasing order of their unique identification numbers (UID)?", options: { A: "5!", B: "\\( ^{10}P_5 \\)", C: "\\( ^{10}C_5 \\)", D: "\\( 5 \\times ^{10}C_5 \\)" }, answer: "C" },
+            { id: 5, text: "How many seven-digit natural numbers, which are the same when the order of their digits is inverted, can be constructed?", options: { A: "\\( 9 \\times ^{10}P_3 \\)", B: "\\( 9^2 \\times ^{10}P_2 \\)", C: "\\( \\frac{1}{2} \\times 9 \\times 10^6 \\)", D: "\\( 9 \\times 10^3 \\)" }, answer: "D" },
+            { id: 6, text: "How many ways are there to pick a 5-person basketball team from 10 possible players, if the Weakest player and the strongest player must be on the team?", options: { A: "\\( ^8C_3 \\)", B: "\\( ^{10}C_4 \\)", C: "\\( ^{10}C_5 \\)", D: "\\( ^8C_4 \\)" }, answer: "A" },
+            { id: 7, text: "How many ways are there to pick a vowel and then a Consonant from the word MATHEMATICS?", options: { A: "\\( ^4C_1 \\times ^7C_1 \\)", B: "\\( ^3C_1 \\times ^5C_1 \\)", C: "\\( ^{11}C_1 \\times ^{10}C_1 \\)", D: "\\( ^{11}P_8 \\)" }, answer: "A" },
+            { id: 8, text: "How many subsets of the set \\( \\{a, b, c, d, e, f, g, h, i, j\\} \\) do not contain both \\( a \\) and \\( b \\) simultaneously?", options: { A: "\\( 2^8 \\)", B: "\\( 2^9 \\)", C: "\\( 2^{10} \\)", D: "\\( 2^{10} - 2^8 \\)" }, answer: "D" },
+            { id: 9, text: "How many ways are there to pick a man and a woman, who are not husband and wife, from a group of 50 married couples?", options: { A: "\\( 2 \\times 5^2 \\times 7^2 \\)", B: "\\( 23 \\times 5^2 \\)", C: "\\( 2^2 \\times 5^2 \\times 7^2 \\)", D: "\\( 2 \\times 5^2 \\)" }, answer: "A" },
+            { id: 10, text: "A binary sequence is a sequence in which each term is either 0 or 1. How many binary sequences, containing exactly six 1's and exactly two 0's, are there?", options: { A: "\\( \\frac{8!}{2!} \\)", B: "\\( 2^8 \\)", C: "\\( ^8C_2 \\)", D: "12" }, answer: "C" },
+            { id: 11, text: "How many 4-digit Campus telephone numbers (including 0000) can contain repeated digits?", options: { A: "\\( ^{10}P_4 \\)", B: "\\( 9 \\times 10^3 - ^{10}P_3 \\)", C: "\\( 10^4 - ^{10}C_4 \\)", D: "\\( 10^4 - ^{10}P_4 \\)" }, answer: "D" },
+            { id: 12, text: "In how many ways can 10 distinct objects be distributed into 10 distinct boxes such that no box is empty?", options: { A: "10!", B: "\\( 10^{10} \\)", C: "10", D: "1" }, answer: "A" },
+            { id: 13, text: "In how many ways can 10 identical objects be distributed into 10 distinct boxes such that no box is empty?", options: { A: "10!", B: "\\( 10^{10} \\)", C: "10", D: "1" }, answer: "D" },
+            { id: 14, text: "How many arrangements of the letters in the word INSTITUTIONAL have two consecutive N's (this means that the two N's are together)?", options: { A: "12!", B: "\\( ^{12}C_2 \\)", C: "\\( \\frac{12!}{(3!)^2} \\)", D: "\\( (3!)^2 \\cdot ^{12}C_1 \\)" }, answer: "C" },
+            { id: 15, text: "How many arrangements of all the letters in the word INSTITUTIONAL are there, in which two N's are consecutive but two T's are not?", options: { A: "\\( \\frac{12!}{(3!)^2} - \\frac{11!}{3! \\cdot 2!} \\)", B: "\\( \\frac{^9C_3 \\cdot 4!}{3!} \\)", C: "\\( ^{10}C_3 \\cdot 9! \\)", D: "\\( ^{10}C_3 \\cdot \\frac{9!}{3!} \\)" }, answer: "D" },
+            { id: 16, text: "In how many ways can a 5-digit code be formed consisting of 5's and 2's only, such that each of them must appear at least once in the code?", options: { A: "\\( 2^5 - 1 \\)", B: "\\( \\frac{5!}{3! \\cdot 2!} \\)", C: "\\( 2^5 - 2 \\)", D: "\\( 10^5 - 2 \\)" }, answer: "C" },
+            { id: 17, text: "A quality controller has to examine electrical appliances, produced in a factory, and mark each as acceptable or unacceptable after checking. In how many ways can 15 appliances be observed in such a way that \\( 12^{th} \\) appliance is the third to be marked unacceptable?", options: { A: "\\( ^{15}P_3 \\)", B: "\\( \\frac{15!}{3! \\cdot 12!} \\)", C: "\\( ^{11}C_2 \\)", D: "\\( ^{11}C_2 \\cdot 2^3 \\)" }, answer: "D" },
+            { id: 18, text: "There are 5 distinct parallel lines and 7 distinct transversals on a plane. Given that no two transversals are parallel, and none of the parallel lines meets two or more transversals at a single point. Find the number of Quadrilaterals, having a pair of parallel edges, determined by the points of intersection of the transversals and the parallel lines.", options: { A: "\\( ^{12}C_4 \\)", B: "\\( ^7C_2 \\times ^5C_2 \\)", C: "7 \\times 5", D: "\\( ^7C_2 \\times ^5P_2 \\)" }, answer: "B" },
+            { id: 19, text: "Let \\( a, b, c, w, x, y, z \\) be distinct real numbers. How many one-to-one functions, mapping \\( \\{a, b, c\\} \\) to \\( \\{w, x, y, z\\} \\), are there?", options: { A: "\\( 3 \\times 4! \\)", B: "\\( ^4C_3 \\)", C: "\\( 3 \\times ^4C_3 \\)", D: "\\( ^4P_3 \\)" }, answer: "D" },
+            { id: 20, text: "In how many ways can 25 diplomats be assigned to 5 embassies, if each diplomat must be assigned to exactly one embassy but the number of diplomats received by an embassy may be 0, 1, 2, ..., 24 or 25?", options: { A: "\\( 5^{25} \\)", B: "\\( 25^5 \\)", C: "\\( ^{25}P_5 \\)", D: "\\( ^{26}P_5 \\)" }, answer: "A" },
+            { id: 21, text: "A girl won a contest. The prize is a restaurant gift voucher and tickets to a sporting event. She can select one of three different restaurants and tickets to a football, baseball, basketball or hockey games. How many different ways can she select a restaurant followed by a sporting event?", options: { A: "7", B: "12", C: "15", D: "16" }, answer: "B" },
+            { id: 22, text: "A bookshelf holds 4 different biographies and 5 different mystery novels. In how many ways can a book of each type be selected?", options: { A: "1", B: "9", C: "10", D: "20" }, answer: "D" },
+            { id: 23, text: "How many numbers between 100 and 999, both of which are inclusive, have 7 as the tens' digit?", options: { A: "90", B: "100", C: "110", D: "120" }, answer: "A" },
+            { id: 24, text: "How many ways can eight runners in an Olympic race finish in first, second and third places?", options: { A: "8", B: "56", C: "24", D: "336" }, answer: "D" },
+            { id: 25, text: "Given that \\( 17! = 355687428096000 \\). What is the thousands' digit of \\( 19! \\)?", options: { A: "0", B: "1", C: "2", D: "3" }, answer: "C" },
+            { id: 26, text: "A man wants to put 8 DVD cases, one for each season of his favorite TV show, in 8 consecutive positions along a line on a shelf. In how many ways can this be done if seasons 1 and 8 must be in the 1st and 8th positions respectively?", options: { A: "720", B: "40320", C: "12", D: "28" }, answer: "A" },
+            { id: 27, text: "A jar contains red and white Gumballs (which are indistinguishable, except in colors), the ratio of the number of white Gumballs to that of red is 5:4. The jar contains a total of 180 Gumballs, which are to be taken out and arranged in a line. In how many ways can this be done?", options: { A: "9!", B: "\\( \\frac{9!}{5!4!} \\)", C: "45", D: "\\( \\frac{180!}{100! \\cdot 80!} \\)" }, answer: "D" },
+            { id: 28, text: "How many 5-digit positive even integers are there?", options: { A: "120", B: "50000", C: "100000", D: "45000" }, answer: "D" },
+            { id: 29, text: "How many ways are there to distribute 9 different books among 15 students, if no student receives more than one book?", options: { A: "\\( ^{15}P_9 \\)", B: "\\( ^{15}C_9 \\)", C: "9!", D: "5!" }, answer: "A" },
+            { id: 30, text: "We say that two words are anagrams if each word can be formed from the other by rearranging its letters. How many possible anagrams (which may or may not be in dictionaries, and must not be INFINITY itself) are there for the word INFINITY?", options: { A: "3359", B: "3358", C: "40320", D: "40319" }, answer: "A" },
+            { id: 31, text: "How many four-digit natural numbers contain one or more repeated digits?", options: { A: "4536", B: "9000", C: "5040", D: "4464" }, answer: "D" },
+            { id: 32, text: "Consider a 5-digit positive integer which remains unchanged if the order of its digits is reversed. In how many ways can such a number be formed?", options: { A: "9000", B: "900", C: "1000", D: "10000" }, answer: "B" },
+            { id: 33, text: "Find the number of 5-digit natural numbers, which have 3 exactly once as a digit?", options: { A: "30000", B: "29889", C: "32805", D: "59049" }, answer: "B" },
+            { id: 34, text: "A certain security code is required to consist of 4 distinct digits, and a digit may be 0, 1, 2, ..., 8 or 9. If the corresponding data system allows only 120 codes per hour for access. If an person wants to try all possible codes for technical purpose, how many hours will it take for him?", options: { A: "42", B: "120", C: "24", D: "5040" }, answer: "A" },
+            { id: 35, text: "How many possible license plates consisting of 6 digits (a digit may be 0, 1, 2, ..., 8 or 9) have either all digits distinct or all digits the same?", options: { A: "151200", B: "1000000", C: "151210", D: "10" }, answer: "C" },
+            { id: 36, text: "A coin is flipped 10 times. How many outcomes, containing exactly 3 or exactly 4 heads, are possible?", options: { A: "330", B: "210", C: "120", D: "512" }, answer: "A" },
+            { id: 37, text: "A byte is a binary number consisting of 8 digits, each digit being 0 or 1. How many bytes have at least 2 zeros?", options: { A: "256", B: "247", C: "248", D: "255" }, answer: "B" },
+            { id: 38, text: "A die is rolled 5 times and the numbers obtained are recorded as a sequence. In how many ways can the terms of the sequence be all even or all multiple of 3?", options: { A: "275", B: "274", C: "243", D: "32" }, answer: "B" },
+            { id: 39, text: "How many possible committees can be formed from a group of 4 men and 6 women. If there are at least 2 men and twice as many women as men in each committee?", options: { A: "94", B: "105", C: "210", D: "80" }, answer: "A" },
+            { id: 40, text: "From a group of 15 men and 9 women, a committee consisting of 12 people is to be formed. If a committee must contain more women than men, how many ways are there to do so?", options: { A: "108108", B: "12285", C: "120848", D: "455" }, answer: "C" },
+            { id: 41, text: "In how many ways can a group of 12 people contains exactly two born in the same month?", options: { A: "66", B: "479001600", C: "12!", D: "31614105600" }, answer: "D" }
+        ];
+
+        document.getElementById('q-count').innerText = questions.length;
+
+        const container = document.getElementById('questionsContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const quizForm = document.getElementById('quizForm');
+        let answeredQuestions = new Set();
+
+        questions.forEach((q) => {
+            let optionsHtml = '';
+            for (const [key, value] of Object.entries(q.options)) {
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="q${q.id}" value="${key}" required>
+                        <span class="opt-key">${key}.</span>
+                        <span class="opt-val">${value}</span>
+                    </label>
+                `;
+            }
+
+            const questionHtml = `
+                <div class="question-card" id="card-q${q.id}">
+                    <p><strong>${q.id}. ${q.text}</strong></p>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+            container.innerHTML += questionHtml;
+        });
+
+        quizForm.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                answeredQuestions.add(e.target.name);
+                if (answeredQuestions.size === questions.length) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Submit Answers";
+                } else {
+                    submitBtn.innerText = `Answered ${answeredQuestions.size} / ${questions.length} Questions`;
+                }
+            }
+        });
+
+        quizForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            let mistakesHtml = "";
+            const formData = new FormData(quizForm);
+            
+            questions.forEach(q => {
+                const userAnswer = formData.get(`q${q.id}`);
+                const card = document.getElementById(`card-q${q.id}`);
+                
+                card.style.borderLeftColor = "#0056b3"; 
+
+                if (userAnswer === q.answer) {
+                    score++;
+                    card.style.borderLeftColor = "#28a745"; 
+                } else {
+                    card.style.borderLeftColor = "#dc3545"; 
+                    mistakesHtml += `
+                        <div class="wrong-answer">
+                            <strong>Question ${q.id}:</strong> Your answer was <b>${userAnswer || 'None'}</b>. <br>
+                            The correct answer is <b>${q.answer}</b>. (${q.options[q.answer]})
+                        </div>
+                    `;
+                }
+            });
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            
+            let finalHtml = `<div class="score-display">Your Score: ${score} / ${questions.length}</div>`;
+            
+            if (score === questions.length) {
+                finalHtml += `<p style="text-align:center; color: #28a745; font-weight:bold; font-size: 18px;">Excellent! All answers are correct.</p>`;
+            } else {
+                finalHtml += `<h4 style="color:#d9534f; margin-top: 0;">Review Your Mistakes:</h4>` + mistakesHtml;
+            }
+
+            resultDiv.innerHTML = finalHtml;
+            
+            if (window.MathJax) {
+                MathJax.typesetPromise([resultDiv]);
+            }
+
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
